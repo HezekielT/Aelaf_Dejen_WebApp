@@ -1,15 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import React from 'react';
 import { Box, Typography, Container, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 
 function Copyright() {
-    const navigate = useNavigate();
+    const navigate = useNavigate;
     return (
-        <Typography variant='body2' color='text.secondary'>
+        <Typography sx={{ justifyContent: 'center' }} variant='body2' color='text.secondary'>
             {'Copyright ©  '}
             <Link color="inherit" onClick={() => navigate('/')}>
                 AELAPH-DEJEN
-            </Link>{' '}
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
