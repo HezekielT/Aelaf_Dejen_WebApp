@@ -33,7 +33,11 @@ function Dashboard(props) {
                                     Upcoming Conventions
                                 </Typography>  
                             </Paper>
-                            <Grid container></Grid>
+                            <Grid container spacing={2}>
+                                <Grid item lg={6}>
+                                    
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Container>
