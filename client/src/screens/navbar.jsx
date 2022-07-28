@@ -43,8 +43,10 @@ function NavBar() {
                                 component="div"
                                 sx={{ justifyContent: 'center',flexGrow: 1, display: {xs: 'none', md: 'flex'} }}
                             >
-                                {/* አእላፍደጀን */}
-                                AELAPH DEJEN
+                                <pre>
+                                 አእላፍ-ደጀን 
+                                AELAPH-DEJEN
+                                </pre>
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
                                 {/* <IconButton
