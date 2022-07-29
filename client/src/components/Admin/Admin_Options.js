@@ -33,6 +33,7 @@ function Admin_Options(props) {
             <Paper
                 sx={{
                     m: 6,
+                    mb: 8,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
