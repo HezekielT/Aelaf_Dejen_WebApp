@@ -14,7 +14,7 @@ function Admin_Options(props) {
             }}
             >
                 <Button variant="outlined">
-                    Manage website's content
+                    Manage website contents
                 </Button>
             </Paper>
             <Paper
@@ -27,17 +27,17 @@ function Admin_Options(props) {
                 }}
             >
                 <Button variant="outlined">
-                    Register Transport Providers
+                    Register Drivers
                 </Button>
             </Paper>
             <Paper
-            sx={{
-                m: 6,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                p: 2
-            }}
+                sx={{
+                    m: 6,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    p: 2
+                }}
             >
                 <Button variant="outlined">
                     Manage Account
