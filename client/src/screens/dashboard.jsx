@@ -1,6 +1,7 @@
 import React from 'react';
 import { Typography, Grid, Paper, 
     ThemeProvider, Box, Container, createTheme } from '@mui/material'
+import Participant_Regist from '../components/Participant-Registeration';
 
 const mdTheme = createTheme()
 
@@ -34,8 +35,8 @@ function Dashboard(props) {
                                 </Typography>  
                             </Paper>
                             <Grid container spacing={2}>
-                                <Grid item lg={6}>
-                                    
+                                <Grid item lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <Participant_Regist />
                                 </Grid>
                             </Grid>
                         </Grid>
