@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Grid, Paper, 
     ThemeProvider, Box, Container, createTheme } from '@mui/material'
-import Participant_Regist from '../components/Participant-Registeration';
+import Participant_Regist from '../components/Participant-Registration';
 
 const mdTheme = createTheme()
 
