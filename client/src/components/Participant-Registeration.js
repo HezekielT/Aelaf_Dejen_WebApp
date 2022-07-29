@@ -105,7 +105,7 @@ function Participant_Regist(props) {
                         variant="contained"
                         sx={{ mt: -4, mb: 4, }}
                     >
-                        Submit
+                        Register
                     </Button>
                 </Grid>
             </Grid>
