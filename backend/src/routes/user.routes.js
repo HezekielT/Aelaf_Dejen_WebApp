@@ -23,6 +23,27 @@ router.route('/participate').post(async function(req, res) {
     }
 });
 
+router.route('registerDriver').post(async function(req, res){
+    const { first_name, last_name, email, phoneno, plateno, location } = req.body;
+    try {
+        await Driver.create({
+            user: {
+                first_name,
+                last_name,
+                email,
+                phoneno,
+            },
+            plateno,
+            location,
+        });
+        console.log("Successfully registered driver");
+        res.status(201).send();
+    } catch(err) {
+        res.status(400).json({ message: err.message });
+    }
+})
+
+
 router.route('/addEvent').post(async function(req, res) {
     const { title, description, dateTime, location } = req.body;
 })
