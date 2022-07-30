@@ -24,10 +24,30 @@ const userSchema = new mongoose.Schema(
         phoneno: {
             type: String,
             required: [true, "Please provide your phone number!"],
-        },
-        Address: {
-            type: String,
-        },
-        
+        },        
     }
-)
+);
+
+const participantSchema = new mongoose.Schema({
+    user: userSchema,
+    location: {
+        type: String,
+    }
+})
+
+const driverSchema = new mongoose.Schema({
+    user: userSchema,
+    plateno: {
+        type: String,
+        required: [true, "Please provide plate number"],
+    },
+    initialLocation: {
+        type: String,
+        require: [true, "Please provide location"]
+    }
+})
+
+module.exports = {
+    Participant: mongoose.model('Participant', participantSchema),
+    Driver: mongoose.model('Driver', driverSchema),
+}
