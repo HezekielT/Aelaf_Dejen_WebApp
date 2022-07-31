@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { AppBar, ThemeProvider, Box, 
     CssBaseline, Container, Toolbar, 
     Typography, createTheme, IconButton, 
-     Menu, MenuItem } from '@mui/material';
+     Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 
+const pages = ['Home', 'Conventions', 'About Us']
 const theme = createTheme();
 function NavBar() {
 
@@ -41,7 +42,7 @@ function NavBar() {
                                 variant='h6'
                                 noWrap
                                 component="div"
-                                sx={{ justifyContent: 'center',flexGrow: 1, display: {xs: 'none', md: 'flex'} }}
+                                sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'} }}
                             >
                                 <pre>
                                  አእላፍ-ደጀን 
@@ -49,7 +50,7 @@ function NavBar() {
                                 </pre>
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
-                                {/* <IconButton
+                                <IconButton
                                     size="large"
                                     aria-label='drivers option'
                                     aria-controls='menu-appbar'
@@ -75,13 +76,29 @@ function NavBar() {
                                     sx={{
                                         display: { xs: 'block', md: 'none' },
                                     }}
-                                > */}
-                                    {/* {pages.map((page) => (
+                                > 
+                                    {pages.map((page) => (
                                         <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                            <Typography textAlign="center">{page}</Typography>
+                                            <Link sx={{textDecoration:"none"}}>{page}</Link>
                                         </MenuItem>
-                                    ))} */}
-                                {/* </Menu> */}
+                                    ))}
+                             </Menu>
+                            </Box>
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component="div"
+                                sx={{
+                                    flexGrow: 1,
+                                    display: { xs: 'flex', md: 'none'}
+                                }}
+                            >
+                                AELAPH-DEJEN
+                            </Typography>
+                            <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Home</Link>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Conventions</Link>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>About Us</Link>
                             </Box>
                         </Toolbar>
                     </Container>
