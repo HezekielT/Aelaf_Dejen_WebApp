@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 
+// we will pass the contents of the event as
+// props to this function and will call it from
+// dashboard screen
 function Events(props) {
     return (
         <Grid>
