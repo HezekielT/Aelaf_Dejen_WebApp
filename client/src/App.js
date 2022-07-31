@@ -10,12 +10,12 @@ import Manage_Account from './components/Admin/Manage_Account';
 function App() {
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBar />
       {/* <Admin_Dashboard /> */}
       {/* <Manage_Contents /> */}
       <Manage_Account />
       {/* <Dashboard /> */}
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
