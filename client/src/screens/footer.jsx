@@ -7,7 +7,6 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import AboutUs from './AboutUs';
 
 const navigate = useNavigate;
 function Copyright() {
@@ -28,30 +27,44 @@ function Copyright() {
 
 function Addresss() {
     return (
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Typography>Address</Typography>
-        </Grid>
+        // <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+            <>
+                <Typography> &gt; Address</Typography>
+                <Typography sx={{ pl: 2}}>
+            Addis Ababa, Ethiopia
+            </Typography>
+            <Typography sx={{ pl: 2}}>
+            +251-(0)-9
+            </Typography>
+            </>
+            
+        // </Grid>
     )
 }
 
 function Usefullinks() {
     return (
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        // <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <>
+            <Typography sx={{ pl: 9, color: '#64748B'}}>
+            &gt; Useful links
+            </Typography>
             <Box 
                 variant='body1' 
                 sx={{ 
                     display: 'flex',
                     flexDirection: 'column',
-                    py: 4,
+                    pt: 2,
+                    px: 10,
                     cursor: 'pointer'
                 }}
-            >
-                <Link onClick={() => navigate('/aboutus')}>
-                    About Us
+                >
+                {/* <Link onClick={() => navigate('/aboutus')}>
+                    &gt; About Us
                 </Link>
                 <Link onClick={() => navigate('/aboutus')}>
-                    Contact Us
-                </Link>
+                    &gt; Contact Us
+                </Link> */}
                 <Link onClick={() => navigate('/aboutus')}>
                     Terms of Service
                 </Link>
@@ -59,15 +72,17 @@ function Usefullinks() {
                     Privacy Policiy
                 </Link>
             </Box>
-        </Grid>
+        </>
+        // </Grid>
     )
 }
 
 function SocialLinks() {
     return (
-        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
-            <Typography>
-                Our Social Links
+        // <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+        <>
+            <Typography sx={{ pl: 2}}>
+            &gt; Our Social Links
             </Typography>
                         
             <Grid item xs={4} sm={2} md={4} lg={4} xl={4}
@@ -106,7 +121,8 @@ function SocialLinks() {
                 </Grid>
             
             </Grid>
-        </Grid>
+            </>
+        // </Grid>
 
     )
 }
@@ -126,18 +142,25 @@ function Footer(props) {
             }}
         >
             <Container maxWidth="xl">
-                <Grid>
-                    <Typography variant='body1'>
-                        AELAPH-DEJEN PLC
-                    </Typography>
-                </Grid>
                 <Grid container spacing={2}>
-                    <Addresss />
-                    <Usefullinks />
-                    <SocialLinks />
-                    <Copyright />
+                    <Grid item xs={12} md={12} sx={{ p: 3,display: 'flex', justifyContent: 'center' }}>
+                        <Typography variant='body1'>
+                            AELAPH-DEJEN PLC
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Addresss />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <Usefullinks />
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                        <SocialLinks />
+                    </Grid>
+                    {/* <Grid item xs={12} md={4}> */}
+                        <Copyright />
+                    {/* </Grid> */}
                 </Grid>
-                
             </Container>
         </Box>
     );
