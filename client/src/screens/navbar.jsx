@@ -4,10 +4,13 @@ import { AppBar, ThemeProvider, Box,
     Typography, createTheme, IconButton, 
      Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
+import { useEffect } from 'react';
 
 const pages = ['Home', 'Conventions', 'About Us']
 const theme = createTheme();
 function NavBar() {
+
+    const [isScrolled, setIsScrolled ] = useState('#1565c0');
 
     const [anchorElPro, setAnchorElPro] = useState(null);
     const open = Boolean(anchorElPro);
@@ -31,11 +34,28 @@ function NavBar() {
         setAnchorElPro(null);
     }
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled('#1976d2')
+            } else {
+                setIsScrolled('#1565c0')
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    const cc = "#322162"
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{display: 'flex'}}>
                 <CssBaseline />
-                <AppBar position='static'>
+                <AppBar style={{background: isScrolled}}>
                     <Container maxWidth="xl">
                         <Toolbar>
                             <Typography
@@ -98,7 +118,7 @@ function NavBar() {
                             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
                                 <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Home</Link>
                                 <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Conventions</Link>
-                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>About Us</Link>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Contact Us</Link>
                             </Box>
                         </Toolbar>
                     </Container>
