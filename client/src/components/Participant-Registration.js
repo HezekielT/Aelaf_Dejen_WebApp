@@ -10,7 +10,7 @@ function Participant_Regist(props) {
             mb: 4,
             p: 4
         }}>
-            <Typography>Please Fill in the following information</Typography>
+            <Typography paragraph component="h4" variant="h6">Please Fill in the following information</Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <TextField
