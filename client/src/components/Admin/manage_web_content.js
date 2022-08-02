@@ -1,4 +1,4 @@
-import { Grid, Card, CardContent, Typography, CardActions } from '@mui/material';
+import { Grid, Card, CardContent, Container, Typography, CardActions } from '@mui/material';
 import React, { useState } from 'react';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import Events from '../Events';
@@ -6,7 +6,7 @@ import Events from '../Events';
 function Manage_Contents(props) {
     const [test, setTest] = useState("Hello")
     return (
-        <div>
+        <Container>
             <Grid maxWidth="lg" container spacing={3}>
                 <Grid item>
                     <Events />
@@ -37,7 +37,7 @@ function Manage_Contents(props) {
                 </Grid>
             </Grid>
             
-        </div>
+        </Container>
     );
 }
 

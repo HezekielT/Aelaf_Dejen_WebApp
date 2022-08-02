@@ -1,10 +1,12 @@
 import { Box, Button, Card, Grid, Paper, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
+import { useReference } from '../context/refProvider';
 
 function ContactUs(props) {
+    const { contactRef } = useReference();
     return (
-        <Container>
+        <Container ref={contactRef}>
             <Grid container>
             <Grid item xs={12} lg={12} sx={{ p: 3,display: 'flex', justifyContent: 'center' }}>
                 <Typography 

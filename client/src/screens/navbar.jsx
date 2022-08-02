@@ -5,15 +5,16 @@ import { AppBar, ThemeProvider, Box,
      Menu, MenuItem, Link } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect } from 'react';
+import { useReference } from '../context/refProvider';
+import Home from '../components/Home'
 
 const pages = ['Home', 'Conventions', 'About Us']
 const theme = createTheme();
 function NavBar() {
-
     const [isScrolled, setIsScrolled ] = useState('#1565c0');
-
+    const { homeRef, eventRef, contactRef, scrollToRef } = useReference();
     const [anchorElPro, setAnchorElPro] = useState(null);
-    const open = Boolean(anchorElPro);
+    // const open = Boolean(anchorElPro);
 
     const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -24,6 +25,7 @@ function NavBar() {
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
       };
+      
       
     const handleClick = (event) => {
         console.log("gag")
@@ -116,9 +118,17 @@ function NavBar() {
                                 AELAPH-DEJEN
                             </Typography>
                             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Home</Link>
-                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Conventions</Link>
-                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}}>Contact Us</Link>
+                                <Link 
+                                    sx={{
+                                        color: '#fff', 
+                                        cursor: 'pointer', 
+                                        textDecoration: 'none',
+                                        px: 2,
+                                    }} 
+                                    onClick={() => scrollToRef(homeRef)}
+                                >Home</Link>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
                             </Box>
                         </Toolbar>
                     </Container>

@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider, Box, createTheme } from '@mui/material';
 import Login from '../components/Admin/Login';
 import Admin_Options from '../components/Admin/Admin_Options';
+import Manage_Contents from '../components/Admin/manage_web_content';
 
 const mdTheme = createTheme();
 function AdminDashboard(props) {
@@ -20,7 +21,8 @@ function AdminDashboard(props) {
                 }}
             >
                 {/* <Login /> */}
-                <Admin_Options />
+                {/* <Admin_Options /> */}
+                <Manage_Contents />
             </Box>
         </ThemeProvider>
     );

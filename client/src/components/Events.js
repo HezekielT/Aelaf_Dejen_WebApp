@@ -4,6 +4,7 @@ import { Box, Container, Paper, Card, CardActions, CardContent,
     CardMedia, Grid, IconButton, Typography, Collapse } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Participant_Regist from './Participant-Registration';
+import { useReference } from '../context/refProvider';
 // we will pass the contents of the event as
 // props to this function and will call it from
 // dashboard screen
@@ -20,12 +21,14 @@ const ExpandMore = styled((props) => {
 }));
 function Events(props) {
     const [expanded, setExpanded] = React.useState(false);
+    const { eventRef } = useReference();
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     }
     return (
         <Box
+        ref={eventRef}
         component="main"
         sx={{
             backgroundColor: (theme) =>
@@ -33,18 +36,18 @@ function Events(props) {
             ? theme.palette.grey[100]
             : theme.palette.grey[900],
             flexGrow: 1,
-            minHeight: '40.6vh',
-            overflow: 'auto'
+            minHeight: '90.6vh',
+            overflow: 'auto',
         }}
     >
         {/* <Container maxWidth="xl" sx={{ mt:4, mb: 4, }}> */}
             <Grid container spacing={2}>
-                <Grid item xs={12} md={12} lg={12} sx={{ mt: 4}}>
+                <Grid item xs={12} md={12} lg={12} sx={{ mt: 2}}>
                     <Paper
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            mt:3, mb: 4,
+                            mt:5, mb: 4,
                         }}
                     >
                         <Typography component="h1" variant="h5" sx={{ mt: 4,mb: 4,textAlign: 'center'}}>

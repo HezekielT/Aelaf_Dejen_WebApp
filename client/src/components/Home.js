@@ -6,17 +6,22 @@ import { Box, ThemeProvider, Container,
     Grid, Paper, 
     Typography, createTheme, Card } from '@mui/material'
 
+import { useReference } from '../context/refProvider';
+
 const mdTheme = createTheme();
 
 function Home(props) {
+    const { homeRef } = useReference();
     return (
             <Card
+                ref={homeRef}
                 component="main"
                 sx={{
                     backgroundColor: '#1565c0',
                     flexGrow: 1,
-                    minHeight: '80vh',
+                    minHeight: '88vh',
                     overflow: 'auto',
+                    mt: 4
                 }}
             >
                 <Container maxWidth="xl" sx={{ mt:4, mb: 4, display: 'flex', flexDirection: 'row'}}>
