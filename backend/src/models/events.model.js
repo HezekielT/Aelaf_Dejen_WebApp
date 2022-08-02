@@ -2,6 +2,10 @@ const express = require('express')
 const mongoose = require('mongoose')
 
 const eventSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: [true, "Please provide title"]
