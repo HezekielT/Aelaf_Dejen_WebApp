@@ -33,36 +33,36 @@ function Events(props) {
             ? theme.palette.grey[100]
             : theme.palette.grey[900],
             flexGrow: 1,
-            minHeight: '83.6vh',
+            minHeight: '40.6vh',
             overflow: 'auto'
         }}
     >
-        <Container maxWidth="lg" sx={{ mt:4, mb: 4, }}>
+        {/* <Container maxWidth="xl" sx={{ mt:4, mb: 4, }}> */}
             <Grid container spacing={2}>
                 <Grid item xs={12} md={12} lg={12} sx={{ mt: 4}}>
                     <Paper
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            mt:-1, mb: 4,
+                            mt:3, mb: 4,
                         }}
                     >
                         <Typography component="h1" variant="h5" sx={{ mt: 4,mb: 4,textAlign: 'center'}}>
                             Upcoming Conventions
                         </Typography>  
                     </Paper>
-                    {/* <Grid container spacing={2}> */}
-                        <Grid item xs={12} md={12} lg={12} sx={{  justifyContent: 'center' }}>
+                    <Container>
+                        <Grid item xs={12} md={12} lg={12} sx={{ my: 3, justifyContent: 'center' }}>
                             {/* <Participant_Regist /> */}
-                            <Grid>
+                            {/* <Grid> */}
                                 <Card
                                     sx={{
                                         // display: 'flex',
                                         // mt: 4, mb: 4,
                                         // maxWidth: 345
-                                        mx: 5
+                                        // mx: 3
                                     }}
-                                >
+                                    >
                                     {/* <CardMedia 
                                         component="img"
                                     /> */}
@@ -71,7 +71,7 @@ function Events(props) {
                                             Annual Meeting starting from Aug. 3
                                         </Typography>
                                     </CardContent>
-                                    <CardActions disableSpacing>
+                                    <CardActions>
                                         <Typography component="h1" variant="h5">
                                             Register
                                         </Typography>
@@ -79,7 +79,7 @@ function Events(props) {
                                             expand={expanded}
                                             onClick={handleExpandClick}
                                             aria-expanded="Register"
-                                        >
+                                            >
                                             <ExpandMoreIcon />
                                         </ExpandMore>
                                     </CardActions>
@@ -89,51 +89,13 @@ function Events(props) {
                                         </CardContent>
                                     </Collapse>
                                 </Card>
-                            </Grid>
+                            {/* </Grid> */}
                         </Grid>
-                        <Grid item xs={12} md={12} lg={12} sx={{ mt: 3, justifyContent: 'center' }}>
-                            {/* <Participant_Regist /> */}
-                            <Grid>
-                                <Card
-                                    sx={{
-                                        // display: 'flex',
-                                        // mt: 4, mb: 4,
-                                        // maxWidth: 345
-                                        mx: 5
-                                    }}
-                                >
-                                    {/* <CardMedia 
-                                        component="img"
-                                    /> */}
-                                    <CardContent sx={{ flex:1 }}>
-                                        <Typography component="h1" variant="h5">
-                                            Annual Meeting starting from Aug. 3
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions disableSpacing>
-                                        <Typography component="h1" variant="h5">
-                                            Register
-                                        </Typography>
-                                        <ExpandMore
-                                            expand={expanded}
-                                            onClick={handleExpandClick}
-                                            aria-expanded="Register"
-                                        >
-                                            <ExpandMoreIcon />
-                                        </ExpandMore>
-                                    </CardActions>
-                                    <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                        <CardContent>
-                                            <Participant_Regist />
-                                        </CardContent>
-                                    </Collapse>
-                                </Card>
-                            </Grid>
-                        </Grid>
+                                            </Container>
                     {/* </Grid> */}
                 </Grid>
             </Grid>
-        </Container>
+        {/* </Container> */}
     </Box>
     );
 }
