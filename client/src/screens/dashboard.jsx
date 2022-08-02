@@ -15,7 +15,7 @@ function Dashboard(props) {
             <Home />
             <Events />
             <ContactUs />
-            
+
         </ThemeProvider>
     );
 }

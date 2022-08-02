@@ -11,7 +11,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 const navigate = useNavigate;
 function Copyright() {
     return (
-        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{mx: '25%' }}>
+        <Grid item xs={12} sm={12} md={12} lg={12} xl={12} sx={{pl: 3,display: 'flex', justifyContent: 'center' }}>
             <Typography variant='body2' color='text.secondary'>
                 {'Copyright ©  '}
                 <Link color="inherit" onClick={() => navigate('/')}>
@@ -29,11 +29,13 @@ function Addresss() {
     return (
         // <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
             <>
-                <Typography> &gt; Address</Typography>
-                <Typography sx={{ pl: 2}}>
+                <Typography sx={{ pl:2 }}> &gt; Address</Typography>
+                <Typography sx={{}}>
             Addis Ababa, Ethiopia
             </Typography>
-            <Typography sx={{ pl: 2}}>
+            <Typography sx={{ 
+                // pl: 2
+            }}>
             +251-(0)-9
             </Typography>
             </>
@@ -46,7 +48,9 @@ function Usefullinks() {
     return (
         // <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
         <>
-            <Typography sx={{ pl: 9, color: '#64748B'}}>
+            <Typography sx={{ 
+                pl: 2, 
+                color: '#64748B'}}>
             &gt; Useful links
             </Typography>
             <Box 
@@ -54,8 +58,8 @@ function Usefullinks() {
                 sx={{ 
                     display: 'flex',
                     flexDirection: 'column',
-                    pt: 2,
-                    px: 10,
+                    // pt: 2,
+                    // px: 10,
                     cursor: 'pointer'
                 }}
                 >
@@ -143,7 +147,7 @@ function Footer(props) {
         >
             <Container maxWidth="xl">
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={12} sx={{ p: 3,display: 'flex', justifyContent: 'center' }}>
+                    <Grid item xs={12} md={12} sx={{ pl: 3,display: 'flex', justifyContent: 'center' }}>
                         <Typography variant='body1'>
                             AELAPH-DEJEN PLC
                         </Typography>
