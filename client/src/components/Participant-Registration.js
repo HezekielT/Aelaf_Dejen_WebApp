@@ -1,89 +1,78 @@
-import { Typography, Grid, TextField, Box, Button, Container, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Typography, Grid, Paper, TextField, Box, Button, Container, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import React from 'react';
 
 function Participant_Regist(props) {
     return (
-        <Container maxWidth="sm" sx={{
-            backgroundColor: "#fff",
-            flexGrow: 1,
-            overflow: 'auto',
-            mb: 4,
-            p: 4
-        }}>
-            <Typography paragraph component="h4" variant="h6">Please Fill in the following information</Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
-                    <TextField
+        // <Container>
+            <Grid container>
+            <Grid item xs={12} lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Typography 
+                    variant='h6'
+                    // noWrap
+                    component="div"
+                    sx={{color: '#1565c0', px: 3}}
+                >
+                    Please Fill in the following information
+                </Typography>
+
+            </Grid>
+                <Grid item xs={12} lg={12} sx={{ p: 1,display: 'flex', justifyContent: 'center' }}>
+
+                    <Paper sx={{width: '60vh',}}>
+                        {/* <Card > */}
+                        <Box maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 6,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                        <TextField
                         required
                         // id="fname"
                         // name="fname"
                         label="First Name"
                         fullWidth
                         autoComplete="first name"
-                        variant="standard"
+                        variant="outlined"
+                        sx={{py: 1}}
                         // value={props.form.fname}
                         // onChange={(e) => props.onChange([props.form.fname = e.target.value])}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
+                        />
+                            <TextField
                         required
                         // id="lname"
                         // name="lname"
                         label="Last Name"
                         fullWidth
                         autoComplete="last name"
-                        variant="standard"
+                        variant="outlined"
+                        sx={{py: 1}}
                         // value={props.form.lname}
                         // onChange={(e) => props.onChange([props.form.lname = e.target.value])}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
+                            <TextField
                         required
                         // id="licenceNo"
                         // name="licenceNo"
                         label="Email"
                         fullWidth
                         autoComplete="email"
-                        variant="standard"
+                        variant="outlined"
+                        sx={{py: 1}}
                         // value={props.form.driver_licence_no}
                         // onChange={(e) => props.onChange([props.form.driver_licence_no = e.target.value])}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
+                        />
+                        <TextField
                         required
                         // id="lname"
                         // name="lname"
                         label="Phone Number"
                         fullWidth
                         autoComplete="phoneno"
-                        variant="standard"
+                        variant="outlined"
+                        sx={{py: 1}}
                         // value={props.form.lname}
                         // onChange={(e) => props.onChange([props.form.lname = e.target.value])}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <Typography>
+                        />
+                        <Typography sx={{py: 2}}>
                         Since we have prepared a transport service, please select the closest location to you from the following
                     </Typography>
-                </Grid>
-                {/* <Grid item xs={12} sm={5}> */}
-                {/* <TextField
-                        required
-                        // id="licenceNo"
-                        // name="licenceNo"
-                        label="Address"
-                        fullWidth
-                        autoComplete="address"
-                        variant="standard"
-                        // value={props.form.driver_licence_no}
-                        // onChange={(e) => props.onChange([props.form.driver_licence_no = e.target.value])}
-                    />
-                </Grid> */}
-                <Grid item xs={12} sm={12} sx={{pb: 4 }}>
-                    <Box sx={{ px:10, display: 'flex', justifyContent: 'center'}}>
+                    <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
                         
                     <FormControl fullWidth>
                         <InputLabel id="select-label">Locations</InputLabel>
@@ -96,20 +85,20 @@ function Participant_Regist(props) {
                             <MenuItem>Item 2</MenuItem>
                         </Select>
                     </FormControl>
-                            </Box>
-                </Grid>
-                <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    </Box>
                     <Button
                         type="submit"
                         // onClick={handleRequest}
                         variant="contained"
-                        sx={{ mt: -4, mb: 4, }}
-                    >
+                        sx={{ mt: 4, mb: 4, }}
+                        >
                         Register
-                    </Button>
+                    </Button></Box>
+                        {/* </Card> */}
+                    </Paper>
                 </Grid>
             </Grid>
-        </Container>
+        // </Container>
     );
 }
 
