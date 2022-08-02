@@ -6,6 +6,9 @@ const eventSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please provide title"]
     },
+    image: {
+        type: String,
+    },
     description: {
         type: String,
         required: [true, "Please provide a description about the event"]
