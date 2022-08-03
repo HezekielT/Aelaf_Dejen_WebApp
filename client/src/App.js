@@ -15,14 +15,14 @@ import { RefProvider } from './context/refProvider';
 function App() {
   return (
     <RefProvider>
-      {/* <Navigator /> */}
+      <Navigator />
       {/* <NavBar /> */}
       {/* <Admin_Dashboard /> */}
       {/* <Manage_Contents /> */}
       {/* <Dashboard /> */}
       {/* <Manage_Account /> */}
       {/* <Footer /> */}
-      <Admin_Dashboard />
+      {/* <Admin_Dashboard /> */}
     </RefProvider>
   );
 }

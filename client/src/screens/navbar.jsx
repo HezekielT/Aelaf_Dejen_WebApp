@@ -99,11 +99,15 @@ function NavBar() {
                                         display: { xs: 'block', md: 'none' },
                                     }}
                                 > 
-                                    {pages.map((page) => (
-                                        <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                            <Link sx={{textDecoration:"none"}}>{page}</Link>
+                                        <MenuItem key={0} onClick={handleCloseNavMenu}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(homeRef)}>Home</Link>
                                         </MenuItem>
-                                    ))}
+                                        <MenuItem key={1} onClick={handleCloseNavMenu}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                        </MenuItem>
+                                        <MenuItem key={2} onClick={handleCloseNavMenu}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
+                                        </MenuItem>
                              </Menu>
                             </Box>
                             <Typography
