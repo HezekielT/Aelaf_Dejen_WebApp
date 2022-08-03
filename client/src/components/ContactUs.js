@@ -22,7 +22,6 @@ function ContactUs(props) {
                 <Grid item xs={12} lg={12} sx={{ p: 4,display: 'flex', justifyContent: 'center' }}>
 
                     <Paper sx={{width: '60vh'}}>
-                        {/* <Card > */}
                         <Box maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 4,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                             <Typography sx={{p: 2}}>
                                 Your Name
@@ -44,7 +43,6 @@ function ContactUs(props) {
                                 />
                             <Button variant='contained' sx={{m: 2}}>Send Message</Button>
                         </Box>
-                        {/* </Card> */}
                     </Paper>
                 </Grid>
             </Grid>
