@@ -20,9 +20,9 @@ function AdminDashboard(props) {
                     overflow: 'auto'
                 }}
             >
-                {/* <Login /> */}
+                <Login />
                 {/* <Admin_Options /> */}
-                <Manage_Contents />
+                {/* <Manage_Contents /> */}
             </Box>
         </ThemeProvider>
     );
