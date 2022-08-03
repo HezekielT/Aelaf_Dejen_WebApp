@@ -1,7 +1,6 @@
 import { Box, Button, Card, Grid, Paper, TextField, Typography } from '@mui/material';
 import { Container } from '@mui/system';
 import React from 'react';
-import { TextareaAutosize } from '@mui/material';
 import { useReference } from '../context/refProvider';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
