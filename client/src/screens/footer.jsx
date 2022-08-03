@@ -31,12 +31,12 @@ function Addresss() {
             <>
                 <Typography sx={{ pl:2 }}> &gt; Address</Typography>
                 <Typography sx={{}}>
-            Addis Ababa, Ethiopia
+            U.S
             </Typography>
             <Typography sx={{ 
                 // pl: 2
             }}>
-            +251-(0)-9
+            +1 (469) 432-2435
             </Typography>
             </>
             
@@ -136,6 +136,7 @@ function Footer(props) {
             component="footer"
             sx={{
                 display: 'flex',
+                // position: "relative",
                 py: 3,
                 px: 2,
                 mt: 'auto',
