@@ -29,7 +29,7 @@ function ContactUs(props) {
             name: '',
             email: '',
             subject: '',
-            message: [],
+            message: '',
           },
           validationSchema: validationSchema,
           onSubmit: (values) => {
