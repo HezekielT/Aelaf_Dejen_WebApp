@@ -25,7 +25,7 @@ function Dashboard(props) {
                     ? theme.palette.grey[100]
                     : theme.palette.grey[900],
                     flexGrow: 1,
-                    minHeight: '90.6vh',
+                    minHeight: 'auto',
                     overflow: 'auto',
                 }}
             >

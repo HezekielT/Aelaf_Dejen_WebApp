@@ -3,7 +3,6 @@ import { Typography, Grid, Paper, TextField, Box, Button,
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import ConfirmRegistration from './Confirm_Registration';
 
 const validationSchema = yup.object({
     first_name: yup
