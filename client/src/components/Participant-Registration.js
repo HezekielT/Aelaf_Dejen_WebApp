@@ -3,6 +3,7 @@ import { Typography, Grid, Paper, TextField, Box, Button,
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import ConfirmRegistration from './Confirm_Registration';
 
 const validationSchema = yup.object({
     first_name: yup
@@ -24,7 +25,7 @@ const validationSchema = yup.object({
 });
 
 function Participant_Regist(props) {
-
+    
     const formik = useFormik({
         initialValues: {
             first_name: '',
@@ -35,8 +36,8 @@ function Participant_Regist(props) {
           },
           validationSchema: validationSchema,
           onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
-          },
+            alert(JSON.stringify("Thank You for Registering!"))
+          }
     });
 
     return (
@@ -122,14 +123,14 @@ function Participant_Regist(props) {
                                 <FormControl fullWidth>
                                     <InputLabel id="select-label">Locations</InputLabel>
                                     <Select
-                                    id='address'
-                                    name="address"
-                                    labelId="select-label"
-                                    label="address"
-                                    value={formik.values.address}
-                                    onChange={formik.handleChange}
-                                    error={formik.touched.address && Boolean(formik.errors.address)}
-                                    helperText={formik.touched.address && formik.errors.address}
+                                        id='address'
+                                        name="address"
+                                        labelId="select-label"
+                                        label="address"
+                                        value={formik.values.address}
+                                        onChange={formik.handleChange}
+                                        error={formik.touched.address && Boolean(formik.errors.address)}
+                                        // helperText={formik.touched.address && formik.errors.address}
                                     >
                                         <MenuItem value="Item">Item</MenuItem>
                                         <MenuItem>Item 2</MenuItem>
@@ -138,7 +139,6 @@ function Participant_Regist(props) {
                             </Box>
                             <Button
                                 type="submit"
-                                // onClick={handleRequest}
                                 variant="contained"
                                 sx={{ mt: 4, mb: 4, }}
                                 >
