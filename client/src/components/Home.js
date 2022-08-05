@@ -16,7 +16,7 @@ function Home(props) {
             sx={{
                 backgroundColor: '#1565c0',
                 flexGrow: 1,
-                minHeight: '80vh',
+                minHeight: '70vh',
                 overflow: 'auto',
                 mt: 4
             }}
