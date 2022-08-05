@@ -3,6 +3,7 @@ import { Box, Paper, TextField,
     Button, Grid, Link,
     Typography, Container } from '@mui/material';
   
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -19,6 +20,7 @@ const validationSchema = yup.object({
 
 function Login(props) {
   
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -26,7 +28,8 @@ function Login(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      navigate('/dashboard')
     },
   });
     return (
