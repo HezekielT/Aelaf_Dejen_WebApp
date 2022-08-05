@@ -1,4 +1,4 @@
-import { Typography, Grid, TextField, Box, Button, Container, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Typography, Grid, TextField, Paper, Box, Button } from '@mui/material';
 import React from 'react';
   
 import { useFormik } from 'formik';
@@ -44,16 +44,24 @@ function Transport_Registration(props) {
     });
 
     return (
-        <Container maxWidth="sm" sx={{
-            backgroundColor: "#fff",
-            flexGrow: 1,
-            overflow: 'auto',
-            mb: 4,
-            p: 4
-        }}>
-            <Typography>Please Fill in the following information</Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+
+        <Grid container>
+                <Grid item xs={12} lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Typography 
+                        variant='h6'
+                        // noWrap
+                        component="div"
+                        sx={{color: '#1565c0', px: 3}}
+                    >
+                        Please Fill in the following information
+                    </Typography>
+
+                </Grid>
+                <Grid item xs={12} lg={12} sx={{ p: 1,display: 'flex', justifyContent: 'center' }}>
+
+                    <Paper sx={{width: '60vh',}}>
+                        {/* <Card > */}
+                        <Box component="form" onSubmit={formik.handleSubmit} maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 6,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                     <TextField
                         required
                         id="first_name"
@@ -62,13 +70,12 @@ function Transport_Registration(props) {
                         fullWidth
                         autoComplete="first name"
                         variant="outlined"
+                        sx={{py: 1}}
                         value={formik.values.first_name}
                         onChange={formik.handleChange}
                         error={formik.touched.first_name && Boolean(formik.errors.first_name)}
                         helperText={formik.touched.first_name && formik.errors.first_name}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="last_name"
@@ -77,13 +84,12 @@ function Transport_Registration(props) {
                         fullWidth
                         autoComplete="last name"
                         variant="outlined"
+                        sx={{py: 1}}
                         value={formik.values.last_name}
                         onChange={formik.handleChange}
                         error={formik.touched.last_name && Boolean(formik.errors.last_name)}
                         helperText={formik.touched.last_name && formik.errors.last_name}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <TextField
                         id="email"
                         name="email"
@@ -98,8 +104,6 @@ function Transport_Registration(props) {
                         error={formik.touched.email && Boolean(formik.errors.email)}
                         helperText={formik.touched.email && formik.errors.email}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <TextField
                         id="phoneno"
                         name="phoneno"
@@ -114,8 +118,6 @@ function Transport_Registration(props) {
                         error={formik.touched.phoneno && Boolean(formik.errors.phoneno)}
                         helperText={formik.touched.phoneno && formik.errors.phoneno}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="plateno"
@@ -124,13 +126,12 @@ function Transport_Registration(props) {
                         fullWidth
                         autoComplete="plateno"
                         variant="outlined"
+                        sx={{py: 1}}
                         value={formik.values.plateno}
                         onChange={formik.handleChange}
                         error={formik.touched.plateno && Boolean(formik.errors.plateno)}
                         helperText={formik.touched.plateno && formik.errors.plateno}
                     />
-                </Grid>
-                <Grid item xs={12} sm={6}>
                     <TextField
                         required
                         id="location"
@@ -139,23 +140,23 @@ function Transport_Registration(props) {
                         fullWidth
                         autoComplete="startinglocation"
                         variant="outlined"
+                        sx={{py: 1}}
                         value={formik.values.location}
                         onChange={formik.handleChange}
                         error={formik.touched.location && Boolean(formik.errors.location)}
                         helperText={formik.touched.location && formik.errors.location}
                     />
-                </Grid>
-                <Grid item xs={12} sm={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button
                         type="submit"
                         variant="contained"
-                        sx={{ mt: -4, mb: 4, }}
+                        sx={{ mt: 4, mb: 4, }}
                     >
                         Register
                     </Button>
-                </Grid>
-            </Grid>
-        </Container>
+                </Box>
+            </Paper>
+        </Grid>
+    </Grid>
     );
 }
 
