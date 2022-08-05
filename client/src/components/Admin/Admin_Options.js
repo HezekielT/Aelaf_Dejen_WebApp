@@ -1,7 +1,10 @@
 import { Button, Container, Paper } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Admin_Options(props) {
+    const navigate = useNavigate();
+
     return (
         <Container maxWidth="lg" sx={{pt: '8%'}}>
             <Paper
@@ -13,7 +16,7 @@ function Admin_Options(props) {
                 p: 2
             }}
             >
-                <Button variant="outlined">
+                <Button variant="outlined" onClick={() => navigate('/dashboard/contents')}>
                     Manage website contents
                 </Button>
             </Paper>
@@ -26,7 +29,7 @@ function Admin_Options(props) {
                     p: 2
                 }}
             >
-                <Button variant="outlined">
+                <Button variant="outlined" onClick={() => navigate('/dashboard/transport')}>
                     Register Drivers
                 </Button>
             </Paper>
@@ -40,7 +43,7 @@ function Admin_Options(props) {
                     p: 2
                 }}
             >
-                <Button variant="outlined">
+                <Button variant="outlined" onClick={() => navigate('/dashboard/accounts')}>
                     Manage Account
                 </Button>
             </Paper>
