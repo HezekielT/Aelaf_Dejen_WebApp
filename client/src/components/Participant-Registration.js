@@ -3,6 +3,7 @@ import { Typography, Grid, Paper, TextField, Box, Button,
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+const axios = require('axios');
 
 const validationSchema = yup.object({
     first_name: yup
@@ -34,8 +35,30 @@ function Participant_Regist(props) {
             address: '',
           },
           validationSchema: validationSchema,
-          onSubmit: (values) => {
-            alert(JSON.stringify("Thank You for Registering!"))
+          onSubmit: async (values) => {
+            e.preventDefault();
+            const config = {
+                header: {
+                    "Content-Type": "application/json"
+                },
+            };
+
+            await axios.post(
+                "http://localhost:5000/participate",
+                {
+                    id: id,
+                    first_name: values.first_name,
+                    last_name: values.last_name,
+                    email: values.email,
+                    phoneno: values.phoneno,
+                    address: values.address,
+                },
+                config
+            ).then(function (){
+                alert(JSON.stringify("Thank You for Registering!"))
+            }).catch(function (error){
+                console.log(error);
+            })
           }
     });
 
