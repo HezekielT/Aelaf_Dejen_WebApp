@@ -13,7 +13,7 @@ function Navigator(props) {
 
     return (
         <Router>
-            {/* <NavBar /> */}
+            <NavBar />
             <Routes>
                 <Route exact path="/" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />

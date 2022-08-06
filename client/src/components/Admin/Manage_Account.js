@@ -1,9 +1,9 @@
 import { Grid, Tabs, Tab, Card, Container, 
     Paper, Typography, Box, TextField, Button,
-    Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+    Select, MenuItem, FormControl, InputLabel, TabScrollButton } from '@mui/material';
 import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -11,7 +11,7 @@ function TabPanel(props) {
     const { children, value, index, ...other } = props;
     
     return(
-        <Paper sx={{  backgroundColor: '#f5f5f5', height: '85vh' }}
+        <Paper sx={{  backgroundColor: '#f5f5f5', minHeight: '85vh' }}
         role="tabpanel"
         hidden={value !== index}
         id={`vertical-tabpanel-${index}`}
@@ -198,6 +198,7 @@ function AddAdmin() {
                     </Select>
                 </FormControl>
             </Box>
+                <Typography paragraph sx={{ m: 2,backgroundColor: '#f5f5f5'}}>Note: The only difference between admin and super admin is an admin can't add a new admin while super admin can</Typography>
             <Button
                 type="submit"
                 variant="contained"
@@ -206,7 +207,6 @@ function AddAdmin() {
                 Add
             </Button>
             </Box>
-            <Typography paragraph sx={{ backgroundColor: '#f5f5f5'}}>Note: The only difference between admin and super admin is an admin can't add a new admin while super admin can</Typography>
             </Paper>
         </Grid>
     </Grid>
@@ -305,6 +305,7 @@ function Manage_Account(props) {
         setValue(newValue);
     }
 
+    
     return (
         <Container maxWidth="lg"
          sx={{
@@ -322,7 +323,7 @@ function Manage_Account(props) {
                     theme.palette.mode === 'light'
                     ? theme.palette.grey[100]
                     : theme.palette.grey[900],
-                            height: '77vh',
+                            minHeight: '85vh',
                             mt: 2,
                             mb: 4, 
                             pl: 2
@@ -354,7 +355,8 @@ function Manage_Account(props) {
                             // mt: 2,
                             // mb: 4, 
                             py: 2,
-                            px: 6
+                            px: 6,
+                            width: '100%'
                         }}
                     >
                         <Tabs
@@ -364,16 +366,22 @@ function Manage_Account(props) {
                             scrollButtons="auto"
                             variant="scrollable"
                             // aria-label="Vertical Tabs"
-                            sx={{ borderRight: 1, }}
+                            // sx={{ borderRight: 1, }}
                         >
-                            <Tab label="Reset Password" {...tabProps(0)}/> 
-                            <Tab label="Add New Admin" {...tabProps(1)}/>
+                            
+
+                                <Tab label="Change Password" {...tabProps(0)}/> 
+                                {/* <TabScrollButton direction='right' onClick={() => }>
+                            </TabScrollButton>
+                            <TabScrollButton direction='left' >
+                            </TabScrollButton> */}
+                                <Tab label="Add New Admin" {...tabProps(1)}/>
                         </Tabs>
                     </Card>
                 </Grid>
                 <Grid item xs={12} md={12} lg={9}
                     sx={{
-                        height: '80vh',
+                        minHeight: '80vh',
                         mb: 4
                     }}
                 >
@@ -385,7 +393,7 @@ function Manage_Account(props) {
                             theme.palette.mode === 'light'
                             ? theme.palette.grey[100]
                             : theme.palette.grey[900],
-                            height: '77vh',
+                            minHeight: '77vh',
                             mt: 2,
                             mb: 4, 
                         }}
