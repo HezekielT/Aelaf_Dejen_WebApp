@@ -36,7 +36,7 @@ function Participant_Regist(props) {
           },
           validationSchema: validationSchema,
           onSubmit: async (values) => {
-            e.preventDefault();
+            // e.preventDefault();
             const config = {
                 header: {
                     "Content-Type": "application/json"
@@ -46,7 +46,7 @@ function Participant_Regist(props) {
             await axios.post(
                 "http://localhost:5000/participate",
                 {
-                    id: id,
+                    // id: id,
                     first_name: values.first_name,
                     last_name: values.last_name,
                     email: values.email,

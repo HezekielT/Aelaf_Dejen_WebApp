@@ -33,6 +33,7 @@ function ContactUs(props) {
           validationSchema: validationSchema,
           onSubmit: (values) => {
             alert(JSON.stringify(values, null, 2));
+            // we send an email to the admin
           },
     });
     return (

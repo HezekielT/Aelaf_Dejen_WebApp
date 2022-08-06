@@ -11,15 +11,15 @@ function TabPanel(props) {
     const { children, value, index, ...other } = props;
     
     return(
-        <Paper minWidth="sm" sx={{  backgroundColor: '#f5f5f5', height: '85vh' }}
+        <Paper sx={{  backgroundColor: '#f5f5f5', height: '85vh' }}
         role="tabpanel"
         hidden={value !== index}
         id={`vertical-tabpanel-${index}`}
         {...other}
         >
             {value === index && (
-                <Box sx={{ p: 3}}>
-                    <Typography>{children}</Typography>
+                    <Box sx={{ p: 3}}>
+                    {children}
                 </Box>
             )}
         </Paper>
@@ -242,7 +242,6 @@ function ChangePassword() {
         <Grid item xs={12} lg={12} sx={{ p: 1,display: 'flex', justifyContent: 'center' }}>
 
             <Paper sx={{width: '60vh',}}>
-                {/* <Card > */}
                 <Box component="form" onSubmit={formik.handleSubmit} maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 6,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <TextField
                   margin="normal"
@@ -294,7 +293,7 @@ function ChangePassword() {
                 Change Password
             </Button>
             </Box>
-            </Paper>
+            </Paper> 
         </Grid>
     </Grid>
     )
@@ -314,7 +313,7 @@ function Manage_Account(props) {
             }}
         >
             <Grid container spacing={2}>
-                <Grid item xs={12} md={3} sx={{ height: '86vh'}}>
+                <Grid item sx={{ height: '86vh', display: {xs: 'none', lg: 'flex'}}}>
                     <Card
                         sx={{
                             display: 'flex',
@@ -333,17 +332,49 @@ function Manage_Account(props) {
                             orientation='vertical'
                             value={value}
                             onChange={handleChange}
+                            scrollButtons="auto"
                             aria-label="Vertical Tabs"
-                            sx={{ mt: 33,borderRight: 1, borderColor: 'divider' }}
+                            sx={{ mt: 33,borderRight: 1, borderColor: 'divider', }}
                         >
                             <Tab label="Reset Password" {...tabProps(0)}/>
                             <Tab label="Add New Admin" {...tabProps(1)}/>
                         </Tabs>
                     </Card>
                 </Grid>
-                <Grid item xs={9} md={9} lg={9}
+                <Grid item xs={12} sx={{ display: {xs: 'flex', lg: 'none'}}}>
+                    <Card
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            backgroundColor: (theme) =>
+                    theme.palette.mode === 'light'
+                    ? theme.palette.grey[100]
+                    : theme.palette.grey[900],
+                            // height: '77vh',
+                            // mt: 2,
+                            // mb: 4, 
+                            py: 2,
+                            px: 6
+                        }}
+                    >
+                        <Tabs
+                            orientation='horizontal'
+                            value={value}
+                            onChange={handleChange}
+                            scrollButtons="auto"
+                            variant="scrollable"
+                            // aria-label="Vertical Tabs"
+                            sx={{ borderRight: 1, }}
+                        >
+                            <Tab label="Reset Password" {...tabProps(0)}/> 
+                            <Tab label="Add New Admin" {...tabProps(1)}/>
+                        </Tabs>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} md={12} lg={9}
                     sx={{
                         height: '80vh',
+                        mb: 4
                     }}
                 >
                     <Card
@@ -364,8 +395,6 @@ function Manage_Account(props) {
                         </TabPanel>
                         <TabPanel value={value} index={1}>
                             <AddAdmin />
-                        </TabPanel>
-                        <TabPanel value={value} index={2}>
                         </TabPanel>
                     </Card> 
                 </Grid>
