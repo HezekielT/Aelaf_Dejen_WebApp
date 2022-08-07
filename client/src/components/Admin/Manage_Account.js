@@ -335,7 +335,7 @@ function Manage_Account(props) {
                             onChange={handleChange}
                             scrollButtons="auto"
                             aria-label="Vertical Tabs"
-                            sx={{ mt: 33,borderRight: 1, borderColor: 'divider', }}
+                            sx={{px: 4, mt: 33,borderRight: 1, borderColor: 'divider', }}
                         >
                             <Tab label="Reset Password" {...tabProps(0)}/>
                             <Tab label="Add New Admin" {...tabProps(1)}/>
