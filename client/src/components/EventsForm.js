@@ -34,30 +34,31 @@ function EventsForm(props) {
           },
           validationSchema: conventionValidationSchema,
           onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+            // alert(JSON.stringify(values, null, 2));
             // e.preventDefault();
-            // const config = {
-            //     header: {
-            //         "Content-Type": "application/json"
-            //     },
-            // };
-            // const putvalues = async () => {
-            //     await axios.post(
-            //         "http://localhost:5000/addEvent",
-            //         {
-            //             id: eid,
-            //             title: values.title,
-            //             description: values.description,
-            //             dateTime: values.dateTime,
-            //             venue: values.venue,
-            //         },
-            //         config
-            //     ).then(function (){
-            //         alert(JSON.stringify("Successfully Added!"))
-            //     }).catch(function (error){
-            //         alert(error)
-            //     })
-            // }
+            const config = {
+                header: {
+                    "Content-Type": "application/json"
+                },
+            };
+            const putvalues = async () => {
+                await axios.post(
+                    "http://localhost:5000/addEvent",
+                    {
+                        id: eid,
+                        title: values.title,
+                        description: values.description,
+                        dateTime: values.dateTime,
+                        venue: values.venue,
+                    },
+                    config
+                ).then(function (){
+                    alert(JSON.stringify("Successfully Added!"))
+                }).catch(function (error){
+                    alert(error)
+                })
+            }
+            putvalues()
 
           }
     });
