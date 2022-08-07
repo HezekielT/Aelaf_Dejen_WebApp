@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose')
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
 const userSchema = new mongoose.Schema(
     {
@@ -33,9 +35,22 @@ const participantSchema = new mongoose.Schema({
         type: String,
         required: [true]
     },
+    event_id: {
+        type: String,
+        required: [true],
+    },
     user: userSchema,
+    event: {
+        type: String,
+        required: [true]
+    },
     location: {
         type: String,
+        required: [true],
+    },
+    event_name: {
+        type: String,
+        required: [true],
     }
 })
 
