@@ -65,7 +65,7 @@ const driverSchema = new mongoose.Schema({
         required: [true, "Please provide plate number"],
     },
     convention: {
-        tyoe: String,
+        type: String,
         required: [true, "please select assigned convention"]
     },
     initialLocation: {
