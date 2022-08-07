@@ -1,15 +1,16 @@
-const { Router } = require("express")
 import { Participant, Driver, Admin } from '../models/user.model';
+const { Router } = require("express");
 
 
 const router = Router();
 // Routes related to convention participants
 
 router.route('/participate').post(async function(req, res) {
-    const { id, first_name, last_name, email, phoneno, address } = req.body;
+    const { id, event_id, first_name, last_name, email, phoneno, address } = req.body;
     try {
         await Participant.create({
             id,
+            event_id,
             user: {
                 first_name,
                 last_name,
@@ -24,6 +25,15 @@ router.route('/participate').post(async function(req, res) {
         res.status(400).json({ message: err.message });
     }
 });
+
+router.route('/getParticipants').get(async function(req, res) {
+    try{
+        const participants = await Participant.find();
+        res.status(201).send(participants);
+    } catch(err) {
+        res.status(400).json({ message: err.message });
+    }
+})
 
 // Routes related to driver
 router.route('registerDriver').post(async function(req, res){
@@ -49,8 +59,8 @@ router.route('registerDriver').post(async function(req, res){
 
 router.route('/getDrivers').get(async function(req, res) {
     try{
-        const events = await Driver.find();
-        res.status(201).send(events);
+        const drivers = await Driver.find();
+        res.status(201).send(drivers);
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
@@ -109,8 +119,8 @@ router.route('registerAdmin').post(async function(req, res){
                 email,
                 phoneno,
             },
-            plateno,
-            location,
+            password,
+            privilege,
         });
         console.log("Successfully registered driver");
         res.status(201).send();
@@ -137,7 +147,7 @@ router.route('registerAdmin').post(async function(req, res){
 //         res.status(400).json({ message: err.message });
 //     }
 
-router.route('/getDrivers').get(async function(req, res) {
+router.route('/getAdmins').get(async function(req, res) {
     try{
         const events = await Admin.find();
         res.status(201).send(events);
@@ -146,7 +156,7 @@ router.route('/getDrivers').get(async function(req, res) {
     }
 })
 
-router.route('/updateDriver/:id').post(function (req, response) {
+router.route('/updateAdmin/:id').post(function (req, response) {
     const { first_name, last_name, email, phoneno, password, privilege } = req.body;
     // try {
     //     await Admin.create({
