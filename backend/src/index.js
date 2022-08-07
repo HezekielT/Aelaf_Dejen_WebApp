@@ -9,9 +9,15 @@ const app = express();
 
 const DATABASE_CONNECTION = process.env.DATABASE_URL;
 
-mongoose.connect(DATABASE_CONNECTION, {
-    UseNewUrlParser: true,
-});
+const connectDB = async () => {
+
+    await mongoose.connect(DATABASE_CONNECTION, {
+        UseNewUrlParser: true,
+    });
+    console.log("Connected to Database")
+}
+
+connectDB();
 
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
