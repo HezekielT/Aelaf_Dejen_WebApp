@@ -25,6 +25,7 @@ router.route('/getEvents').get(async function(req, res) {
         const events = await Event.find();
         res.status(201).send(events);
     } catch(err) {
+        console.log("Here is ")
         res.status(400).json({ message: err.message });
     }
 })
