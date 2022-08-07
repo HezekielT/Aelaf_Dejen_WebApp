@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Card, CardActions, CardContent,
-    IconButton, Typography, Collapse, CardMedia } from '@mui/material'
+    IconButton, Typography, Collapse, CardMedia, Container, alpha } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Participant_Regist from './Participant-Registration';
 import View_Participants from './View_Participants';
+import LogoutIcon from '@mui/icons-material/Logout';
 // we will pass the contents of the event as
 // props to this function and will call it from
 // dashboard screen
@@ -93,6 +94,17 @@ function Events(props) {
                             <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
                                 {convention.title}
                             </Typography>
+                            <Container 
+                             sx={{transition: ".5s ease", opacity: 0, 
+                                position: "absolue", top: "50%", left: "50%",
+                                transform: "translate(-50%, -50%)", textAlign: 'center',
+                                "&:hover": {
+                                    opacity: 0.3
+                                }
+                            }}
+                            >
+                                <LogoutIcon sx={{ "&:hover": {opacity: 1}}}/>
+                            </Container>
                             <Typography paragraph>{convention.description}</Typography>
                             <Typography paragraph>Date and Time: {convention.dateTime}</Typography>
                             <Typography paragraph>Place: {convention.location}</Typography>
