@@ -1,5 +1,5 @@
 const { Router } = require('express');
-import { Event } from '../models/events.model';
+const Event = require('../models/events.model');
 
 const router = Router();
 
@@ -29,7 +29,7 @@ router.route('/getEvents').get(async function(req, res) {
     }
 })
 
-router.route('/updateEvent/:id').post(function (req, response) {
+router.route('/updateEvent/:id').post(async function (req, response) {
     let id = req.params.id;
     let newvalues = {
         $set: {
@@ -52,7 +52,7 @@ router.route('/updateEvent/:id').post(function (req, response) {
     }
 });
 
-router.route("/:id").delete((req, response) => {
+router.route("/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
@@ -65,3 +65,5 @@ router.route("/:id").delete((req, response) => {
         res.status(400).json({ message: err.message });
     }
 })
+
+module.exports = router;

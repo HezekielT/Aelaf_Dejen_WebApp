@@ -1,4 +1,6 @@
-import { Participant, Driver, Admin } from '../models/user.model';
+const Participant = require('../models/user.model');
+const Driver = require('../models/user.model')
+const Admin = require('../models/user.model')
 const { Router } = require("express");
 
 
@@ -66,7 +68,7 @@ router.route('/getDrivers').get(async function(req, res) {
     }
 })
 
-router.route('/updateDriver/:id').post(function (req, response) {
+router.route('/updateDriver/:id').post(async function (req, response) {
     let id = req.params.id;
     let newvalues = {
         $set: {
@@ -92,7 +94,7 @@ router.route('/updateDriver/:id').post(function (req, response) {
     }
 });
 
-router.route("/:id").delete((req, response) => {
+router.route("/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
@@ -156,7 +158,7 @@ router.route('/getAdmins').get(async function(req, res) {
     }
 })
 
-router.route('/updateAdmin/:id').post(function (req, response) {
+router.route('/updateAdmin/:id').post(async function (req, response) {
     const { first_name, last_name, email, phoneno, password, privilege } = req.body;
     // try {
     //     await Admin.create({
@@ -206,7 +208,7 @@ router.route('/updateAdmin/:id').post(function (req, response) {
     }
 });
 
-router.route("/:id").delete((req, response) => {
+router.route("/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
