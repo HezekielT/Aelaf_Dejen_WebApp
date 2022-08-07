@@ -16,9 +16,9 @@ function Home(props) {
             sx={{
                 backgroundColor: '#1565c0',
                 flexGrow: 1,
-                minHeight: '70vh',
+                minHeight: '80vh',
                 overflow: 'auto',
-                mt: 4
+                // mt: 4
             }}
         >
             <Container maxWidth="xl" sx={{ mt:4, mb: 4, display: 'flex', flexDirection: 'row'}}>
