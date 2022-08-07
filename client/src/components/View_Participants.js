@@ -1,6 +1,14 @@
 import React from 'react';
+import { TableBody, Table, TableCell, 
+  TableHead, TableRow, Typography, Paper } from '@mui/material';
 
-function View_Participants(props) {
+function GenerateTable() {
+
+}
+
+ function View_Participants(props) {
+  // const list = props.list;
+  
   return (
     <div>
       Hello
