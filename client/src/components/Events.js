@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Card, CardActions, CardContent,
-    IconButton, Typography, Collapse, TextField } from '@mui/material'
+    IconButton, Typography, Collapse, CardMedia } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Participant_Regist from './Participant-Registration';
 import View_Participants from './View_Participants';
@@ -20,39 +20,60 @@ const ExpandMore = styled((props) => {
         duration: theme.transitions.duration.shortest,
     }),
 }));
+
+function RenderComponent(props) {
+    if(props.val !== true){
+        return <Participant_Regist id={props.convention.id} event_name={props.convention.title}/>
+    } else {
+        return <View_Participants id={props.convention.id} event_name={props.convention.title}/>
+    }
+}
+
+function RenderPoster(props) {
+    if(props.image !== null){
+        return (
+            <CardMedia
+                component="img"
+                height="140"
+                image={props.convention.image}
+                alt="green iguana"
+            />
+        )
+    }
+}
 function Events(props) {
     const val= props.admin
     const [expanded, setExpanded] = React.useState(false);
     const [conventions, setConventions] = useState('');
-    const [admin, setAdmin] = useState(null)
     const [text, setText] = useState('')
+    
     const config = {
         header: {
             "Content-Type": "application/json",
         },
     };
     // get a list of conventions from our database
-    useEffect(async () => {
-        await axios.post(
-            "http://localhost:5000/getEvents",
-            config
-        )
-        .then(function (response){
-            setConventions(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
+    useEffect(() => {
+        const fetch = async () => {
+            await axios.post(
+                "http://localhost:5000/getEvents",
+                config
+            ).then(function (response){
+                setConventions(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+        }
+        fetch()
         
     }, [])
 
     useEffect(() => {
         if(val !== true) {
             setText("REGISTER")
-            setAdmin(<Participant_Regist />)
         } else {
             setText("VIEW REGISTERED PARTICIPANTS")
-            setAdmin(<View_Participants />)
         }
             
     },[])
@@ -62,44 +83,45 @@ function Events(props) {
 
     return ( 
         <Card>
-            <CardContent>
             
-                {conventions !== null ? (
-                    conventions.map(convention => 
-                        // add an image
-                        <>
-                        <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
-                            {convention.title}
-                        </Typography>
-                        <Typography paragraph>{convention.description}</Typography>
-                        <Typography paragraph>Date and Time: {convention.dateTime}</Typography>
-                        <Typography paragraph>Place: {convention.location}</Typography>
-                        </>
-                    )
-                ): (
-                    <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
-                        There is no upcoming convention!
-                    </Typography>
-                )}
-                    </CardContent>
-                <CardActions sx={{ border: 1, }}>
-            <Typography component="h1" variant="h5">
-                {text}
-            </Typography>
-            <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={text}
-            >
-            <ExpandMoreIcon />
-            </ExpandMore>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-                {admin}
-            </CardContent>
-        </Collapse>
-            
+            {conventions !== '' ? (
+                conventions.map(convention => 
+                    <>
+                        {RenderPoster(convention.image)}
+                        <CardContent>
+                    {/* // add an image */}
+                            <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
+                                {convention.title}
+                            </Typography>
+                            <Typography paragraph>{convention.description}</Typography>
+                            <Typography paragraph>Date and Time: {convention.dateTime}</Typography>
+                            <Typography paragraph>Place: {convention.location}</Typography>
+                        </CardContent>
+                        <CardActions sx={{ border: 1, }}>
+                            <Typography component="h1" variant="h5">
+                                {text}
+                            </Typography>
+                            <ExpandMore
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={text}
+                            >
+                            <ExpandMoreIcon />
+                            </ExpandMore>
+                        </CardActions>
+                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                            <CardContent>
+                                {RenderComponent(val, convention.id, convention.title)}
+                            </CardContent>
+                        </Collapse>
+                    </>
+                )
+            ): (
+                <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
+                    There is no upcoming convention!
+                </Typography>
+            )}
+                
         </Card>
                         
     );
