@@ -3,6 +3,8 @@ import { Typography, Grid, Paper, TextField, Box, Button,
 import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import {v4 as uuidV4 } from "uuid";
+
 const axios = require('axios');
 
 const validationSchema = yup.object({
@@ -25,7 +27,8 @@ const validationSchema = yup.object({
 });
 
 function Participant_Regist(props) {
-    
+    const pid = uuidV4();
+
     const formik = useFormik({
         initialValues: {
             first_name: '',
@@ -46,12 +49,14 @@ function Participant_Regist(props) {
             await axios.post(
                 "http://localhost:5000/participate",
                 {
-                    // id: id,
+                    id: pid,
+                    event_id: props.id,
                     first_name: values.first_name,
                     last_name: values.last_name,
                     email: values.email,
                     phoneno: values.phoneno,
                     address: values.address,
+                    event_name: props.event_name,
                 },
                 config
             ).then(function (){
