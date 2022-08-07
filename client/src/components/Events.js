@@ -56,7 +56,7 @@ function Events(props) {
     // get a list of conventions from our database
     useEffect(() => {
         const fetch = async () => {
-            await axios.post(
+            await axios.get(
                 "http://localhost:5000/getEvents",
                 config
             ).then(function (response){
@@ -84,9 +84,10 @@ function Events(props) {
 
     return ( 
         <Card>
+            {/* Need to address the issue of conventions.map is not a method problem */}
             
-            {conventions !== '' ? (
-                conventions.map(convention => 
+            {conventions !== null ? 
+                (conventions.map(convention => 
                     <>
                         {RenderPoster(convention.image)}
                         <CardContent>
@@ -127,8 +128,8 @@ function Events(props) {
                             </CardContent>
                         </Collapse>
                     </>
-                )
-            ): (
+                ))
+            : (
                 <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
                     There is no upcoming convention!
                 </Typography>
