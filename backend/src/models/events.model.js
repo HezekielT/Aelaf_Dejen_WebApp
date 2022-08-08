@@ -18,7 +18,7 @@ const eventSchema = new mongoose.Schema({
         required: [true, "Please provide a description about the event"]
     },
     dateTime: {
-        type: Date,
+        type: String,
         required: [true, "Please Provide date and time of the convention"]
     },
     location: {
