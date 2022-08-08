@@ -6,9 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Participant_Regist from './Participant-Registration';
 import View_Participants from './View_Participants';
 import LogoutIcon from '@mui/icons-material/Logout';
-// we will pass the contents of the event as
-// props to this function and will call it from
-// dashboard screen
+
 const axios = require('axios');
 
 const ExpandMore = styled((props) => {
@@ -31,7 +29,7 @@ function RenderComponent(props) {
 }
 
 function RenderPoster(props) {
-    if(props.image !== null){
+    if(props.convention.image !== undefined){
         return (
             <CardMedia
                 component="img"
@@ -45,7 +43,7 @@ function RenderPoster(props) {
 function Events(props) {
     const val= props.admin
     const [expanded, setExpanded] = React.useState(false);
-    const [conventions, setConventions] = useState('');
+    const [conventions, setConventions] = useState([]);
     const [text, setText] = useState('')
     
     const config = {
@@ -55,12 +53,17 @@ function Events(props) {
     };
     // get a list of conventions from our database
     useEffect(() => {
+        if(val !== true) {
+            setText("REGISTER")
+        } else {
+            setText("VIEW REGISTERED PARTICIPANTS")
+        }
         const fetch = async () => {
             await axios.get(
                 "http://localhost:5000/getEvents",
                 config
             ).then(function (response){
-                setConventions(response);
+                setConventions(response.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -70,28 +73,14 @@ function Events(props) {
         
     }, [])
 
-    useEffect(() => {
-        if(val !== true) {
-            setText("REGISTER")
-        } else {
-            setText("VIEW REGISTERED PARTICIPANTS")
-        }
-            
-    },[])
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    }
-
-    return ( 
-        <Card>
-            {/* Need to address the issue of conventions.map is not a method problem */}
-            
-            {conventions !== null ? 
-                (conventions.map(convention => 
-                    <>
+    function MainComponent(){
+        if(conventions !== []){
+            return(
+                conventions.map(convention => 
+                    <Card key={convention.id}>
+                        {console.log(convention.image)}
                         {RenderPoster(convention.image)}
                         <CardContent>
-                    {/* // add an image */}
                             <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
                                 {convention.title}
                             </Typography>
@@ -124,19 +113,27 @@ function Events(props) {
                         </CardActions>
                         <Collapse in={expanded} timeout="auto" unmountOnExit>
                             <CardContent>
-                                {RenderComponent(val, convention.id, convention.title)}
+                                {/* {RenderComponent(val, convention.id, convention.title)} */}
+                                <View_Participants />
                             </CardContent>
                         </Collapse>
-                    </>
-                ))
-            : (
+                    </Card>
+                )
+            )
+        } else {
+            return (
                 <Typography component="h1" variant="h5" sx={{ justifyContent: 'center'}}>
                     There is no upcoming convention!
                 </Typography>
-            )}
-                
-        </Card>
-                        
+            )
+        }
+    }
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    }
+
+    return ( 
+        <MainComponent />            
     );
 }
 
