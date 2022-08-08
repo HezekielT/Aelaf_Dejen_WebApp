@@ -1,10 +1,12 @@
-const { Router } = require('express');
+const express = require('express');
 const Event = require('../models/events.model');
 
-const router = Router();
+const router = express.Router();
 
 router.route('/addEvent').post(async function(req, res) {
     const { id, title, image, description, dateTime, location } = req.body;
+    console.log(typeof(id)," ",typeof(title)," ",typeof(image), " ",typeof(description), " ",
+    typeof(dateTime)," ",typeof(location))
     try {
         await Event.create({
             id,
@@ -18,6 +20,7 @@ router.route('/addEvent').post(async function(req, res) {
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
+
 });
 
 router.route('/getEvents').get(async function(req, res) {
