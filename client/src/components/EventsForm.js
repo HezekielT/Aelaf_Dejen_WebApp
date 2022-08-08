@@ -4,6 +4,7 @@ import React from 'react';
 import { v4 as uuidV4 } from "uuid";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import storage from "../firebase";
 
 const axios = require('axios');
 
@@ -24,6 +25,25 @@ const conventionValidationSchema = yup.object({
 
 function EventsForm(props) {
     const eid = uuidV4();
+    let imagePath = '';
+
+    function uploadToFirebase(value) {
+        const uploadTask = storage.ref(`posters/${value.name}`).put(value);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                var percent = snapshot.bytesTransferred / snapshot.totalbytes * 100 ;
+                console.log(percent + "%");
+            },
+            (error) => {console.log(error)},
+            async () => {
+                await storage
+                    .ref("posters").child(value.name).getDownloadURL().then((urls) => {
+                    imagePath = urls;
+                })
+            }
+        )
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -34,6 +54,7 @@ function EventsForm(props) {
           },
           validationSchema: conventionValidationSchema,
           onSubmit: (values) => {
+            console.log(typeof(eid))
             // alert(JSON.stringify(values, null, 2));
             // e.preventDefault();
             const config = {
@@ -45,13 +66,13 @@ function EventsForm(props) {
                 await axios.post(
                     "http://localhost:5000/addEvent",
                     {
-                        id: eid,
+                        id: eid.toString(),
                         title: values.title,
+                        image: imagePath,
                         description: values.description,
                         dateTime: values.dateTime,
-                        venue: values.venue,
+                        location: values.venue,
                     },
-                    config
                 ).then(function (){
                     alert(JSON.stringify("Successfully Added!"))
                 }).catch(function (error){
@@ -89,7 +110,6 @@ function EventsForm(props) {
                                 required
                                 id="title"
                                 name="title"
-                                label="title"
                                 fullWidth
                                 autoComplete="title"
                                 variant="outlined"
@@ -124,7 +144,7 @@ function EventsForm(props) {
                                     type="file"
                                     accept='image/*'
                                     style={{ display: 'none'}}
-                                    // onChange={(e) => }
+                                    onChange={(e) => uploadToFirebase(e.target.files[0])}
                                 />
                                 <Button
                                     variant="outlined"
@@ -139,6 +159,7 @@ function EventsForm(props) {
                                 required
                                 id="dateTime"
                                 name="dateTime"
+                                label="YYYY/MM/D 00:00 PM/AM"
                                 fullWidth
                                 autoComplete="dateTime"
                                 variant="outlined"
