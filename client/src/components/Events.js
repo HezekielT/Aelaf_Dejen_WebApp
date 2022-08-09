@@ -31,14 +31,14 @@ function RenderComponent(props) {
     }
 }
 
-function RenderPoster(props) {
-    if(props.image !== undefined){
+function RenderPoster(value) {
+    if(value !== '' ){
         return (
             <CardMedia
                 component="img"
                 height="140"
-                image={props.convention.image}
-                alt="green iguana"
+                image={value}
+                alt="poster"
             />
         )
     }
@@ -51,11 +51,17 @@ function Events(props) {
     const [enableEdit, setEnableEdit] = useState(false);
     const [conventionItem, setConventionItem] = useState([]);
     const [drivers, setDrivers] = useState([]);
+    const [reloadComponent, setReloadComponent] = useState(false);
+
     const config = {
         header: {
             "Content-Type": "application/json",
         },
     };
+    let endpoints = [
+        "http://localhost:5000/getEvents",
+        "http://localhost:5000/getDrivers"
+    ]
     // get a list of conventions from our database
     useEffect(() => {
         if(val !== true) {
@@ -64,31 +70,21 @@ function Events(props) {
             setText("VIEW REGISTERED PARTICIPANTS")
         }
         const fetch = async () => {
-            await axios.all(
-                ["http://localhost:5000/getEvents","http://localhost:5000/getDrivers"],
-                config
-            ).then(axios.spread((...responses) => {
-                setConventions(responses[0].data)
-                setDrivers(responses[1].data)
-            }))
-            // .then(function (response){
-            //     setConventions(response.data);
-            // })
-            .catch(function (error) {
-                console.log(error);
+            Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
+            .then(([{data: events}, {data: drivers}] ) => {
+                setConventions(events)
+                setDrivers(drivers)
             })
         }
         fetch()
-        
-    }, [])
+    }, [reloadComponent])
 
     async function DeleteConvention(id) {
         await axios.delete(
             `http://localhost:5000/deleteEvent/${id}`,
             config
         ).then(function(response) {
-            console.log(response)
-            window.location.reload(true);
+            setReloadComponent(!reloadComponent);
         }).catch(function (error) {
             console.log(error)
         })
@@ -99,30 +95,35 @@ function Events(props) {
         setConventionItem(convention)
     }
     function MainComponent(){
-        if(conventions === []){
+        if(conventions.length === 0){
             
             return (
-                    <Typography component="h1" variant="h5" sx={{ py: 5, justifyContent: 'center'}}>
-                        There is no upcoming convention!
-                    </Typography>
+                <Card>
+                    <CardContent>
+                        <Typography component="h1" variant="h5" sx={{ py: 5, justifyContent: 'center'}}>
+                            There is no upcoming convention!
+                        </Typography>
+                    </CardContent>
+                </Card>
             )
         } else {
             if(enableEdit === false) {
                 return(
                     conventions.map(convention => 
-                        <Card key={convention.id} sx={{ display: 'flex'}}>
+                        <Card key={convention.id}>
                             {RenderPoster(convention.image)}
                             <CardContent>
                                 <Typography component="h1" variant="h5" sx={{ textAlign: 'center'}}>
                                     {convention.title}
                                 </Typography>
-                                (if(val === true) {
-                                    <Box sx={{ justifyItems: 'flex-end'}}>
-                                        <EditIcon onClick={() => EditConvention(convention)}/>
-                                        <DeleteIcon onClick={() => DeleteConvention(convention.id)}/>
+                                {(val === true) ? (
+                                    <Box sx={{ textAlign: 'right', px: 2}}>
+                                        <EditIcon sx={{cursor: 'pointer',}} onClick={() => EditConvention(convention)}/>
+                                        <DeleteIcon sx={{cursor: 'pointer',}} onClick={() => DeleteConvention(convention.id)}/>
                                     </Box>
-                                })
-                                {val === true ? (
+                                ) : (<></>)
+                                }
+                                {/* {val === true ? (
                                     <Container 
                                         sx={{transition: ".5s ease", opacity: 0, 
                                         position: "absolue", top: "50%", left: "50%",
@@ -136,7 +137,7 @@ function Events(props) {
                                         
                                     </Box>
                                 </Container>
-                                ) : (<></>)}
+                                ) : (<></>)} */}
                                 
                                 <Typography paragraph>{convention.description}</Typography>
                                 <Typography paragraph>Date and Time: {convention.dateTime}</Typography>
@@ -163,7 +164,14 @@ function Events(props) {
                     )
                 )
             } else {
-                return <EventsForm convention={conventionItem} setEnableEdit={setEnableEdit}/>
+                return (
+                    <EventsForm 
+                        convention={conventionItem} 
+                        setEnableEdit={setEnableEdit} 
+                        reloadComponent={reloadComponent} 
+                        setReloadComponent={setReloadComponent}
+                    />
+                )
             }
         }
     }
