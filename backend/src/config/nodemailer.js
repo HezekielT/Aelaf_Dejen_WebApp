@@ -1,7 +1,6 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv'
+const nodemailer = require('nodemailer');
 
-dotenv.config();
+require('dotenv').config();
 
 const user = process.env.USER;
 const pass = process.env.PASS;
@@ -14,7 +13,7 @@ const transport = nodemailer.createTransport({
   }
 });
 
-export const sendResetEmail = (email, resetToken) => {
+const sendResetEmail = (email, resetToken) => {
 
   const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
   const message = `
@@ -31,7 +30,7 @@ export const sendResetEmail = (email, resetToken) => {
   .catch((err) => console.log(err));
 }
 
-export const sendConfirmationEmail = (first_name, last_name, email, privilege, token) => {
+const sendConfirmationEmail = (first_name, last_name, email, privilege, token) => {
   transport.sendMail({
     from: user,
     to: email,
@@ -45,3 +44,5 @@ export const sendConfirmationEmail = (first_name, last_name, email, privilege, t
   })
   .catch((err) => console.log(err));
 };
+
+module.exports={sendResetEmail, sendConfirmationEmail}

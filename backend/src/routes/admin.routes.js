@@ -1,8 +1,8 @@
 const { Admin } = require('../models/user.model')
 const { Router } = require("express");
-import { isAuth } from '../utils';
-import jwt from "jsonwebtoken";
-import { sendResetEmail, sendConfirmationEmail } from "../config/nodemailer";
+const { isAuth } = require('../utils');
+const jwt = require("jsonwebtoken");
+const { sendResetEmail, sendConfirmationEmail } = require("../config/nodemailer");
 
 const router = Router();
 

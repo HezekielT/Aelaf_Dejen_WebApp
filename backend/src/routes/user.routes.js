@@ -1,8 +1,6 @@
 const { Participant } = require('../models/user.model');
 const { Driver } = require('../models/user.model')
 const { Router } = require("express");
-import jwt from "jsonwebtoken";
-import { sendResetEmail, sendConfirmationEmail } from "../config/nodemailer";
 
 const router = Router();
 // Routes related to convention participants
