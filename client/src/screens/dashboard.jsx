@@ -4,8 +4,8 @@ import { Typography, Grid, Paper,
 import Events from '../components/Events';
 import Home from '../components/Home';
 import ContactUs from '../components/ContactUs';
-import NavBar from './screens/navbar';
-import Footer from './screens/footer';
+import NavBar from './navbar';
+import Footer from './footer';
 
 
 import { useReference } from '../context/refProvider';
