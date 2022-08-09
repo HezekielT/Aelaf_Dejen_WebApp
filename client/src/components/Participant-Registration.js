@@ -7,6 +7,8 @@ import {v4 as uuidV4 } from "uuid";
 
 const axios = require('axios');
 
+// does it work if i add config?
+
 const validationSchema = yup.object({
     first_name: yup
       .string('Enter your name')
@@ -21,7 +23,7 @@ const validationSchema = yup.object({
     phoneno: yup
       .string('Enter phone no')
       .required('Your phone number is required'),
-    address: yup
+    location: yup
       .string('Enter Address')
       .required('Location is required'),
 });
@@ -35,35 +37,35 @@ function Participant_Regist(props) {
             last_name: '',
             email: '',
             phoneno: '',
-            address: '',
+            location: '',
           },
           validationSchema: validationSchema,
-          onSubmit: async (values) => {
-            // e.preventDefault();
+          onSubmit: (values) => {
             const config = {
                 header: {
                     "Content-Type": "application/json"
                 },
             };
-
-            await axios.post(
-                "http://localhost:5000/participate",
-                {
-                    id: pid,
-                    event_id: props.id,
-                    first_name: values.first_name,
-                    last_name: values.last_name,
-                    email: values.email,
-                    phoneno: values.phoneno,
-                    address: values.address,
-                    event_name: props.event_name,
-                },
-                config
-            ).then(function (){
-                alert(JSON.stringify("Thank You for Registering!"))
-            }).catch(function (error){
-                console.log(error);
-            })
+            const putvalues = async () => {
+                await axios.post(
+                    "http://localhost:5000/participate",
+                    {
+                        id: pid,
+                        event_id: props.id,
+                        first_name: values.first_name,
+                        last_name: values.last_name,
+                        email: values.email,
+                        phoneno: values.phoneno,
+                        location: values.location,
+                        event_name: props.event_name,
+                    },
+                ).then(function (){
+                    alert(JSON.stringify("Thank You for Registering!"))
+                }).catch(function (error){
+                    alert(error);
+                })
+            }
+            putvalues()
           }
     });
 
@@ -150,17 +152,20 @@ function Participant_Regist(props) {
                                 <FormControl fullWidth>
                                     <InputLabel id="select-label">Locations</InputLabel>
                                     <Select
-                                        id='address'
-                                        name="address"
+                                        id='location'
+                                        name="location"
                                         labelId="select-label"
-                                        label="address"
-                                        value={formik.values.address}
+                                        label="location"
+                                        value={formik.values.location}
                                         onChange={formik.handleChange}
-                                        error={formik.touched.address && Boolean(formik.errors.address)}
+                                        error={formik.touched.location && Boolean(formik.errors.location)}
                                         // helperText={formik.touched.address && formik.errors.address}
                                     >
-                                        <MenuItem value="Item">Item</MenuItem>
-                                        <MenuItem>Item 2</MenuItem>
+                                        {props.drivers !== [] ? (
+                                            <MenuItem value={props.drivers.id}>{props.initialLocation}</MenuItem>
+                                        ) : (
+                                            <MenuItem value="">"None available"</MenuItem>
+                                        )}
                                     </Select>
                                 </FormControl>
                             </Box>
