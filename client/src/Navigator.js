@@ -6,14 +6,11 @@ import Manage_Contents from './components/Admin/manage_web_content';
 import Transport_Registration from './components/Admin/Transport_Registration';
 import AdminDashboard from './screens/Admin_Dashboard';
 import Dashboard from './screens/dashboard';
-import Footer from './screens/footer';
-import NavBar from './screens/navbar';
 
 function Navigator(props) {
 
     return (
         <Router>
-            <NavBar />
             <Routes>
                 <Route exact path="/" element={<Dashboard />} />
                 <Route path="/admin" element={<AdminDashboard />} />
@@ -22,7 +19,6 @@ function Navigator(props) {
                 <Route path="/dashboard/transport" element={<Transport_Registration />} />
                 <Route path="/dashboard/accounts" element={<Manage_Account />} />
             </Routes>
-            <Footer />
         </Router>
     );
 }
