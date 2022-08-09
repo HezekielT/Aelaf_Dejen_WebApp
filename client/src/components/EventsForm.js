@@ -26,7 +26,6 @@ const conventionValidationSchema = yup.object({
 function EventsForm(props) {
     const eid = uuidV4();
     let imagePath = '';
-
     function uploadToFirebase(value) {
         const uploadTask = storage.ref(`posters/${value.name}`).put(value);
         uploadTask.on(
@@ -62,24 +61,47 @@ function EventsForm(props) {
                     "Content-Type": "application/json"
                 },
             };
-            const putvalues = async () => {
-                await axios.post(
-                    "http://localhost:5000/addEvent",
-                    {
-                        id: eid.toString(),
-                        title: values.title,
-                        image: imagePath,
-                        description: values.description,
-                        dateTime: values.dateTime,
-                        location: values.venue,
-                    },
-                ).then(function (){
-                    alert(JSON.stringify("Successfully Added!"))
-                }).catch(function (error){
-                    alert(error)
-                })
+            if(props.convention!==undefined){
+                const putvalues = async () => {
+                    await axios.post(
+                        `http://localhost:5000/updateEvent/${props.convention.id}`,
+                        {
+                            title: values.title,
+                            image: imagePath,
+                            description: values.description,
+                            dateTime: values.dateTime,
+                            location: values.venue,
+                        },
+                        config
+                    ).then(function (){
+                        alert(JSON.stringify("Successfully Updated!"))
+                    }).catch(function (error){
+                        alert(error)
+                    })
+                }
+                putvalues()
+            } else {
+                const putvalues = async () => {
+                    await axios.post(
+                        "http://localhost:5000/addEvent",
+                        {
+                            id: eid.toString(),
+                            title: values.title,
+                            image: imagePath,
+                            description: values.description,
+                            dateTime: values.dateTime,
+                            location: values.venue,
+                        },
+                        config
+                    ).then(function (){
+                        alert(JSON.stringify("Successfully Added!"))
+                    }).catch(function (error){
+                        alert(error)
+                    })
+                }
+                putvalues()
+                
             }
-            putvalues()
 
           }
     });
@@ -113,6 +135,7 @@ function EventsForm(props) {
                                 fullWidth
                                 autoComplete="title"
                                 variant="outlined"
+                                placeholder={props.convention!==undefined ? (props.convention.title) : ('')}
                                 sx={{py: 1}}
                                 value={formik.values.title}
                                 onChange={formik.handleChange}
@@ -129,6 +152,7 @@ function EventsForm(props) {
                                 fullWidth
                                 autoComplete="description"
                                 variant="outlined"
+                                placeholder={props.convention!==undefined ? (props.convention.description) : ('')}
                                 sx={{py: 1}}
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
@@ -163,6 +187,7 @@ function EventsForm(props) {
                                 fullWidth
                                 autoComplete="dateTime"
                                 variant="outlined"
+                                placeholder={props.convention!==undefined ? (props.convention.dateTime) : ('')}
                                 sx={{py: 1}}
                                 value={formik.values.dateTime}
                                 onChange={formik.handleChange}
@@ -179,13 +204,14 @@ function EventsForm(props) {
                                 fullWidth
                                 autoComplete="venue"
                                 variant="outlined"
+                                placeholder={props.convention!==undefined ? (props.convention.location) : ('')}
                                 sx={{py: 1}}
                                 value={formik.values.venue}
                                 onChange={formik.handleChange}
                                 error={formik.touched.venue && Boolean(formik.errors.venue)}
                                 helperText={formik.touched.venue && formik.errors.venue}
                             />
-
+                            {props.convention!==undefined ? (<Button variant='outlined' sx={{m: 2}} onClick={() => {props.setEnableEdit(false)}}>Cancel</Button>): (<></>)}
                             <Button type="submit" variant='contained' sx={{m: 2}}>Submit</Button>
                         </Box>
                         {/* </Card> */}
