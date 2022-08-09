@@ -71,7 +71,8 @@ const driverSchema = new mongoose.Schema({
     }
 })
 
-const adminSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema(
+    {
     id: {
         type: String,
         required: [true],
@@ -87,7 +88,21 @@ const adminSchema = new mongoose.Schema({
         type: Boolean,
         required: [true],
     },
-})
+    status: {
+        type: String,
+        enum: ["Pending", "Active"],
+        default: "Pending"
+    },
+    confirmationCode: {
+        type: String,
+        unique: true,
+    },
+    resetPasswordToken: String,
+    },
+    {
+        timestamps: true,
+    }
+)
 
 adminSchema.pre('save', async function(done) {
     if (!this.isModified("password")) {
@@ -104,10 +119,11 @@ adminSchema.methods.matchPassword = async function(password){
  };
 
 adminSchema.methods.getSignedJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_SECRET);
-    // jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_SECRET, {
-    //     expiresIn: process.env.ACCESS_TOKEN_EXPIRE,
-    // });
+    return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "10d",
+    });
+    // jwt.sign({ email: this.email }, process.env.ACCESS_TOKEN_SECRET);
+    
 };
 
 adminSchema.methods.getResetPasswordToken = async function () {
