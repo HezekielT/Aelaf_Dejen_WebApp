@@ -90,7 +90,7 @@ const adminSchema = new mongoose.Schema(
     },
     status: {
         type: String,
-        enum: ["Pending", "Active"],
+        enum: ["Pending", "Active", "Suspended"],
         default: "Pending"
     },
     confirmationCode: {
