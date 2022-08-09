@@ -40,11 +40,8 @@ const participantSchema = new mongoose.Schema({
         required: [true],
     },
     user: userSchema,
-    event: {
-        type: String,
-        required: [true]
-    },
     location: {
+        // transport location chosen by the participant
         type: String,
         required: [true],
     },
