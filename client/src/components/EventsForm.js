@@ -1,6 +1,6 @@
 import { Button, Container, Box, 
     Grid, Paper, Typography, TextField } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidV4 } from "uuid";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -25,7 +25,7 @@ const conventionValidationSchema = yup.object({
 
 function EventsForm(props) {
     const eid = uuidV4();
-    let imagePath = '';
+    const [imagePath, setImagePath] = useState(undefined);
     function uploadToFirebase(value) {
         const uploadTask = storage.ref(`posters/${value.name}`).put(value);
         uploadTask.on(
@@ -38,8 +38,11 @@ function EventsForm(props) {
             async () => {
                 await storage
                     .ref("posters").child(value.name).getDownloadURL().then((urls) => {
-                    imagePath = urls;
+                    const val = urls;
+                    setImagePath(val)
+                    // console.log(imagePath)
                 })
+                
             }
         )
     }
@@ -72,9 +75,10 @@ function EventsForm(props) {
                             dateTime: values.dateTime,
                             location: values.venue,
                         },
-                        config
                     ).then(function (){
                         alert(JSON.stringify("Successfully Updated!"))
+                        props.setEnableEdit(false)
+                        props.setReloadComponent(!props.reloadComponent)
                     }).catch(function (error){
                         alert(error)
                     })
@@ -94,6 +98,7 @@ function EventsForm(props) {
                         },
                         config
                     ).then(function (){
+                        // props.setReloadComponent(!props.reloadComponent)
                         alert(JSON.stringify("Successfully Added!"))
                     }).catch(function (error){
                         alert(error)
