@@ -60,7 +60,6 @@ function ContactUs(props) {
                             <TextField 
                                 id="name"
                                 name="name"
-                                autoFocus
                                 variant='outlined'
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
