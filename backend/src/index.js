@@ -35,7 +35,7 @@ const port = process.env.PORT || 5000;
 
 app.use(require('./routes/user.routes'));
 app.use(require('./routes/events.routes'));
-// app.use(require('./routes/contacts.routes'));
+app.use(require('./routes/admin.routes'));
 
 app.listen(port, () => {
     console.log(`Currently Listening at http://localhost:${port}`);
