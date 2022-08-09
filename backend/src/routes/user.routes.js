@@ -1,6 +1,6 @@
-const Participant = require('../models/user.model');
-const Driver = require('../models/user.model')
-const Admin = require('../models/user.model')
+const { Participant } = require('../models/user.model');
+const { Driver } = require('../models/user.model')
+const { Admin } = require('../models/user.model')
 const { Router } = require("express");
 
 
@@ -8,7 +8,8 @@ const router = Router();
 // Routes related to convention participants
 
 router.route('/participate').post(async function(req, res) {
-    const { id, event_id, first_name, last_name, email, phoneno, address } = req.body;
+    const { id, event_id, first_name, last_name, email, phoneno, location, event_name } = req.body;
+    console.log(id," ",event_id," ",first_name," ",last_name," ",email," ",phoneno," ",location," ",event_name)
     try {
         await Participant.create({
             id,
@@ -19,7 +20,8 @@ router.route('/participate').post(async function(req, res) {
                 email,
                 phoneno,
             },
-            address,
+            location,
+            event_name
         });
         console.log("Successfully registered");
         res.status(201).send();
@@ -38,7 +40,7 @@ router.route('/getParticipants').get(async function(req, res) {
 })
 
 // Routes related to driver
-router.route('registerDriver').post(async function(req, res){
+router.route('/registerDriver').post(async function(req, res){
     const { first_name, last_name, email, phoneno, plateno, location } = req.body;
     try {
         await Driver.create({
@@ -94,7 +96,7 @@ router.route('/updateDriver/:id').post(async function (req, response) {
     }
 });
 
-router.route("/:id").delete(async (req, response) => {
+router.route("/deleteDriver/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
@@ -110,7 +112,7 @@ router.route("/:id").delete(async (req, response) => {
 
 // Routes related to admin
 
-router.route('registerAdmin').post(async function(req, res){
+router.route('/registerAdmin').post(async function(req, res){
     const { id, first_name, last_name, email, phoneno, password, privilege } = req.body;
     try {
         await Admin.create({
@@ -208,7 +210,7 @@ router.route('/updateAdmin/:id').post(async function (req, response) {
     }
 });
 
-router.route("/:id").delete(async (req, response) => {
+router.route("/deleteAdmin/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
