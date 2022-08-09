@@ -26,7 +26,6 @@ router.route('/getEvents').get(async function(req, res) {
         const events = await Event.find();
         res.status(201).send(events);
     } catch(err) {
-        console.log("Here is ")
         res.status(400).json({ message: err.message });
     }
 })
@@ -44,27 +43,25 @@ router.route('/updateEvent/:id').post(async function (req, response) {
     }
 
     try {
-        await Event.updateOne(id, newvalues, function(err, res){
+        await Event.updateOne({id: id}, newvalues, function(err, res){
             if (err) throw err;
             console.log("1 document updated");
             response.json(res);
         })
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        response.status(400).json({ message: err.message });
     }
 });
 
 router.route("/deleteEvent/:id").delete(async (req, response) => {
 
-    let id = req.params.id
+    let id = req.params.id;
     try {
-        await Event.deleteOne(id, function(err, obj){
-            if (err) throw err;
-            console.log("1 document deleted.");
-            response.status(obj);
+        await Event.deleteOne({id: id}).then(function() {
+            response.status(200).send({ message: "Successfully Deleted!"})
         });
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        response.status(400).json({ message: err.message });
     }
 })
 
