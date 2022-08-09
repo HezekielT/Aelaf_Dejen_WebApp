@@ -36,6 +36,8 @@ function ForgotPasswordForm(props) {
           setResponseError(error.message);
         })
       }
+      putvalues()
+      setResponseError('')
     }
   })
   return (
