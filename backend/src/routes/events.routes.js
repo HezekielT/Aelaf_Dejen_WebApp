@@ -5,8 +5,6 @@ const router = express.Router();
 
 router.route('/addEvent').post(async function(req, res) {
     const { id, title, image, description, dateTime, location } = req.body;
-    console.log(typeof(id)," ",typeof(title)," ",typeof(image), " ",typeof(description), " ",
-    typeof(dateTime)," ",typeof(location))
     try {
         await Event.create({
             id,
@@ -56,7 +54,7 @@ router.route('/updateEvent/:id').post(async function (req, response) {
     }
 });
 
-router.route("/:id").delete(async (req, response) => {
+router.route("/deleteEvent/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
