@@ -30,7 +30,7 @@ const validationSchema = yup.object({
 
 function Participant_Regist(props) {
     const pid = uuidV4();
-
+    console.log(typeof(props.drivers))
     const formik = useFormik({
         initialValues: {
             first_name: '',
@@ -58,11 +58,15 @@ function Participant_Regist(props) {
                         phoneno: values.phoneno,
                         location: values.location,
                         event_name: props.event_name,
+                    },{
+                    header: {
+                        "Content-Type": "application/json",
                     },
+                }
                 ).then(function (){
                     alert(JSON.stringify("Thank You for Registering!"))
                 }).catch(function (error){
-                    alert(error);
+                    console.log(error);
                 })
             }
             putvalues()
@@ -162,7 +166,9 @@ function Participant_Regist(props) {
                                         // helperText={formik.touched.address && formik.errors.address}
                                     >
                                         {props.drivers !== [] ? (
-                                            <MenuItem value={props.drivers.id}>{props.initialLocation}</MenuItem>
+                                            props.drivers.map(driver => 
+                                                <MenuItem key={driver.id} value={driver.id}>{driver.initialLocation}</MenuItem>
+                                            )
                                         ) : (
                                             <MenuItem value="">"None available"</MenuItem>
                                         )}
