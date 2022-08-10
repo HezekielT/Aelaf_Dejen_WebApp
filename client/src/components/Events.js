@@ -27,11 +27,14 @@ function RenderComponent(props) {
     if(props.val !== true){
         return <Participant_Regist id={props.id} event_name={props.title} drivers={props.drivers}/>
     } else {
-        return <View_Participants id={props.id} event_name={props.title}/>
+        return <View_Participants id={props.id}/>
     }
 }
 
 function RenderPoster(value) {
+    if(value === undefined){
+        return;
+    }
     if(value !== '' ){
         return (
             <CardMedia
@@ -43,6 +46,7 @@ function RenderPoster(value) {
         )
     }
 }
+
 function Events(props) {
     const val= props.admin
     const [expanded, setExpanded] = React.useState(false);
@@ -52,7 +56,8 @@ function Events(props) {
     const [conventionItem, setConventionItem] = useState([]);
     const [drivers, setDrivers] = useState([]);
     const [reloadComponent, setReloadComponent] = useState(false);
-
+    const [getList, setGetList] = useState('');
+    
     const config = {
         header: {
             "Content-Type": "application/json",
@@ -67,7 +72,7 @@ function Events(props) {
         if(val !== true) {
             setText("REGISTER")
         } else {
-            setText("VIEW REGISTERED PARTICIPANTS")
+            setText("View Registered Participants")
         }
         const fetch = async () => {
             Promise.all(endpoints.map((endpoint) => axios.get(endpoint)))
@@ -79,6 +84,19 @@ function Events(props) {
         fetch()
     }, [reloadComponent])
 
+    useEffect(() => {
+        let participantEndpoints = [];
+        
+        if(conventions !== []){
+            conventions.map(convention => 
+                participantEndpoints = [ ...participantEndpoints, `http://localhost:5000/getParticipants/${convention.id} `] 
+            )
+        }
+        const fetch = async () => {
+            Promise.all(participantEndpoints.map((endpoint) => axios.get(endpoint)))
+            .then((response) => setGetList({}))
+        }
+    }, [conventions])
     async function DeleteConvention(id) {
         await axios.delete(
             `http://localhost:5000/deleteEvent/${id}`,
@@ -110,7 +128,7 @@ function Events(props) {
             if(enableEdit === false) {
                 return(
                     conventions.map(convention => 
-                        <Card key={convention.id}>
+                        <Card key={convention.id} sx={{mb: 2}}>
                             {RenderPoster(convention.image)}
                             <CardContent>
                                 <Typography component="h1" variant="h5" sx={{ textAlign: 'center'}}>
@@ -123,25 +141,11 @@ function Events(props) {
                                     </Box>
                                 ) : (<></>)
                                 }
-                                {/* {val === true ? (
-                                    <Container 
-                                        sx={{transition: ".5s ease", opacity: 0, 
-                                        position: "absolue", top: "50%", left: "50%",
-                                        transform: "translate(-50%, -50%)", textAlign: 'center',
-                                        "&:hover": {
-                                            opacity: 0.3,
-                                        }
-                                        }}
-                                    >
-                                    <Box  sx={{ "&:hover": {opacity: 1}, justifyContent: 'space-evenly'}}>
-                                        
-                                    </Box>
-                                </Container>
-                                ) : (<></>)} */}
                                 
                                 <Typography paragraph>{convention.description}</Typography>
                                 <Typography paragraph>Date and Time: {convention.dateTime}</Typography>
                                 <Typography paragraph>Place: {convention.location}</Typography>
+
                             </CardContent>
                             <CardActions sx={{ border: 1, }}>
                                 <Typography component="h1" variant="h5">
@@ -180,15 +184,9 @@ function Events(props) {
     }
 
     return ( 
-        // useEffect(() => {
 
-            // if(enableEdit == true) {
-                <MainComponent />
-            //  } else {
-                // <MainComponent /> 
-        //      }
-        // }, [enableEdit])
-                    
+        <MainComponent />       
+            
     );
 }
 
