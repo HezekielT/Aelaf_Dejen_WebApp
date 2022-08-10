@@ -1,8 +1,12 @@
-import { Typography, Grid, TextField, Paper, Box, Button } from '@mui/material';
-import React from 'react';
+import { Typography, Grid, TextField, Paper,
+     Box, Button, Select, MenuItem,
+     FormControl, InputLabel  } from '@mui/material';
+import React, { useEffect, useState } from 'react';
   
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { v4 as uuidV4 } from 'uuid'
+import axios from 'axios'
 
 const validationSchema = yup.object({
     first_name: yup
@@ -21,12 +25,59 @@ const validationSchema = yup.object({
     plateno: yup
       .string('Enter plate no')
       .required('Plate number of the car is required'),
+    convention: yup
+      .string('Enter location')
+      .required('convention is required'),
     location: yup
       .string('Enter location')
       .required('Location is required'),
 })
 
 function Transport_Registration(props) {
+    const tid = uuidV4()
+    const [conventions, setConventions] = useState([])
+
+    useEffect(() => {
+        const fetch = () => {
+            axios.get(
+                "http://localhost:5000/getEvents"
+            ).then(function(response) {
+                console.log("response", response)
+                setConventions(response.data)
+                console.log("conv", response.data)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        }
+        fetch();
+    }, [])
+
+    function RenderConventions(props) {
+        // {console.log(props.conventions)}
+        // const headers = Object.keys(props.conventions).length
+        // console.log(headers)
+        // console.log(conventions)
+        // console.log(Object.values(conventions[0]))
+        return (
+            <FormControl fullWidth>
+                            <InputLabel id="select-label">Convention</InputLabel>
+            <Select
+                id='convention'
+                name="convention"
+                labelId="select-label"
+                label="convention"
+                value={formik.values.convention}
+                onChange={formik.handleChange}
+                error={formik.touched.convention && Boolean(formik.errors.convention)}
+                // helperText={formik.touched.address && formik.errors.address}
+                
+            >
+                {conventions.map(convention => 
+                    <MenuItem key={convention.id} value={convention.id}>{convention.location}</MenuItem>
+                )}
+            </Select></FormControl>
+        )
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -35,11 +86,32 @@ function Transport_Registration(props) {
             email: '',
             phoneno: '',
             plateno: '',
+            convention: '',
             location: '',
           },
           validationSchema: validationSchema,
           onSubmit: (values) => {
-            alert(JSON.stringify("Thank You for Registering!"))
+            const putvalues = () => {
+                axios.post(
+                    "http://localhost:5000/registerDriver",
+                    {
+                        id: tid,
+                        first_name: values.first_name,
+                        last_name: values.last_name,
+                        email: values.email,
+                        phoneno: values.phoneno,
+                        plateno: values.plateno,
+                        convention: values.convention,
+                        initialLocation: values.location,
+                    }
+                ).then(function() {
+                    alert(JSON.stringify("Driver Registered!"))
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+            putvalues();
+
           }
     });
 
@@ -132,6 +204,28 @@ function Transport_Registration(props) {
                         error={formik.touched.plateno && Boolean(formik.errors.plateno)}
                         helperText={formik.touched.plateno && formik.errors.plateno}
                     />
+                    <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
+                                    {conventions !== [] ? (
+                                        <RenderConventions conventions={conventions}/>
+                                    ) : (
+                                        <FormControl fullWidth>
+                                            <InputLabel id="select-label">Convention</InputLabel>
+                                        <Select
+                                    id='convention'
+                                    name="convention"
+                                    labelId="select-label"
+                                    label="convention"
+                                    value={formik.values.convention}
+                                    onChange={formik.handleChange}
+                                    error={formik.touched.convention && Boolean(formik.errors.convention)}
+                                    // helperText={formik.touched.address && formik.errors.address}
+                                    
+                                >
+                                    <MenuItem>None available</MenuItem>
+                                </Select>
+                            </FormControl>
+                                )}
+                    </Box>
                     <TextField
                         required
                         id="location"
