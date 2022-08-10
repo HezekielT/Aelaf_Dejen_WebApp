@@ -28,9 +28,11 @@ router.route('/participate').post(async function(req, res) {
     }
 });
 
-router.route('/getParticipants').get(async function(req, res) {
+router.route('/getParticipants/:id').get(async function(req, res) {
+    let id = req.params.id;
+    // console.log(id)
     try{
-        const participants = await Participant.find();
+        const participants = await Participant.find({}).where('event_id').equals(id);
         res.status(201).send(participants);
     } catch(err) {
         res.status(400).json({ message: err.message });
@@ -39,7 +41,7 @@ router.route('/getParticipants').get(async function(req, res) {
 
 // Routes related to driver
 router.route('/registerDriver').post(async function(req, res){
-    const { first_name, last_name, email, phoneno, plateno, location } = req.body;
+    const { id, first_name, last_name, email, phoneno, plateno, convention, initialLocation } = req.body;
     try {
         await Driver.create({
             id,
@@ -50,7 +52,8 @@ router.route('/registerDriver').post(async function(req, res){
                 phoneno,
             },
             plateno,
-            location,
+            convention,
+            initialLocation,
         });
         console.log("Successfully registered driver");
         res.status(201).send();
