@@ -26,6 +26,8 @@ const conventionValidationSchema = yup.object({
 function EventsForm(props) {
     const eid = uuidV4();
     const [imagePath, setImagePath] = useState(undefined);
+    const [remove, setRemove] = useState(false);
+
     function uploadToFirebase(value) {
         const uploadTask = storage.ref(`posters/${value.name}`).put(value);
         uploadTask.on(
@@ -38,9 +40,9 @@ function EventsForm(props) {
             async () => {
                 await storage
                     .ref("posters").child(value.name).getDownloadURL().then((urls) => {
-                    const val = urls;
-                    setImagePath(val)
-                    // console.log(imagePath)
+                        const val = urls;
+                        setImagePath(val)
+                        console.log(imagePath, "........")
                 })
                 
             }
@@ -49,16 +51,13 @@ function EventsForm(props) {
 
     const formik = useFormik({
         initialValues: {
-            title: '',
-            description: '',
-            dateTime: '',
-            venue: '',
+            title: props.convention!==undefined ? (props.convention.title) : (''),
+            description: props.convention!==undefined ? (props.convention.description) : (''),
+            dateTime: props.convention!==undefined ? (props.convention.dateTime) : (''),
+            venue: props.convention!==undefined ? (props.convention.location) : (''),
           },
           validationSchema: conventionValidationSchema,
           onSubmit: (values) => {
-            console.log(typeof(eid))
-            // alert(JSON.stringify(values, null, 2));
-            // e.preventDefault();
             const config = {
                 header: {
                     "Content-Type": "application/json"
@@ -66,17 +65,27 @@ function EventsForm(props) {
             };
             if(props.convention!==undefined){
                 const putvalues = async () => {
+                    if(imagePath === undefined) {
+                        setImagePath(props.convention.image);
+                    }
+                    if(remove) {
+                        setImagePath(undefined);
+                    }
                     await axios.post(
                         `http://localhost:5000/updateEvent/${props.convention.id}`,
                         {
                             title: values.title,
-                            image: imagePath,
+                            image: remove ? ('') : (imagePath),
                             description: values.description,
                             dateTime: values.dateTime,
                             location: values.venue,
-                        },
+                        },{
+                            header: {
+                                "Content-Type": "application/json",
+                            },}
                     ).then(function (){
                         alert(JSON.stringify("Successfully Updated!"))
+                        setRemove(false)
                         props.setEnableEdit(false)
                         props.setReloadComponent(!props.reloadComponent)
                     }).catch(function (error){
@@ -95,8 +104,10 @@ function EventsForm(props) {
                             description: values.description,
                             dateTime: values.dateTime,
                             location: values.venue,
-                        },
-                        config
+                        },{
+                            header: {
+                                "Content-Type": "application/json",
+                            },}
                     ).then(function (){
                         // props.setReloadComponent(!props.reloadComponent)
                         alert(JSON.stringify("Successfully Added!"))
@@ -128,7 +139,6 @@ function EventsForm(props) {
                 <Grid item xs={12} lg={12} sx={{ p: 4,display: 'flex', justifyContent: 'center' }}>
 
                     <Paper sx={{width: '60vh'}}>
-                        {/* <Card > */}
                         <Box component="form" onSubmit={formik.handleSubmit} maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 4,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                             <Typography sx={{p: 2}}>
                                 Convention's Title
@@ -165,7 +175,7 @@ function EventsForm(props) {
                                 helperText={formik.touched.description && formik.errors.description}
                             />
                             <Typography sx={{p: 2}}>
-                                Poster(if any)
+                                Poster Image( Optional )
                             </Typography>
                             <label htmlFor='poster'>
                                 <input 
@@ -181,6 +191,11 @@ function EventsForm(props) {
                                     fullWidth
                                 >Choose Poster</Button>
                             </label>
+                            {props.convention!==undefined ? (
+                                <Button variant='outlined' component="span" fullwidth='true' sx={{my: 2}} onClick={() => {setRemove(true)}}>
+                                    Remove Poster
+                                </Button>
+                            ): (<></>)}
                             <Typography sx={{p: 2}}>
                                 Date and Time
                             </Typography>
@@ -216,10 +231,13 @@ function EventsForm(props) {
                                 error={formik.touched.venue && Boolean(formik.errors.venue)}
                                 helperText={formik.touched.venue && formik.errors.venue}
                             />
-                            {props.convention!==undefined ? (<Button variant='outlined' sx={{m: 2}} onClick={() => {props.setEnableEdit(false)}}>Cancel</Button>): (<></>)}
+                            {props.convention!==undefined ? (
+                                <Button variant='outlined' sx={{m: 2}} onClick={() => {props.setEnableEdit(false)}}>
+                                    Cancel
+                                </Button>
+                            ): (<></>)}
                             <Button type="submit" variant='contained' sx={{m: 2}}>Submit</Button>
                         </Box>
-                        {/* </Card> */}
                     </Paper>
                 </Grid>
             </Grid>
