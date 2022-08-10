@@ -24,7 +24,7 @@ router.route('/addEvent').post(async function(req, res) {
 router.route('/getEvents').get(async function(req, res) {
     try{
         const events = await Event.find();
-        res.status(201).send(events);
+        res.status(201).send(JSON.stringify(events));
     } catch(err) {
         res.status(400).json({ message: err.message });
     }
@@ -43,10 +43,10 @@ router.route('/updateEvent/:id').post(async function (req, response) {
     }
 
     try {
-        await Event.updateOne({id: id}, newvalues, function(err, res){
-            if (err) throw err;
+        await Event.updateOne({id: id}, newvalues).then(function(err, res){
+            // if (err) throw err;
             console.log("1 document updated");
-            response.json(res);
+            response.status(200).json(res);
         })
     } catch (err) {
         response.status(400).json({ message: err.message });
