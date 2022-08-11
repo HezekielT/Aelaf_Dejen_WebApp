@@ -16,6 +16,7 @@ const validationSchema = yup.object({
 function ForgotPasswordForm(props) {
 
   const [responseError, setResponseError] = useState('');
+  const [checkEmail, setCheckEmail] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -23,6 +24,7 @@ function ForgotPasswordForm(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
+      setResponseError('')
       const putvalues = async () => {
         await axios.post(
           "http://localhost:5000/forgotPassword",
@@ -30,7 +32,7 @@ function ForgotPasswordForm(props) {
             email: values.email,
           },
         ).then(function () {
-          <CheckEmail />
+          setCheckEmail(true)
         }).catch(function (error) {
           alert(error)
           setResponseError(error.message);
@@ -42,8 +44,10 @@ function ForgotPasswordForm(props) {
   })
   return (
     <Container maxWidth="sm" sx={{pt: '8%'}}>
-                    
-      <Paper
+      {checkEmail ? (
+        <CheckEmail />
+      ) :(
+        <Paper
         sx={{
             marginTop: 8,
             display: 'flex',
@@ -82,6 +86,7 @@ function ForgotPasswordForm(props) {
           </Button>
         </Box>
       </Paper>
+      )} 
     </Container>
   );
 }
