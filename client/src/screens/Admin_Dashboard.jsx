@@ -1,8 +1,8 @@
 import React from 'react';
 import { ThemeProvider, Box, createTheme } from '@mui/material';
-import Login from '../components/Admin/Login';
-import Admin_Options from '../components/Admin/Admin_Options';
-import Manage_Contents from '../components/Admin/manage_web_content';
+import Login from '../components/Admin_Auth/Login';
+import Admin_Options from '../components/Admin_Tasks/Admin_Options';
+import Manage_Contents from '../components/Admin_Tasks/manage_web_content';
 
 const mdTheme = createTheme();
 const boxSx = {
