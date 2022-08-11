@@ -8,6 +8,7 @@ import Manage_Contents from './components/Admin_Tasks/manage_web_content';
 import Transport_Registration from './components/Admin_Tasks/Transport_Registration';
 import AdminDashboard from './screens/Admin_Dashboard';
 import Dashboard from './screens/dashboard';
+import Not_Found from './screens/Not_Found';
 
 function Navigator(props) {
 
@@ -22,6 +23,7 @@ function Navigator(props) {
                 <Route path="/dashboard/accounts" element={<Manage_Account />} />
                 <Route path="/forgotpassword" element={<ForgotPasswordForm />} />
                 <Route path="/resetpassword/:resetToken?" element={<ResetPassword />} />
+                <Route path="*" element={<Not_Found />} />
             </Routes>
         </Router>
     );
