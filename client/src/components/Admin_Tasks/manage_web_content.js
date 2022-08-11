@@ -3,10 +3,10 @@ import { Grid, Card, CardContent, Box, Paper, Container, IconButton,
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
-import Events from '../Events';
+import Events from '../convention/Events';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useReference } from '../../context/refProvider';
-import EventsForm from '../EventsForm';
+import EventsForm from '../convention/EventsForm';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;

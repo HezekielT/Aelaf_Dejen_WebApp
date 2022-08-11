@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { v4 as uuidV4 } from "uuid";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import storage from "../firebase";
+import storage from "../../firebase";
 
 const axios = require('axios');
 

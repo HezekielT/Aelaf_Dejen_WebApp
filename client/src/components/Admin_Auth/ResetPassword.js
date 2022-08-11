@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid, Typography, Paper, 
   Box, TextField, Button } from '@mui/material';
 
@@ -54,7 +54,7 @@ function ResetPassword(props) {
           )
           .then(function(response){
             alert(JSON.stringify(response.data))
-            resetToken !== null ? (navigate('/login')) : ('')
+            resetToken !== null ? (navigate('/login')) : (<></>)
             
           })
           .catch(function(error){
