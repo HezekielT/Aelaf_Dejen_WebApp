@@ -166,7 +166,7 @@ function Participant_Regist(props) {
                                     >
                                         {props.drivers !== [] ? (
                                             props.drivers.map(driver => 
-                                                <MenuItem key={driver.id} value={driver.id}>{driver.initialLocation}</MenuItem>
+                                                <MenuItem key={driver.id} value={driver.initialLocation}>{driver.initialLocation}</MenuItem>
                                             )
                                         ) : (
                                             <MenuItem value="">"None available"</MenuItem>
