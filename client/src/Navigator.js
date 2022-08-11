@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Admin_Options from './components/Admin/Admin_Options';
-import Manage_Account from './components/Admin/Manage_Account';
-import Manage_Contents from './components/Admin/manage_web_content';
-import Transport_Registration from './components/Admin/Transport_Registration';
+import Admin_Options from './components/Admin_Tasks/Admin_Options';
+import Manage_Account from './components/Admin_Tasks/Manage_Account';
+import Manage_Contents from './components/Admin_Tasks/manage_web_content';
+import Transport_Registration from './components/Admin_Tasks/Transport_Registration';
 import AdminDashboard from './screens/Admin_Dashboard';
 import Dashboard from './screens/dashboard';
 
