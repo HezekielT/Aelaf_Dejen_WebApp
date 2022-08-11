@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ForgotPasswordForm from './components/Admin_Auth/ForgotPassword';
 import Admin_Options from './components/Admin_Tasks/Admin_Options';
 import Manage_Account from './components/Admin_Tasks/Manage_Account';
 import Manage_Contents from './components/Admin_Tasks/manage_web_content';
@@ -18,6 +19,7 @@ function Navigator(props) {
                 <Route path="/dashboard/contents" element={<Manage_Contents />} />
                 <Route path="/dashboard/transport" element={<Transport_Registration />} />
                 <Route path="/dashboard/accounts" element={<Manage_Account />} />
+                <Route path="/forgotpassword" element={<ForgotPasswordForm />} />
             </Routes>
         </Router>
     );
