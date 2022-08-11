@@ -68,7 +68,7 @@ function Login(props) {
             <Typography component="h3" variant="h5">
                 Login
             </Typography>
-            <Typography>
+            <Typography sx={{color: "#c62828"}}>
                 {responseError}
             </Typography>
             <Box component="form" onSubmit={formik.handleSubmit} sx={ boxSx }>
