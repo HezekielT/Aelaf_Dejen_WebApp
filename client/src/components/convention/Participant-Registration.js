@@ -30,7 +30,6 @@ const validationSchema = yup.object({
 
 function Participant_Regist(props) {
     const pid = uuidV4();
-    console.log(typeof(props.drivers))
     const formik = useFormik({
         initialValues: {
             first_name: '',

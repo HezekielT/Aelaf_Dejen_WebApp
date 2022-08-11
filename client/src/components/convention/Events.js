@@ -93,6 +93,7 @@ function Events(props) {
                     conventions.map((convention) => 
                     // console.log(conventions.indexOf(convention),"-id-", convention.id)
                         <EventsItem 
+                         key={convention.id}
                          val={val}
                          text={text}
                          EditConvention={EditConvention}
