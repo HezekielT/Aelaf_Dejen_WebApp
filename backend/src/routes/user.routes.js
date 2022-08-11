@@ -87,13 +87,12 @@ router.route('/updateDriver/:id').post(async function (req, response) {
     }
 
     try {
-        await Driver.updateOne(id, newvalues, function(err, res){
-            if (err) throw err;
+        await Driver.updateOne({id: id}, newvalues).then(function(err, res){
             console.log("1 document updated");
-            response.json(res);
+            response.status(200).json(res);
         })
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        response.status(400).json({ message: err.message });
     }
 });
 
@@ -101,13 +100,12 @@ router.route("/deleteDriver/:id").delete(async (req, response) => {
 
     let id = req.params.id
     try {
-        await Driver.deleteOne(id, function(err, obj){
-            if (err) throw err;
+        await Driver.deleteOne({id: id}).then(function(err, obj){
             console.log("1 document deleted.");
-            response.status(obj);
+            response.status(200).json(res);
         });
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        response.status(400).json({ message: err.message });
     }
 })
 
