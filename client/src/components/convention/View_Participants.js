@@ -1,48 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { TableBody, Table, TableCell, 
   TableHead, TableRow, Typography, Paper } from '@mui/material';
-import axios from 'axios';
 
-function GenerateTable(title, data) {
-  console.log("j", data)
-  let headers
-  if( Object.keys(data).length !== 0) {
-
-    headers = Object.keys(data[0])
+function GenerateTable(props) {
+  let headers;
+  if( props.data.data.length !==0 && Object.keys(props.data.data[0]).length !== 0) {
+    headers = Object.keys(props.data.data[0].user).slice(0,4).concat(Object.keys(props.data.data[0]).slice(4,6))
   }
 
   return (
-    Object.keys(data).length !== 0 ? (
+    props.data.data.length !==0 && Object.keys(props.data).length !== 0 ? (
       <Paper>
-      <Typography variant="h4" color="inherit">
-        {title}
-      </Typography>
 
-      <hr />
+        <hr />
 
-      <Table>
-        <TableHead>
-          <TableRow>
-            {headers.map(header => (
-              <TableCell align="right">{header.toUpperCase()}</TableCell>
-            ))}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((emp, index) => (
-            <TableRow key={index}>
+        <Table>
+          <TableHead>
+            <TableRow>
               {headers.map(header => (
-                <TableCell align='right'>{emp[header]}</TableCell>
+                
+                <TableCell>{header.toUpperCase()}</TableCell>
               ))}
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+          </TableHead>
+          <TableBody>
+            {props.data.data.map((data, i) => 
+              <TableRow key={i}>
+                {Object.values(data.user).slice(0,4).concat(Object.values(props.data.data[0]).slice(4,6)).map(emp => 
+                  <TableCell>{emp}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
     ) : (
-        <Typography >
+      <Paper sx={{ m: 3, p: 2}}>
+        <Typography variant="h6">
           No one has registered so far!
         </Typography>
+      </Paper>
     )
     
   );
@@ -53,15 +50,21 @@ GenerateTable.defaultProps = {
 }
 
  function View_Participants(props) {
-  
+  let vid;
+  if(props.participantList.allData[props.index].data.length === 0){
+    vid = '0'
+  } else {
+    vid = props.participantList.allData[props.index].data[0].id;
+  }
   useEffect(() => {
-    
-    console.log("List: ", props.participantList.allData[props.index].data[0])
+    // console.log("List: ", props.participantList.allData[props.index].data[0].id)
+    // console.log("TYPE ", Object.keys(props.participantList.allData[props.index].data[0]))
     // console.log("index", props.index)
   },[])
+  console.log(vid,'-')
   return (
-    // <GenerateTable title="Participants" data={participants} />
-    <div key={props.id}>Hello</div>
+    <GenerateTable key={vid} title="Participants" data={props.participantList.allData[props.index] } />
+    // <div key={props.id}>Hello</div>
   );
 }
 
