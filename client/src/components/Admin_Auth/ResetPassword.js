@@ -5,6 +5,8 @@ import { Grid, Typography, Paper,
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
+import { useNavigate, useParams } from 'react-router-dom';
+const axios = require('axios')
 
 const changePsdValidation = yup.object({
   oldPassword: yup
@@ -21,6 +23,14 @@ const changePsdValidation = yup.object({
 });
 
 function ResetPassword(props) {
+  const resetToken = useParams();
+  const endpoint = (resetToken !== null) ? 
+    (`http://localhost:5000/passwordreset/${resetToken}`) :
+    ('http://localhost:5000/passwordreset')
+
+  const navigate = useNavigate();
+  const [responseError, setResponseError] = useState('');
+
   const formik = useFormik({
     initialValues: {
         oldPassword: '',
@@ -29,16 +39,38 @@ function ResetPassword(props) {
       },
       validationSchema: changePsdValidation,
       onSubmit: (values) => {
-        alert(JSON.stringify(values, null, 2));
+        setResponseError('')
+        const reset = async () => {
+          await axios.post(
+            endpoint,
+            {
+              password: values.confirmPassword,
+            },
+            {
+              header: {
+                "Content-Type": "application/json",
+              }
+            }
+          )
+          .then(function(response){
+            alert(JSON.stringify(response.data))
+            resetToken !== null ? (navigate('/login')) : ('')
+            
+          })
+          .catch(function(error){
+            setResponseError(error)
+          }) 
+        }
+        reset();
       },
 });
 
   return (
     <Grid container>
       <Grid item xs={12} lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Typography>{responseError}</Typography>
           <Typography 
               variant='h6'
-              // noWrap
               component="div"
               sx={{color: '#1565c0', px: 3}}
           >
