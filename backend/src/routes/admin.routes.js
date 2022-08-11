@@ -108,7 +108,7 @@ router.route('/forgotPassword').post(async function(req, res, next){
   }
 })
 // can the parameter reset token be optional?
-router.route('/passwordreset/:resetToken').post(async function(req, res){
+router.route('/passwordreset/:resetToken?').post(async function(req, res){
   if (req.params.resetToken !== null){
       const resetPasswordToken = crypto
           .createHash("sha256")
