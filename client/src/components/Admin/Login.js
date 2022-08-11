@@ -5,6 +5,7 @@ import { Box, Paper, TextField,
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+
 const axios = require('axios')
 
 const validationSchema = yup.object({
@@ -17,6 +18,15 @@ const validationSchema = yup.object({
     .min(8, 'Password should be of minimum 8 characters')
     .required('Password is required')
 });
+
+const paperSx ={
+  marginTop: 8,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center'
+}
+
+const boxSx = { mt: 1, px: 7, pb: 7 }
 
 function Login(props) {
   const [responseError, setResponseError] = useState('');
@@ -50,12 +60,7 @@ function Login(props) {
       <Container maxWidth="sm" sx={{pt: '8%'}}>
                     
         <Paper
-            sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
-            }}
+            sx={ paperSx }
             >
             <Typography comoponent="h1" variant='h5' sx={{p: 3}}>
                 AELAPH-DEJEN ADMIN
@@ -66,7 +71,7 @@ function Login(props) {
             <Typography>
                 {responseError}
             </Typography>
-            <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1, px: 7, pb: 7 }}>
+            <Box component="form" onSubmit={formik.handleSubmit} sx={ boxSx }>
                 <TextField
                   margin="normal"
                   required
