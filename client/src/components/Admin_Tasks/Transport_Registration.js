@@ -42,9 +42,9 @@ function Transport_Registration(props) {
             axios.get(
                 "http://localhost:5000/getEvents"
             ).then(function(response) {
-                console.log("response", response)
+                // console.log("response", response)
                 setConventions(response.data)
-                console.log("conv", response.data)
+                // console.log("conv", response.data)
             }).catch(function (error) {
                 console.log(error)
             })
@@ -53,29 +53,26 @@ function Transport_Registration(props) {
     }, [])
 
     function RenderConventions(props) {
-        // {console.log(props.conventions)}
-        // const headers = Object.keys(props.conventions).length
-        // console.log(headers)
-        // console.log(conventions)
-        // console.log(Object.values(conventions[0]))
+        
         return (
             <FormControl fullWidth>
-                            <InputLabel id="select-label">Convention</InputLabel>
-            <Select
-                id='convention'
-                name="convention"
-                labelId="select-label"
-                label="convention"
-                value={formik.values.convention}
-                onChange={formik.handleChange}
-                error={formik.touched.convention && Boolean(formik.errors.convention)}
-                // helperText={formik.touched.address && formik.errors.address}
-                
-            >
-                {conventions.map(convention => 
-                    <MenuItem key={convention.id} value={convention.id}>{convention.location}</MenuItem>
-                )}
-            </Select></FormControl>
+                <InputLabel id="select-label">Convention</InputLabel>
+                <Select
+                    id='convention'
+                    name="convention"
+                    labelId="select-label"
+                    label="convention"
+                    value={formik.values.convention}
+                    onChange={formik.handleChange}
+                    error={formik.touched.convention && Boolean(formik.errors.convention)}
+                    // helperText={formik.touched.address && formik.errors.address}
+                    
+                >
+                    {conventions.map(convention => 
+                        <MenuItem key={convention.id} value={convention.id}>{convention.location}</MenuItem>
+                    )}
+                </Select>
+            </FormControl>
         )
     }
 
@@ -205,12 +202,12 @@ function Transport_Registration(props) {
                         helperText={formik.touched.plateno && formik.errors.plateno}
                     />
                     <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
-                                    {conventions !== [] ? (
-                                        <RenderConventions conventions={conventions}/>
-                                    ) : (
-                                        <FormControl fullWidth>
-                                            <InputLabel id="select-label">Convention</InputLabel>
-                                        <Select
+                        {conventions !== [] ? (
+                            <RenderConventions conventions={conventions}/>
+                        ) : (
+                            <FormControl fullWidth>
+                                <InputLabel id="select-label">Convention</InputLabel>
+                                <Select
                                     id='convention'
                                     name="convention"
                                     labelId="select-label"
@@ -224,7 +221,7 @@ function Transport_Registration(props) {
                                     <MenuItem>None available</MenuItem>
                                 </Select>
                             </FormControl>
-                                )}
+                    )}
                     </Box>
                     <TextField
                         required
