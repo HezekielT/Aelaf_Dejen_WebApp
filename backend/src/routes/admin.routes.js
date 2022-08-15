@@ -11,28 +11,29 @@ router.route('/registerAdmin').post(async function(req, res){
   const token = jwt.sign({ email: email}, process.env.JWT_SECRET);
 
   try {
-      await Admin.create({
-          id,
-          admin: {
-              first_name,
-              last_name,
-              email,
-              phoneno,
-          },
-          password,
-          privilege,
-          confirmationCode: token,
-      });
-      console.log("Successfully registered driver");
+    //   await Admin.create({
+    //       id,
+    //       admin: {
+    //           first_name,
+    //           last_name,
+    //           email,
+    //           phoneno,
+    //       },
+    //       password,
+    //       privilege,
+    //       confirmationCode: token,
+    //   });
+    //   console.log("Successfully registered driver");
       sendConfirmationEmail(first_name, last_name, email, privilege, token);
-      res.status(201).send();
+    //   res.status(201).send();
+    res.redirect(200, 'http://localhost:3000/admin')
   } catch(err) {
       res.status(400).json({ message: err.message });
   }
 
 })
 
-router.route('/confirm/:confrimationCode').get(async function(req, res) {
+router.route('/confirm/:confrimationCode').post(async function(req, res) {
   const user = await Admin.findOne({
       confirmationCode: req.params.confirmationCode,
   })
@@ -53,6 +54,28 @@ router.route('/confirm/:confrimationCode').get(async function(req, res) {
   })
 });
 
+router.route('/createnewpassword').post(async function(req, res) {
+    const { id, password } = req.body;
+    const user = await Admin.findOne({
+        id
+    })
+
+    if(!user) {
+        return res.status(404).send({ message: "Not Found!"})
+    }
+    user.password = password;
+    user.save((err) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+    });
+    res.status(200).send({
+        success: true,
+        data: "Password Successfully Created!"
+    })
+})
+
 router.route('/signin').post(async function(req, res) {
   const { email, password } = req.body;
   try {
@@ -71,9 +94,10 @@ router.route('/signin').post(async function(req, res) {
           return res.status(400).send({ message: "You have been suspended by the admin!"})
       }
       res.status(200).send({
-          success: true,
-          data: "Successfully Logged in!",
-          token: user.getSignedJwtToken(),
+        email: user.email, 
+        first_name: user.first_name,
+        last_name: user.last_name, 
+        token: user.getSignedJwtToken(),
       });
   } catch (err) {
       res.status(400).json({message: err.message})
