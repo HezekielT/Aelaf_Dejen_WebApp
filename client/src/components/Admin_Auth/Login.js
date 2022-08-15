@@ -46,8 +46,9 @@ function Login(props) {
             email: values.email,
             password: values.password,
           },
-        ).then(function (){
-          navigate('/dashboard')
+        ).then(function (response){
+          localStorage.setItem("UserInfo", response.data.token)
+          navigate('/dashboard', { state: {user: response.data}})
         }).catch(function (error){
           setResponseError(error.message);
         })
