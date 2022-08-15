@@ -2,8 +2,10 @@ import { Grid, Box, Paper, Typography,
   TextField, FormControl, InputLabel, 
   Select, MenuItem, Button } from '@mui/material';
 import React from 'react';
+import { v4 as uuidV4 } from 'uuid'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+const axios = require('axios');
 
 const validationSchema = yup.object({
   first_name: yup
@@ -25,22 +27,45 @@ const validationSchema = yup.object({
     .required('Password is required'),
   privilege: yup
     .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters')
-    .required('Password is required')
+    .required('privilege is required')
 });
 
 function AddAdmin(props) {
+  const aid = uuidV4();
   const formik = useFormik({
     initialValues: {
-      name: '',
+      first_name: '',
+      last_name: '',
       email: '',
+      phoneno: '',
       password: '',
       privilege: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    //   navigate('/dashboard')
+    const putvalues = async () => {
+        await axios.post(
+            "http://localhost:5000/registerAdmin",
+            {
+                id: aid,
+                first_name: values.first_name,
+                last_name: values.last_name,
+                email: values.email,
+                phoneno: values.phoneno,
+                password: values.password,
+                privilege: values.privilege,
+            },{
+            header: {
+                "Content-Type": "application/json",
+            },
+        }
+        ).then(function (){
+            alert(JSON.stringify("Thank You for Registering!"))
+        }).catch(function (error){
+            console.log(error);
+        })
+    }
+    putvalues()
     },
   });
 return(
