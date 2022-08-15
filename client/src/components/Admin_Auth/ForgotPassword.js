@@ -6,6 +6,16 @@ import { Button, Container, Paper,
 import axios from 'axios';
 import CheckEmail from './CheckEmail';
 
+const boxSx = {
+  backgroundColor: (theme) =>
+  theme.palette.mode === 'light'
+  ? theme.palette.grey[100]
+  : theme.palette.grey[900],
+  flexGrow: 1,
+  minHeight: '100vh',
+  overflow: 'auto'
+}
+
 const validationSchema = yup.object({
   email: yup
     .string('Enter your email')
@@ -43,51 +53,60 @@ function ForgotPasswordForm(props) {
     }
   })
   return (
-    <Container maxWidth="sm" sx={{pt: '8%'}}>
-      {checkEmail ? (
-        <CheckEmail />
-      ) :(
-        <Paper
-        sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-        }}
-      >
-        <Typography comoponent="h1" variant='h5' sx={{p: 3}}>
-            AELAPH-DEJEN ADMIN
-        </Typography>
-        <Typography component="h3" variant="h5">
-            {responseError}
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1, px: 7, pb: 7 }}>
-              
-          <TextField 
-            required
-            id="email"
-            name='email'
-            margin='normal'
-            autoComplete='email'
-            autoFocus
-            fullWidth
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.error.email}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Submit
-          </Button>
-        </Box>
-      </Paper>
+    <Box
+      component="main"
+      sx={ boxSx }
+    >
+      <Container maxWidth="sm" sx={{pt: '8%'}}>
+        {checkEmail ? (
+          <CheckEmail />
+        ) :(
+          <Paper
+          sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+          }}
+        >
+          <Typography comoponent="h1" variant='h5' sx={{p: 3}}>
+              AELAPH-DEJEN ADMIN
+          </Typography>
+          <Typography component="h3" variant="h5">
+              Your Email
+          </Typography>
+          <Typography component="h3" variant="h5">
+              {responseError}
+          </Typography>
+          <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1, px: 7, pb: 7 }}>
+                
+            <TextField 
+              required
+              id="email"
+              name='email'
+              margin='normal'
+              autoComplete='email'
+              label="Email"
+              autoFocus
+              fullWidth
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.error.email}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Paper>
       )} 
-    </Container>
+      </Container>
+    </Box>
   );
 }
 
