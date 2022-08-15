@@ -20,7 +20,10 @@ const connectDB = async () => {
 connectDB();
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    cors: {
+        origin: ['http://localhost:3000'],
+        methods: ['GET', 'POST']
+    }
 }));
 
 app.use(express.json());
