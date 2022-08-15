@@ -81,11 +81,13 @@ const adminSchema = new mongoose.Schema(
     password: {
         type: String,
         required: [true, "Please add a password"],
-        minlength: 6,
+        minlength: 8,
+        default: "qncir6;fus0!Y7",
         select: false,
     },
     privilege: {
-        type: Boolean,
+        type: String,
+        enum: ["super_admin", "admin"],
         required: [true],
     },
     status: {
@@ -96,6 +98,7 @@ const adminSchema = new mongoose.Schema(
     confirmationCode: {
         type: String,
         unique: true,
+        required: [false],
     },
     resetPasswordToken: String,
     },
