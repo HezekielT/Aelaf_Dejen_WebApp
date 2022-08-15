@@ -8,23 +8,43 @@ import Manage_Contents from './components/Admin_Tasks/manage_web_content';
 import Transport_Registration from './components/Admin_Tasks/Transport_Registration';
 import AdminDashboard from './screens/Admin_Dashboard';
 import Dashboard from './screens/dashboard';
+import NavBar from '../src/screens/navbar';
+import Footer from '../src/screens/footer';
 import Not_Found from './screens/Not_Found';
+import Create_New_Password from './components/Admin_Tasks/Create_New_Password';
 
 function Navigator(props) {
-
+    // const location = useLocation()
+    // const [navBar, setNavBar] = useState(null)
+    // useEffect(() => {
+    //     if(location.pathname !== '/admin') {
+    //         setNavBar(<NavBar />)
+    //     } else {
+    //         setNavBar(<></>)
+    //     }
+    // })
     return (
         <Router>
-            <Routes>
-                <Route exact path="/" element={<Dashboard />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/dashboard" element={<Admin_Options />} />
-                <Route path="/dashboard/contents" element={<Manage_Contents />} />
-                <Route path="/dashboard/transport" element={<Transport_Registration />} />
-                <Route path="/dashboard/accounts" element={<Manage_Account />} />
-                <Route path="/forgotpassword" element={<ForgotPasswordForm />} />
-                <Route path="/resetpassword/:resetToken?" element={<ResetPassword />} />
-                <Route path="*" element={<Not_Found />} />
-            </Routes>
+            {/* {navBar} */}
+            <NavBar />
+        {/* {(location.pathname !== "/admin") ? (
+        ) : (
+            <></>
+        )} */}
+                <Routes>
+                    <Route exact path="/" element={<Dashboard />} />
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/dashboard" element={<Admin_Options />} />
+                    <Route path="/dashboard/contents" element={<Manage_Contents />} />
+                    <Route path="/dashboard/transport" element={<Transport_Registration />} />
+                    <Route path="/dashboard/accounts" element={<Manage_Account />} />
+                    <Route path="/forgotpassword" element={<ForgotPasswordForm />} />
+                    <Route path="/resetpassword/:resetToken?" element={<ResetPassword />} />
+                    <Route path='/confirm/?confirmationCode' element={<Create_New_Password />} />
+                    <Route path="*" element={<Not_Found />} />
+                </Routes>
+        {/* {(location.pathname !== "/admin") ? (   */}
+            <Footer />
         </Router>
     );
 }
