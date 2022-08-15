@@ -14,23 +14,10 @@ import Not_Found from './screens/Not_Found';
 import Create_New_Password from './components/Admin_Tasks/Create_New_Password';
 
 function Navigator(props) {
-    // const location = useLocation()
-    // const [navBar, setNavBar] = useState(null)
-    // useEffect(() => {
-    //     if(location.pathname !== '/admin') {
-    //         setNavBar(<NavBar />)
-    //     } else {
-    //         setNavBar(<></>)
-    //     }
-    // })
+    
     return (
         <Router>
-            {/* {navBar} */}
             <NavBar />
-        {/* {(location.pathname !== "/admin") ? (
-        ) : (
-            <></>
-        )} */}
                 <Routes>
                     <Route exact path="/" element={<Dashboard />} />
                     <Route path="/admin" element={<AdminDashboard />} />
@@ -43,7 +30,6 @@ function Navigator(props) {
                     <Route path='/confirm/?confirmationCode' element={<Create_New_Password />} />
                     <Route path="*" element={<Not_Found />} />
                 </Routes>
-        {/* {(location.pathname !== "/admin") ? (   */}
             <Footer />
         </Router>
     );
