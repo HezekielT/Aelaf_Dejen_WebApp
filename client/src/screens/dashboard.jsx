@@ -4,8 +4,6 @@ import { Typography, Grid, Paper,
 import Events from '../components/convention/Events';
 import Home from '../components/Home';
 import ContactUs from '../components/ContactUs';
-import NavBar from './navbar';
-import Footer from './footer';
 import { useReference } from '../context/refProvider';
 
 const mdTheme = createTheme()
@@ -34,7 +32,6 @@ function Dashboard(props) {
 
     return (
         <ThemeProvider theme={mdTheme}>
-            <NavBar />
             <Home />
             <Box
                 ref={eventRef}
@@ -59,7 +56,6 @@ function Dashboard(props) {
                 </Grid>
             </Box>
             <ContactUs />
-            <Footer />
         </ThemeProvider>
     );
 }
