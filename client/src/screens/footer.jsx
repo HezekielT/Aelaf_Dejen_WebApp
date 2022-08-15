@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography, Container, Link, Grid } from '@mui/material';
 
 import GoogleIcon from '@mui/icons-material/Google';
@@ -130,45 +130,70 @@ function SocialLinks() {
 
     )
 }
+
+// function Component() {
+    //     return (
+        //         footer
+        //         )
+        //     }
 function Footer(props) {
+    const location = useLocation()
+    
+    const [footer, setFooter] = useState(null)
+    
+    useEffect(() => {
+        // {console.log(location.)}
+        if(location.pathname === '/' || location.pathname === '/dashboard' 
+        || location.pathname === '/dashboard/content' || location.pathname === '/dashboard/transport' 
+        || location.pathname === '/dashboard/accounts') {
+            setFooter(
+                <Box
+                    component="footer"
+                    sx={{
+                        display: 'flex',
+                        // position: "relative",
+                        py: 3,
+                        px: 2,
+                        mt: 'auto',
+                        backgroundColor: (theme) => 
+                        theme.palette.mode === 'light' 
+                        ? theme.palette.grey[200] 
+                        : theme.palette.grey[800],
+                    }}
+                >
+                    <Container maxWidth="xl">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={12} sx={{ pl: 3,display: 'flex', justifyContent: 'center' }}>
+                                <Typography variant='body1'>
+                                    AELAPH-DEJEN CONVENTION
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Addresss />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <Usefullinks />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <SocialLinks />
+                            </Grid>
+                            {/* <Grid item xs={12} md={4}> */}
+                                <Copyright />
+                            {/* </Grid> */}
+                        </Grid>
+                    </Container>
+                </Box>
+            )
+        } else {
+            setFooter( <></> )
+            
+        }
+    },[location.pathname])
+        
+
     return (
-        <Box
-            component="footer"
-            sx={{
-                display: 'flex',
-                // position: "relative",
-                py: 3,
-                px: 2,
-                mt: 'auto',
-                backgroundColor: (theme) => 
-                theme.palette.mode === 'light' 
-                ? theme.palette.grey[200] 
-                : theme.palette.grey[800],
-            }}
-        >
-            <Container maxWidth="xl">
-                <Grid container spacing={2}>
-                    <Grid item xs={12} md={12} sx={{ pl: 3,display: 'flex', justifyContent: 'center' }}>
-                        <Typography variant='body1'>
-                            AELAPH-DEJEN PLC
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Addresss />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Usefullinks />
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <SocialLinks />
-                    </Grid>
-                    {/* <Grid item xs={12} md={4}> */}
-                        <Copyright />
-                    {/* </Grid> */}
-                </Grid>
-            </Container>
-        </Box>
-    );
+        footer
+    )
 }
 
 export default Footer;
