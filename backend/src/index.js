@@ -2,6 +2,7 @@ const express = require('express')
 
 const cors = require('cors')
 const mongoose = require('mongoose')
+const path = require('path')
 
 require('dotenv').config();
 
@@ -28,17 +29,19 @@ app.use(cors({
 
 app.use(express.json());
 
-app.get('/', (req, res ) => {
-    res.json({
-        message: 'Hello There',
-    });
-});
-
 const port = process.env.PORT || 5000;
 
 app.use(require('./routes/user.routes'));
 app.use(require('./routes/events.routes'));
 app.use(require('./routes/admin.routes'));
+
+if(process.env.NODE_ENV ===  'production') {
+    app.use(express.static('../client/build'))
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '..','client', 'build', 'index.html'));
+    } )
+}
 
 app.listen(port, () => {
     console.log(`Currently Listening at http://localhost:${port}`);
