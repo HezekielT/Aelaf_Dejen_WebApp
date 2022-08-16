@@ -46,7 +46,20 @@ function Manage_Account(props) {
     const handleChange = (event, newValue ) => {
         setValue(newValue);
     }
-
+    function getName() {
+        const name = localStorage.getItem('name');
+        
+        if( name !== null ) {
+          if( name === undefined ) {
+            return ''
+          } else {
+            return name
+          }
+        }
+        return ''
+      }
+    
+    const name = getName()
     
     return (
         <Container maxWidth="lg"
@@ -80,7 +93,11 @@ function Manage_Account(props) {
                             sx={{px: 4, mt: 33,borderRight: 1, borderColor: 'divider', }}
                         >
                             <Tab label="Reset Password" {...tabProps(0)}/>
-                            <Tab label="Add New Admin" {...tabProps(1)}/>
+                            {(name !== '' && name.privilege  === 'super_admin') ? (
+                                <Tab label="Add New Admin" {...tabProps(1)}/>
+                            ) : ( 
+                                <></>
+                            )}
                         </Tabs>
                     </Card>
                 </Grid>
@@ -113,11 +130,11 @@ function Manage_Account(props) {
                             
 
                                 <Tab label="Change Password" {...tabProps(0)}/> 
-                                {/* {(location.state.user.privilege === 'super_admin') ? ( */}
+                                {(name !== '' && name.privilege  === 'super_admin') ? (
                                     <Tab label="Add New Admin" {...tabProps(1)}/>
-                                 {/* ) : ( */}
-                                    // <></>
-                                 {/* )}     */}
+                                  ) : ( 
+                                     <></>
+                                 )}
                         </Tabs>
                     </Card>
                 </Grid>
@@ -143,43 +160,17 @@ function Manage_Account(props) {
                         <TabPanel value={value} index={0}>
                             <ResetPassword />
                         </TabPanel>
-                        {/* {(location.state.user.privilege === 'super_admin') ? ( */}
+                        {(name !== '' && name.privilege  === 'super_admin') ? (
                             <TabPanel value={value} index={1}>
                                 <AddAdmin />
                             </TabPanel>
-                         {/* ) : ( */}
-                            // <></>
-                        {/*  )}  */}
+                         ) : ( 
+                            <></>
+                        )} 
                         
                     </Card> 
                 </Grid>
             </Grid>
-            {/* <Paper
-            sx={{
-                m: 6,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                p: 2
-            }}
-            >
-                <Button variant="outlined">
-                    Reset Password
-                </Button>
-            </Paper>
-            <Paper
-            sx={{
-                m: 6,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                p: 2
-            }}
-            >
-                <Button variant="outlined">
-                    <LogoutIcon /> {" Logout"}
-                </Button>
-            </Paper> */}
         </Container>
     );
 }
