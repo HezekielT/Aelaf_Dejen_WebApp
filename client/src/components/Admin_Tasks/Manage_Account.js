@@ -6,6 +6,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ResetPassword from '../Admin_Auth/ResetPassword';
 import React, { useRef } from 'react';
 import AddAdmin from './Add_Admin';
+import { useLocation } from 'react-router-dom';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -40,6 +41,7 @@ function tabProps(index) {
 }
 
 function Manage_Account(props) {
+    const location = useLocation();
     const [value, setValue ] = React.useState(0);
     const handleChange = (event, newValue ) => {
         setValue(newValue);
@@ -111,11 +113,11 @@ function Manage_Account(props) {
                             
 
                                 <Tab label="Change Password" {...tabProps(0)}/> 
-                                {/* <TabScrollButton direction='right' onClick={() => }>
-                            </TabScrollButton>
-                            <TabScrollButton direction='left' >
-                            </TabScrollButton> */}
-                                <Tab label="Add New Admin" {...tabProps(1)}/>
+                                {/* {(location.state.user.privilege === 'super_admin') ? ( */}
+                                    <Tab label="Add New Admin" {...tabProps(1)}/>
+                                 {/* ) : ( */}
+                                    // <></>
+                                 {/* )}     */}
                         </Tabs>
                     </Card>
                 </Grid>
@@ -141,9 +143,14 @@ function Manage_Account(props) {
                         <TabPanel value={value} index={0}>
                             <ResetPassword />
                         </TabPanel>
-                        <TabPanel value={value} index={1}>
-                            <AddAdmin />
-                        </TabPanel>
+                        {/* {(location.state.user.privilege === 'super_admin') ? ( */}
+                            <TabPanel value={value} index={1}>
+                                <AddAdmin />
+                            </TabPanel>
+                         {/* ) : ( */}
+                            // <></>
+                        {/*  )}  */}
+                        
                     </Card> 
                 </Grid>
             </Grid>
