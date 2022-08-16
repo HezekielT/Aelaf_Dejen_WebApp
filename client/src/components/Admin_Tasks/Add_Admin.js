@@ -21,10 +21,10 @@ const validationSchema = yup.object({
   phoneno: yup
     .string('Enter phone no')
     .required('Your phone number is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters')
-    .required('Password is required'),
+//   password: yup
+//     .string('Enter your password')
+//     .min(8, 'Password should be of minimum 8 characters')
+//     .required('Password is required'),
   privilege: yup
     .string('Enter your password')
     .required('privilege is required')
@@ -38,7 +38,7 @@ function AddAdmin(props) {
       last_name: '',
       email: '',
       phoneno: '',
-      password: '',
+    //   password: '',
       privilege: '',
     },
     validationSchema: validationSchema,
@@ -52,7 +52,7 @@ function AddAdmin(props) {
                 last_name: values.last_name,
                 email: values.email,
                 phoneno: values.phoneno,
-                password: values.password,
+                // password: values.password,
                 privilege: values.privilege,
             },{
             header: {
@@ -142,7 +142,7 @@ return(
             error={formik.touched.phoneno && Boolean(formik.errors.phoneno)}
             helperText={formik.touched.phoneno && formik.errors.phoneno}
         />
-        <TextField
+        {/* <TextField
             margin="normal"
             required
             fullWidth
@@ -155,7 +155,7 @@ return(
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
-        />
+        /> */}
         <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
                         
             <FormControl fullWidth>
