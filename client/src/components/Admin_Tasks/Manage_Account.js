@@ -1,7 +1,7 @@
 import { Grid, Tabs, Tab, Card, 
     Container, Paper, Box } from '@mui/material';
 import PropTypes from 'prop-types';
-import LogoutIcon from '@mui/icons-material/Logout';
+// import LogoutIcon from '@mui/icons-material/Logout';
 import ResetPassword from '../Admin_Auth/ResetPassword';
 import React from 'react';
 import AddAdmin from './Add_Admin';
@@ -46,7 +46,7 @@ function Manage_Account(props) {
         setValue(newValue);
     }
     function getName() {
-        const name = localStorage.getItem('name');
+        const name = localStorage.getItem('pri');
         
         if( name !== null ) {
           if( name === undefined ) {
@@ -58,7 +58,7 @@ function Manage_Account(props) {
         return ''
       }
     
-    const name = getName()
+    const privilege = getName()
     
     return (
         <Container maxWidth="lg"
@@ -92,7 +92,7 @@ function Manage_Account(props) {
                             sx={{px: 4, mt: 33,borderRight: 1, borderColor: 'divider', }}
                         >
                             <Tab label="Reset Password" {...tabProps(0)}/>
-                            {(name !== '' && name.privilege  === 'super_admin') ? (
+                            {(privilege !== '' && privilege  === 'super_admin') ? (
                                 <Tab label="Add New Admin" {...tabProps(1)}/>
                             ) : ( 
                                 <></>
@@ -124,7 +124,7 @@ function Manage_Account(props) {
                             
 
                                 <Tab label="Change Password" {...tabProps(0)}/> 
-                                {(name !== '' && name.privilege  === 'super_admin') ? (
+                                {(privilege !== '' && privilege  === 'super_admin') ? (
                                     <Tab label="Add New Admin" {...tabProps(1)}/>
                                   ) : ( 
                                      <></>
@@ -154,7 +154,7 @@ function Manage_Account(props) {
                         <TabPanel value={value} index={0}>
                             <ResetPassword />
                         </TabPanel>
-                        {(name !== '' && name.privilege  === 'super_admin') ? (
+                        {(privilege !== '' && privilege  === 'super_admin') ? (
                             <TabPanel value={value} index={1}>
                                 <AddAdmin />
                             </TabPanel>
