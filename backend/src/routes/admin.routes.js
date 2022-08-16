@@ -7,41 +7,42 @@ const { sendResetEmail, sendConfirmationEmail } = require("../config/nodemailer"
 const router = Router();
 
 router.route('/registerAdmin').post(async function(req, res){
-  const { id, first_name, last_name, email, phoneno, password, privilege } = req.body;
-  const token = jwt.sign({ email: email}, process.env.JWT_SECRET);
+  const { id, first_name, last_name, email, phoneno, privilege } = req.body;
+  const token = jwt.sign({ email: email}, process.env.JWT_KEY);
 
   try {
-    //   await Admin.create({
-    //       id,
-    //       admin: {
-    //           first_name,
-    //           last_name,
-    //           email,
-    //           phoneno,
-    //       },
-    //       password,
-    //       privilege,
-    //       confirmationCode: token,
-    //   });
-    //   console.log("Successfully registered driver");
+      await Admin.create({
+          id,
+          admin: {
+              first_name,
+              last_name,
+              email,
+              phoneno,
+          },
+        //   password,
+          privilege,
+          confirmationCode: token,
+      });
+      console.log("Successfully registered driver");
       sendConfirmationEmail(first_name, last_name, email, privilege, token);
-    //   res.status(201).send();
-    res.redirect(200, 'http://localhost:3000/admin')
+      res.status(201).send();
   } catch(err) {
       res.status(400).json({ message: err.message });
   }
 
 })
 
-router.route('/confirm/:confrimationCode').post(async function(req, res) {
+router.route('/confirm/:confirmationCode').get(async function(req, res) {
+  const confirmcode = req.params.confirmationCode;
   const user = await Admin.findOne({
-      confirmationCode: req.params.confirmationCode,
+      confirmationCode: confirmcode,
   })
 
   if(!user) {
       return res.status(404).send({ message: "Admin not found." });
   }
   user.status = "Active";
+  const id = user.id;
   user.save((err) => {
       if (err) {
           res.status(500).send({ message: err });
@@ -50,7 +51,8 @@ router.route('/confirm/:confrimationCode').post(async function(req, res) {
   });
   res.status(200).send({
       success: true,
-      data: "Admin is active now"
+      data: "Admin is active now",
+      id: id
   })
 });
 
@@ -80,24 +82,26 @@ router.route('/signin').post(async function(req, res) {
   const { email, password } = req.body;
   try {
       const user = await Admin.findOne({ email }).select("+password");
-      if (!user) {
+      
+     if (!user) {
           return res.status(404).send({ message: "Admin Not found!"});
       }
       const isMatch = await user.matchPassword(password);
       if(!isMatch) {
           return res.status(400).send({ message: "Incorrect email or password"})
-      }
-      if(user.status === "Pending") {
+      }if(user.status === "Pending") {
           return res.status(400).send({ message: "Please verify your email first!"})
       }
       if(user.status === "Suspended") {
           return res.status(400).send({ message: "You have been suspended by the admin!"})
       }
-      res.status(200).send({
-        email: user.email, 
-        first_name: user.first_name,
-        last_name: user.last_name, 
+    
+      res.status(201).send({
+        admin: user.admin,
+        privilege: user.privilege,
+        id: user.id,
         token: user.getSignedJwtToken(),
+        success: "Successfully Logged In",
       });
   } catch (err) {
       res.status(400).json({message: err.message})
@@ -151,30 +155,32 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
 
           await user.save();
           res.status(201).json({
-              success: true,
-              data: "Password Updated Successfully!",
-              token: user.getSignedJwtToken(),
+            admin: user.admin,
+            privilege: user.privilege,
+            id: user.id,
+            token: user.getSignedJwtToken(),
           });
       } catch (err) {
           console.log(err);
       }
   } else {
-      const { email } = req.body.email
+      const { id } = req.body.id
       try {
           const user = await Admin.findOne({
-              email,
+              id,
           });
           if (!user) {
-              return res.status(400).send({ message: "Email Not Found!"})
+              return res.status(400).send({ message: "Admin Not Found!"})
           }
 
           user.password = req.body.password;
 
           await user.save();
-          res.status(201).json({
-              success: true,
-              data: "Password Updated Successfully!",
-              token: user.getSignedJwtToken(),
+          res.status(201).send({
+            admin: user.admin,
+            privilege: user.privilege,
+            id: user.id,
+            token: user.getSignedJwtToken(),
           });
       } catch (err) {
           console.log(err);
