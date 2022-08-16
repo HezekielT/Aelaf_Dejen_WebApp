@@ -5,7 +5,7 @@ import { Grid, Typography, Paper,
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 const axios = require('axios')
 
 const changePsdValidation = yup.object({
@@ -24,15 +24,15 @@ const changePsdValidation = yup.object({
 
 function ResetPassword(props) {
   const resetToken = useParams();
-  const location = useLocation();
+  // const location = useLocation();
   const reset = resetToken.resetToken;
-  const endpoint = (reset !== null) ? 
+  const endpoint = (reset !== undefined) ? 
     (`http://localhost:5000/passwordreset/${reset}`) :
     ('http://localhost:5000/passwordreset')
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   function getName() {
-    const name = localStorage.getItem('name');
+    const name = localStorage.getItem('id');
     
     if( name !== null ) {
       if( name === undefined ) {
@@ -54,15 +54,15 @@ function ResetPassword(props) {
     confirmPassword: '',
   },
   validationSchema: changePsdValidation,
-  onSubmit: (values) => {
-      const body = (reset !== null) ? ({
-        id: name.id,
+  onSubmit: (values, actions) => {
+      const body = (reset !== undefined) ? ({
         password: values.confirmPassword,
       }) : ({
+        id: name,
         password: values.confirmPassword,
       })
       setResponseError('')
-      const reset = async () => {
+      const resetFunc = async () => {
         await axios.post(
           endpoint,
           body,
@@ -76,28 +76,41 @@ function ResetPassword(props) {
           alert("Password Successfully Updated!")
           localStorage.removeItem('UserInfo')
           localStorage.setItem('UserInfo', response.data.token)
-          navigate('/dashboard', { state: {user: response.data}})
+          localStorage.setItem("fname",  response.data.first_name)
+          localStorage.setItem("lname",  response.data.last_name)
+          localStorage.setItem('pri', response.data.privilege)
+          localStorage.setItem('id', response.data.id)
         })
         .catch(function(error){
-          setResponseError(error)
+          setResponseError(error.response.data.message)
         }) 
       }
-      reset();
+      resetFunc();
+      actions.setSubmitting(false);
+      actions.resetForm({
+        values: {
+          oldPassword: '',
+          newPassword: '',
+          confirmPassword: '',
+        },
+      });
     },
 });
 
   return (
     <Grid container>
       <Grid item xs={12} lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography>{responseError}</Typography>
           <Typography 
               variant='h6'
               component="div"
               sx={{color: '#1565c0', px: 3,  mt: '15%'}}
-          >
+              >
               Change Password
           </Typography>
 
+          <Typography sx={{color: "#c62828"}}>
+                {responseError}
+          </Typography>
       </Grid>
       <Grid item xs={12} lg={12} sx={{ p: 1,display: 'flex', justifyContent: 'center' }}>
 
@@ -145,13 +158,13 @@ function ResetPassword(props) {
                 error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
                 helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
               />
-              <Button
+            <Button
               type="submit"
               variant="contained"
               sx={{ mt: 4, mb: 4, }}
-          >
-              Change Password
-          </Button>
+            >
+                Change Password
+            </Button>
           </Box>
           </Paper> 
       </Grid>
