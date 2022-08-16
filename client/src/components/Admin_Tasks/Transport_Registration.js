@@ -87,7 +87,7 @@ function Transport_Registration(props) {
             location: '',
           },
           validationSchema: validationSchema,
-          onSubmit: (values) => {
+          onSubmit: (values, actions) => {
             const putvalues = () => {
                 axios.post(
                     "http://localhost:5000/registerDriver",
@@ -108,7 +108,18 @@ function Transport_Registration(props) {
                 })
             }
             putvalues();
-
+            actions.setSubmitting(false);
+            actions.resetForm({
+            values: {
+                first_name: '',
+                last_name: '',
+                email: '',
+                phoneno: '',
+                plateno: '',
+                convention: '',
+                location: '',
+            },
+            });
           }
     });
 
