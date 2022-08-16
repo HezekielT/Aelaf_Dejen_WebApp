@@ -1,6 +1,6 @@
 const { Admin } = require('../models/user.model')
 const { Router } = require("express");
-const { isAuth } = require('../utils');
+const crypto = require('crypto')
 const jwt = require("jsonwebtoken");
 const { sendResetEmail, sendConfirmationEmail } = require("../config/nodemailer");
 
@@ -97,7 +97,8 @@ router.route('/signin').post(async function(req, res) {
       }
     
       res.status(201).send({
-        admin: user.admin,
+        first_name: user.admin.first_name,
+        last_name: user.admin.last_name,
         privilege: user.privilege,
         id: user.id,
         token: user.getSignedJwtToken(),
@@ -137,9 +138,9 @@ router.route('/forgotPassword').post(async function(req, res, next){
 })
 // can the parameter reset token be optional?
 router.route('/passwordreset/:resetToken?').post(async function(req, res){
-  if (req.params.resetToken !== null){
-      const resetPasswordToken = crypto
-          .createHash("sha256")
+    console.log(req.params.resetToken, "kl")
+  if (req.params.resetToken !== undefined ){
+      const resetPasswordToken = crypto.createHash("sha256")
           .update(req.params.resetToken)
           .digest("hex");
       try {
@@ -155,7 +156,8 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
 
           await user.save();
           res.status(201).json({
-            admin: user.admin,
+            first_name: user.admin.first_name,
+            last_name: user.admin.last_name,
             privilege: user.privilege,
             id: user.id,
             token: user.getSignedJwtToken(),
@@ -164,7 +166,7 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
           console.log(err);
       }
   } else {
-      const { id } = req.body.id
+      const { id, password } = req.body;
       try {
           const user = await Admin.findOne({
               id,
@@ -173,7 +175,7 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
               return res.status(400).send({ message: "Admin Not Found!"})
           }
 
-          user.password = req.body.password;
+          user.password = password;
 
           await user.save();
           res.status(201).send({
