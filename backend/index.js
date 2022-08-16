@@ -31,9 +31,9 @@ app.use(express.json());
 
 const port = process.env.PORT || 5000;
 
-app.use(require('./routes/user.routes'));
-app.use(require('./routes/events.routes'));
-app.use(require('./routes/admin.routes'));
+app.use(require('./src/routes/user.routes'));
+app.use(require('./src/routes/events.routes'));
+app.use(require('./src/routes/admin.routes'));
 
 if(process.env.NODE_ENV ===  'production') {
     app.use(express.static('../client/build'))
