@@ -53,7 +53,7 @@ function Create_New_Password(props) {
         }).then(function(response) {
           navigate('/admin')
         }).catch((error) =>
-          console.log(error)
+        setResponseError(error.response.data.message)
         )
       }
       putvalues()
