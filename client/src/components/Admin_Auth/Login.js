@@ -55,7 +55,7 @@ function Login(props) {
         ).then(function (response){
           console.log(response.data)
           localStorage.setItem("UserInfo", response.data.token)
-          localStorage.setItem("name", {admin: response.data.admin, id: response.data.id})
+          localStorage.setItem("name", {admin: response.data.admin, id: response.data.id, privilege: response.data.privilege})
           navigate('/dashboard')
         }).catch(function (error){
           setResponseError(error.response.data.message);
