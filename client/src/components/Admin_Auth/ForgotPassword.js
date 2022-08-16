@@ -44,8 +44,7 @@ function ForgotPasswordForm(props) {
         ).then(function () {
           setCheckEmail(true)
         }).catch(function (error) {
-          alert(error)
-          setResponseError(error.message);
+          setResponseError(error.response.data.message);
         })
       }
       putvalues()
@@ -72,6 +71,9 @@ function ForgotPasswordForm(props) {
           <Typography comoponent="h1" variant='h5' sx={{p: 3}}>
               AELAPH-DEJEN ADMIN
           </Typography>
+          <Typography sx={{color: "#c62828"}}>
+                {responseError}
+            </Typography>
           <Typography component="h3" variant="h5">
               Your Email
           </Typography>
