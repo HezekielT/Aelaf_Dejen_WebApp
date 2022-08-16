@@ -19,19 +19,21 @@ const NewPsdValidation = yup.object({
 })
 
 function Create_New_Password(props) {
+  const navigate = useNavigate();
   const token = useParams();
-
+  const code = token.confirmationCode;
   const [responseError, setResponseError] = useState('')
   const [ getId, setGetId] = useState(null)
   useEffect( () => {
     const fetch = async () => {
       await axios.get(
-        `http://localhost:5000/confirm/${token}`
+        `http://localhost:5000/confirm/${code}`
       ).then(function(response) {
-        setGetId(response)
+        setGetId(response.data.id)
       }).catch(error => {
         console.log(error)
-      })}
+      })
+    }
       fetch();
       alert("We have verified your email, please set a new password.")
   },[])
@@ -49,7 +51,7 @@ function Create_New_Password(props) {
           id: getId,
           password: values.confirmPassword
         }).then(function(response) {
-          console.log(response)
+          navigate('/admin')
         }).catch((error) =>
           console.log(error)
         )
@@ -65,7 +67,7 @@ function Create_New_Password(props) {
           <Typography 
               variant='h6'
               component="div"
-              sx={{color: '#1565c0', px: 3}}
+              sx={{color: '#1565c0', px: 3, mt: '15%'}}
           >
               Create a new password
           </Typography>
