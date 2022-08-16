@@ -42,7 +42,7 @@ function AddAdmin(props) {
       privilege: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
+    onSubmit: (values, actions) => {
     const putvalues = async () => {
         await axios.post(
             "http://localhost:5000/registerAdmin",
@@ -60,12 +60,22 @@ function AddAdmin(props) {
             },
         }
         ).then(function (){
-            alert(JSON.stringify("Thank You for Registering!"))
+            alert(JSON.stringify(`Admin Successfully Added, please check ${values.email} email's to verify!`));
         }).catch(function (error){
             console.log(error);
         })
     }
     putvalues()
+    actions.setSubmitting(false);
+    actions.resetForm({
+    values: {
+        first_name: '',
+        last_name: '',
+        email: '',
+        phoneno: '',
+        privilege: '',
+    },
+    });
     },
   });
 return(
@@ -142,20 +152,6 @@ return(
             error={formik.touched.phoneno && Boolean(formik.errors.phoneno)}
             helperText={formik.touched.phoneno && formik.errors.phoneno}
         />
-        {/* <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-        /> */}
         <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
                         
             <FormControl fullWidth>
