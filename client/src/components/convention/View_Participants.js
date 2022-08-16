@@ -5,7 +5,7 @@ import { TableBody, Table, TableCell,
 function GenerateTable(props) {
   let headers;
   if( props.data.data.length !==0 && Object.keys(props.data.data[0]).length !== 0) {
-    headers = Object.keys(props.data.data[0].user).slice(0,4).concat(Object.keys(props.data.data[0]).slice(4,6))
+    headers = Object.keys(props.data.data[0].user).slice(0,4).concat(Object.keys(props.data.data[0]).slice(4,5))
   }
 
   return (
@@ -26,7 +26,7 @@ function GenerateTable(props) {
           <TableBody>
             {props.data.data.map((data, i) => 
               <TableRow key={i}>
-                {Object.values(data.user).slice(0,4).concat(Object.values(props.data.data[0]).slice(4,6)).map(emp => 
+                {Object.values(data.user).slice(0,4).concat(Object.values(props.data.data[0]).slice(4,5)).map(emp => 
                   <TableCell>{emp}</TableCell>
                 )}
               </TableRow>
