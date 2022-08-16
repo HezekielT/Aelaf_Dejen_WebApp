@@ -31,6 +31,11 @@ const boxSx = { mt: 1, px: 7, pb: 7 }
 function Login(props) {
   const [responseError, setResponseError] = useState('');
   const navigate = useNavigate();
+  const config = {
+    header: {
+        "Content-Type": "application/json",
+    },
+  };
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -46,11 +51,15 @@ function Login(props) {
             email: values.email,
             password: values.password,
           },
+          config,
         ).then(function (response){
+          console.log(response.data)
           localStorage.setItem("UserInfo", response.data.token)
-          navigate('/dashboard', { state: {user: response.data}})
+          localStorage.setItem("name", {admin: response.data.admin, id: response.data.id})
+          navigate('/dashboard')
         }).catch(function (error){
-          setResponseError(error.message);
+          setResponseError(error.response.data.message);
+          console.log(error)
         })
       }
       putvalues()
@@ -67,7 +76,7 @@ function Login(props) {
                 AELAPH-DEJEN ADMIN
             </Typography>
             <Typography component="h3" variant="h5">
-                Login
+                LOG IN
             </Typography>
             <Typography sx={{color: "#c62828"}}>
                 {responseError}
