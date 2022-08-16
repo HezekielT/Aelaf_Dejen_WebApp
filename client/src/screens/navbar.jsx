@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AppBar, ThemeProvider, Box, 
     CssBaseline, Container, Toolbar, 
     Typography, createTheme, IconButton, 
-     Menu, MenuItem, Link, ListItemIcon, Avatar, Divider, Stack, Tooltip } from '@mui/material';
+     Menu, MenuItem, Link, ListItemIcon, Avatar, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect } from 'react';
 import { useReference } from '../context/refProvider';
@@ -10,7 +10,6 @@ import { Logout } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { LogoutIcon } from '@mui/icons-material/Logout'
 
-const pages = ['Home', 'Conventions', 'About Us']
 const theme = createTheme();
 
 function stringToColor(string) {
@@ -100,21 +99,10 @@ function NavBar() {
     }
 
     function AdminMdNavBar() {
-        function getName() {
-            const name = localStorage.getItem('name');
-            
-            if( name !== null ) {
-              if( name === undefined ) {
-                return ''
-              } else {
-                return name
-              }
-            }
-            return ''
-          }
         
-        const name = getName()
-        const full_name = name !== '' ? name.admin.first_name + ' ' + name.admin.last_name : ''
+        const fname = localStorage.getItem('fname');
+        const lname = localStorage.getItem('lname');
+        const full_name = fname + ' ' + lname;
         return (
             <React.Fragment>
             <IconButton
@@ -126,7 +114,7 @@ function NavBar() {
             aria-expanded={open ? 'true' : undefined}
             >
                 <Stack direction="row" spacing={2}>
-                    {name !== '' ? (
+                    {fname !== '' ? (
                         <Avatar  {...stringAvatar(full_name)} />
                     ) : (
                         <></>
@@ -188,7 +176,7 @@ function NavBar() {
             </>
         )
     }
-    const cc = "#322162"
+    
     function Content() {
         if(location.pathname === '/' || location.pathname === '/dashboard' 
         || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
