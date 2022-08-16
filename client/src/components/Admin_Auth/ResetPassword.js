@@ -5,7 +5,7 @@ import { Grid, Typography, Paper,
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 const axios = require('axios')
 
 const changePsdValidation = yup.object({
@@ -24,45 +24,66 @@ const changePsdValidation = yup.object({
 
 function ResetPassword(props) {
   const resetToken = useParams();
-  const endpoint = (resetToken !== null) ? 
-    (`http://localhost:5000/passwordreset/${resetToken}`) :
+  const location = useLocation();
+  const reset = resetToken.resetToken;
+  const endpoint = (reset !== null) ? 
+    (`http://localhost:5000/passwordreset/${reset}`) :
     ('http://localhost:5000/passwordreset')
 
   const navigate = useNavigate();
-  const [responseError, setResponseError] = useState('');
+  function getName() {
+    const name = localStorage.getItem('name');
+    
+    if( name !== null ) {
+      if( name === undefined ) {
+        return ''
+      } else {
+        return name
+      }
+    }
+    return ''
+  }
 
+  const name = getName()
+  const [responseError, setResponseError] = useState('');
+  
   const formik = useFormik({
-    initialValues: {
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: '',
-      },
-      validationSchema: changePsdValidation,
-      onSubmit: (values) => {
-        setResponseError('')
-        const reset = async () => {
-          await axios.post(
-            endpoint,
-            {
-              password: values.confirmPassword,
-            },
-            {
-              header: {
-                "Content-Type": "application/json",
-              }
+  initialValues: {
+    oldPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  },
+  validationSchema: changePsdValidation,
+  onSubmit: (values) => {
+      const body = (reset !== null) ? ({
+        id: name.id,
+        password: values.confirmPassword,
+      }) : ({
+        password: values.confirmPassword,
+      })
+      setResponseError('')
+      const reset = async () => {
+        await axios.post(
+          endpoint,
+          body,
+          {
+            header: {
+              "Content-Type": "application/json",
             }
-          )
-          .then(function(response){
-            alert(JSON.stringify(response.data))
-            resetToken !== null ? (navigate('/login')) : (<></>)
-            
-          })
-          .catch(function(error){
-            setResponseError(error)
-          }) 
-        }
-        reset();
-      },
+          }
+        )
+        .then(function(response){
+          alert("Password Successfully Updated!")
+          localStorage.removeItem('UserInfo')
+          localStorage.setItem('UserInfo', response.data.token)
+          navigate('/dashboard', { state: {user: response.data}})
+        })
+        .catch(function(error){
+          setResponseError(error)
+        }) 
+      }
+      reset();
+    },
 });
 
   return (
@@ -72,7 +93,7 @@ function ResetPassword(props) {
           <Typography 
               variant='h6'
               component="div"
-              sx={{color: '#1565c0', px: 3}}
+              sx={{color: '#1565c0', px: 3,  mt: '15%'}}
           >
               Change Password
           </Typography>
