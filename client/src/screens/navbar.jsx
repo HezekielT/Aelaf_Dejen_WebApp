@@ -100,7 +100,21 @@ function NavBar() {
     }
 
     function AdminMdNavBar() {
-        // const full_name = location.state.user.first_name + ' ' + location.state.user.last_name
+        function getName() {
+            const name = localStorage.getItem('name');
+            
+            if( name !== null ) {
+              if( name === undefined ) {
+                return ''
+              } else {
+                return name
+              }
+            }
+            return ''
+          }
+        
+        const name = getName()
+        const full_name = name !== '' ? name.admin.first_name + ' ' + name.admin.last_name : ''
         return (
             <React.Fragment>
             <IconButton
@@ -112,7 +126,11 @@ function NavBar() {
             aria-expanded={open ? 'true' : undefined}
             >
                 <Stack direction="row" spacing={2}>
-                    <Avatar  {...stringAvatar("full name")} />
+                    {name !== '' ? (
+                        <Avatar  {...stringAvatar(full_name)} />
+                    ) : (
+                        <></>
+                    )}
                 </Stack>
             </IconButton>
             <Menu
@@ -172,8 +190,8 @@ function NavBar() {
     }
     const cc = "#322162"
     function Content() {
-    	if(location.pathname === '/' || location.pathname === '/dashboard' 
-        || location.pathname === '/dashboard/content' || location.pathname === '/dashboard/transport' 
+        if(location.pathname === '/' || location.pathname === '/dashboard' 
+        || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
         || location.pathname === '/dashboard/accounts') {
             return(
                     <Box sx={{display: 'flex'}}>
@@ -239,17 +257,6 @@ function NavBar() {
                                         AELAPH-DEJEN
                                     </Typography>
                                     <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-                                        {/* <Link 
-                                            sx={{
-                                                color: '#fff', 
-                                                cursor: 'pointer', 
-                                                textDecoration: 'none',
-                                                px: 2,
-                                            }} 
-                                            onClick={() => scrollToRef(homeRef)}
-                                        >Home</Link>
-                                        <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
-                                        <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link> */}
                                         {location.pathname === '/' ? (
                                             <NormalMdNavBar />
                                         ) : (
