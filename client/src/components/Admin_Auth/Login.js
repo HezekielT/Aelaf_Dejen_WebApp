@@ -43,7 +43,6 @@ function Login(props) {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       const putvalues = async () => {
         await axios.post(
           "http://localhost:5000/signin",
@@ -53,9 +52,12 @@ function Login(props) {
           },
           config,
         ).then(function (response){
-          console.log(response.data)
+          console.log(typeof(response.data.admin))
           localStorage.setItem("UserInfo", response.data.token)
-          localStorage.setItem("name", {admin: response.data.admin, id: response.data.id, privilege: response.data.privilege})
+          localStorage.setItem("fname",  response.data.first_name)
+          localStorage.setItem("lname",  response.data.last_name)
+          localStorage.setItem('pri', response.data.privilege)
+          localStorage.setItem('id', response.data.id)
           navigate('/dashboard')
         }).catch(function (error){
           setResponseError(error.response.data.message);
