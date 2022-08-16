@@ -5,11 +5,12 @@ import { Typography, Box } from '@mui/material';
 function ConfirmRegistration(props) {
     const [open, setOpen] = React.useState(false);
     // console.log(props.val)
-    // useEffect(() => {
-    // },[])
-    if(props.val == true){
-        handleOpen()
-    }
+    useEffect(() => {
+
+        if(props.val == true){
+            handleOpen()
+        }
+    },[])
     const handleOpen = () => {
         setOpen(true)
     };
