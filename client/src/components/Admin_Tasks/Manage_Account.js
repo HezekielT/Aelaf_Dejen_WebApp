@@ -1,10 +1,9 @@
-import { Grid, Tabs, Tab, Card, Container, 
-    Paper, Typography, Box, TextField, Button,
-    Select, MenuItem, FormControl, InputLabel, TabScrollButton } from '@mui/material';
+import { Grid, Tabs, Tab, Card, 
+    Container, Paper, Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ResetPassword from '../Admin_Auth/ResetPassword';
-import React, { useRef } from 'react';
+import React from 'react';
 import AddAdmin from './Add_Admin';
 import { useLocation } from 'react-router-dom';
 
@@ -107,12 +106,9 @@ function Manage_Account(props) {
                             display: 'flex',
                             flexDirection: 'row',
                             backgroundColor: (theme) =>
-                    theme.palette.mode === 'light'
-                    ? theme.palette.grey[100]
-                    : theme.palette.grey[900],
-                            // height: '77vh',
-                            // mt: 2,
-                            // mb: 4, 
+                            theme.palette.mode === 'light'
+                            ? theme.palette.grey[100]
+                            : theme.palette.grey[900],
                             py: 2,
                             px: 6,
                             width: '100%'
@@ -124,8 +120,6 @@ function Manage_Account(props) {
                             onChange={handleChange}
                             scrollButtons="auto"
                             variant="scrollable"
-                            // aria-label="Vertical Tabs"
-                            // sx={{ borderRight: 1, }}
                         >
                             
 
