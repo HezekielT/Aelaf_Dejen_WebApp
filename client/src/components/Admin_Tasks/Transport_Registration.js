@@ -120,7 +120,7 @@ function Transport_Registration(props) {
                         variant='h6'
                         // noWrap
                         component="div"
-                        sx={{color: '#1565c0', px: 3}}
+                        sx={{color: '#1565c0',py: 2, px: 3, mt: 10}}
                     >
                         Please Fill in the following information
                     </Typography>
