@@ -95,7 +95,7 @@ function Manage_Contents(props) {
                         </Collapse>
                     </Card>
                     </Grid>
-                                            </Container>
+                </Container>
                     {/* </Grid> */}
                 </Grid>
             </Grid>
