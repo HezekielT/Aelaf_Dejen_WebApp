@@ -144,7 +144,7 @@ function Footer(props) {
     useEffect(() => {
         // {console.log(location.)}
         if(location.pathname === '/' || location.pathname === '/dashboard' 
-        || location.pathname === '/dashboard/content' || location.pathname === '/dashboard/transport' 
+        || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
         || location.pathname === '/dashboard/accounts') {
             setFooter(
                 <Box
