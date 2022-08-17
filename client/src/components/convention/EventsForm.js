@@ -72,7 +72,7 @@ function EventsForm(props) {
                         setImagePath(undefined);
                     }
                     await axios.post(
-                        `http://localhost:5000/updateEvent/${props.convention.id}`,
+                        `/api/event/updateEvent/${props.convention.id}`,
                         {
                             title: values.title,
                             image: remove ? ('') : (imagePath),
@@ -96,7 +96,7 @@ function EventsForm(props) {
             } else {
                 const putvalues = async () => {
                     await axios.post(
-                        "http://localhost:5000/addEvent",
+                        "/api/event/addEvent",
                         {
                             id: eid.toString(),
                             title: values.title,
