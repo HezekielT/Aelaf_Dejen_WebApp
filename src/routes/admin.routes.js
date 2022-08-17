@@ -120,7 +120,6 @@ router.route('/forgotPassword').post(async function(req, res, next){
       }
 
       const resetToken = await user.getResetPasswordToken()
-      console.log("Reset Token- ",resetToken)
       await user.save();
       try {
           sendResetEmail(email, resetToken);
@@ -166,13 +165,18 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
           console.log(err);
       }
   } else {
-      const { id, password } = req.body;
+      const { id, oldPassword, password } = req.body;
       try {
           const user = await Admin.findOne({
               id,
           });
           if (!user) {
               return res.status(400).send({ message: "Admin Not Found!"})
+          }
+
+          const isMatch = await user.matchPassword(oldPassword);
+          if(!isMatch) {
+            return res.status(400).send({ message: " Old Password is Incorrect"})
           }
 
           user.password = password;
