@@ -119,11 +119,11 @@ router.route('/forgotPassword').post(async function(req, res, next){
           return res.status(404).send({ message: "No email could not be sent, Please check your email!"})
       }
 
-      const resetToken = user.getResetPasswordToken()
-
+      const resetToken = await user.getResetPasswordToken()
+      console.log("Reset Token- ",resetToken)
       await user.save();
       try {
-          sendResetEmail(user.email, resetToken);
+          sendResetEmail(email, resetToken);
           res.status(200).json({ success: true, data: 'Email Sent'})
       } catch (err) {
           console.log(err);
