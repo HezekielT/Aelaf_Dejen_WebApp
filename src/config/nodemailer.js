@@ -6,7 +6,7 @@ require('dotenv').config({ path: '../../.env' });
 
 const sendResetEmail = (email, resetToken) => {
 
-  const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+  const resetUrl = `https://intense-mountain-14095.herokuapp.com/passwordreset/${resetToken}`;
   const message = `
          <h1>You have requested a password reset</h1>
          <p> You can reset your password by clicking on the following link: </p>
@@ -32,7 +32,7 @@ const sendResetEmail = (email, resetToken) => {
 
 const sendConfirmationEmail = async (first_name, last_name, email, privilege, token) => {
 
-  const resetUrl = `http://localhost:3000/confirm/${token}`;
+  const resetUrl = `https://intense-mountain-14095.herokuapp.com/confirm/${token}`;
   const message = `<h1>Email Confirmation</h1>
   <div>
   <h2>Dear ${first_name} ${last_name}, </h2>
