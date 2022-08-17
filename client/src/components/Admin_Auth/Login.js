@@ -45,7 +45,7 @@ function Login(props) {
     onSubmit: (values) => {
       const putvalues = async () => {
         await axios.post(
-          "http://localhost:5000/signin",
+          "/api/admin/signin",
           {
             email: values.email,
             password: values.password,
