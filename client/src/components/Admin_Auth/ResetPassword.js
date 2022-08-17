@@ -60,6 +60,7 @@ function ResetPassword(props) {
         password: values.confirmPassword,
       }) : ({
         id: name,
+        oldPassword: values.oldPassword,
         password: values.confirmPassword,
       })
       setResponseError('')
