@@ -22,8 +22,8 @@ function Events(props) {
     };
 
     let endpoints = [
-        "http://localhost:5000/getEvents",
-        "http://localhost:5000/getDrivers"
+        "/api/event/getEvents",
+        "/api/driver/getDrivers"
     ]
 
     useEffect(() => {
@@ -47,7 +47,7 @@ function Events(props) {
         
         if(conventions !== []){
             conventions.map(convention => 
-                participantEndpoints = [ ...participantEndpoints, `http://localhost:5000/getParticipants/${convention.id} `] 
+                participantEndpoints = [ ...participantEndpoints, `/api/driver/getParticipants/${convention.id} `] 
             )
         }
         const fetch = async () => {
@@ -61,7 +61,7 @@ function Events(props) {
 
     async function DeleteConvention(id) {
         await axios.delete(
-            `http://localhost:5000/deleteEvent/${id}`,
+            `/api/driver/deleteEvent/${id}`,
             config
         ).then(function(response) {
             setReloadComponent(!reloadComponent);
