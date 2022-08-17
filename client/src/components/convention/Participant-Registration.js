@@ -47,7 +47,7 @@ function Participant_Regist(props) {
             };
             const putvalues = async () => {
                 await axios.post(
-                    "http://localhost:5000/participate",
+                    "/api/driver/participate",
                     {
                         id: pid,
                         event_id: props.id,
