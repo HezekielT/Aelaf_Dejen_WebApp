@@ -37,7 +37,7 @@ function ForgotPasswordForm(props) {
       setResponseError('')
       const putvalues = async () => {
         await axios.post(
-          "http://localhost:5000/forgotPassword",
+          "/api/admin/forgotPassword",
           {
             email: values.email,
           },
