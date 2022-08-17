@@ -35,7 +35,7 @@ function Navigator(props) {
                         <Route path="/dashboard/accounts" element={<Manage_Account />} />
                     </Route>
                     <Route path="/forgotpassword" element={<ForgotPasswordForm />} />
-                    <Route path="/passwordreset/:resetToken?" element={<ResetPassword />} />
+                    <Route path="/passwordreset/:resetToken" element={<ResetPassword />} />
                     <Route path='/confirm/:confirmationCode' element={<Create_New_Password />} />
                     <Route path="*" element={<Not_Found />} />
                 </Routes>
