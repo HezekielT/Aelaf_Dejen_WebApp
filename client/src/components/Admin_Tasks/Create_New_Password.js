@@ -27,7 +27,7 @@ function Create_New_Password(props) {
   useEffect( () => {
     const fetch = async () => {
       await axios.get(
-        `http://localhost:5000/confirm/${code}`
+        `/api/admin/confirm/${code}`
       ).then(function(response) {
         setGetId(response.data.id)
       }).catch(error => {
@@ -46,7 +46,7 @@ function Create_New_Password(props) {
     validationSchema: NewPsdValidation,
     onSubmit: (values) => {
       const putvalues = async () => {
-        axios.post('http://localhost:5000/createnewpassword',
+        axios.post('/api/admin/createnewpassword',
         {
           id: getId,
           password: values.confirmPassword
