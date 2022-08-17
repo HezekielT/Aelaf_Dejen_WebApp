@@ -12,7 +12,7 @@ function CheckEmail(props) {
       }}
     >
       <Typography comoponent="h1" variant='h5' sx={{p: 3}}>
-        Please Check Your Email Inbox!
+        Please Check Your Inbox(Email)!
       </Typography>
     </Paper>
   );
