@@ -41,7 +41,8 @@ function ForgotPasswordForm(props) {
           {
             email: values.email,
           },
-        ).then(function () {
+        ).then(function (response) {
+          console.log(response)
           setCheckEmail(true)
         }).catch(function (error) {
           setResponseError(error.response.data.message);
