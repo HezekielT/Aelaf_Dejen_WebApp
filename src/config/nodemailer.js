@@ -10,7 +10,7 @@ const sendResetEmail = (email, resetToken) => {
   const message = `
          <h1>You have requested a password reset</h1>
          <p> You can reset your password by clicking on the following link: </p>
-         <a href=${resetUrl} clicktracking=off>${resetUrl}</a>
+         <a href=${resetUrl}>${resetUrl}</a>
         `;
 
   const msg = {
