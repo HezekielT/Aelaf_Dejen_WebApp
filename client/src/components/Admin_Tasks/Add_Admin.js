@@ -45,7 +45,7 @@ function AddAdmin(props) {
     onSubmit: (values, actions) => {
     const putvalues = async () => {
         await axios.post(
-            "http://localhost:5000/registerAdmin",
+            "/api/admin/registerAdmin",
             {
                 id: aid,
                 first_name: values.first_name,
