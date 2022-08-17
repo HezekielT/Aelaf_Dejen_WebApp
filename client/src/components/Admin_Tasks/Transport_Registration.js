@@ -40,7 +40,7 @@ function Transport_Registration(props) {
     useEffect(() => {
         const fetch = () => {
             axios.get(
-                "http://localhost:5000/getEvents"
+                "/api/event/getEvents"
             ).then(function(response) {
                 // console.log("response", response)
                 setConventions(response.data)
@@ -90,7 +90,7 @@ function Transport_Registration(props) {
           onSubmit: (values, actions) => {
             const putvalues = () => {
                 axios.post(
-                    "http://localhost:5000/registerDriver",
+                    "/api/driver/registerDriver",
                     {
                         id: tid,
                         first_name: values.first_name,
