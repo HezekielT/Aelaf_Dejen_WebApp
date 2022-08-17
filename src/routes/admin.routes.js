@@ -189,12 +189,12 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
       }
   }
 })
-router.route('/getAdmins').get(async function(req, isAuth, res) {
+router.route('/getAdmins').get(async function(req, res) {
   try{
       const events = await Admin.find();
       res.status(201).send(events);
   } catch(err) {
-      res.status(400).json({ message: err.message });
+      console.log(err)
   }
 })
 
