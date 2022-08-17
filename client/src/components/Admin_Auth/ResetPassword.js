@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Paper, 
-  Box, TextField, Button } from '@mui/material';
+  Box, TextField, Button, Container } from '@mui/material';
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
 
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 const axios = require('axios')
 
 const changePsdValidation = yup.object({
@@ -25,6 +25,7 @@ const changePsdValidation = yup.object({
 function ResetPassword(props) {
   const resetToken = useParams();
   // const location = useLocation();
+  const navigate = useNavigate();
   const reset = resetToken.resetToken;
   const endpoint = (reset !== undefined) ? 
     (`/api/admin/passwordreset/${reset}`) :
@@ -80,6 +81,7 @@ function ResetPassword(props) {
           localStorage.setItem("lname",  response.data.last_name)
           localStorage.setItem('pri', response.data.privilege)
           localStorage.setItem('id', response.data.id)
+          navigate('/dashboard')
         })
         .catch(function(error){
           setResponseError(error.response.data.message)
@@ -98,6 +100,8 @@ function ResetPassword(props) {
 });
 
   return (
+    <Container>
+      
     <Grid container>
       <Grid item xs={12} lg={12} sx={{ display: 'flex', justifyContent: 'center' }}>
           <Typography 
@@ -105,7 +109,11 @@ function ResetPassword(props) {
               component="div"
               sx={{color: '#1565c0', px: 3,  mt: '15%'}}
               >
-              Change Password
+                {reset !== undefined ? (
+                  'Reset Password'
+                ) : (
+                  'Change Password'
+                )}
           </Typography>
 
           <Typography sx={{color: "#c62828"}}>
@@ -116,7 +124,8 @@ function ResetPassword(props) {
 
           <Paper sx={{width: '60vh',}}>
               <Box component="form" onSubmit={formik.handleSubmit} maxWidth="lg" sx={{backgroundColor: '#f5f5f5',p: 6,display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-              <TextField
+              {reset === undefined ? (
+                <TextField
                 margin="normal"
                 required
                 fullWidth
@@ -129,7 +138,8 @@ function ResetPassword(props) {
                 onChange={formik.handleChange}
                 error={formik.touched.oldPassword && Boolean(formik.errors.oldPassword)}
                 helperText={formik.touched.oldPassword && formik.errors.oldPassword}
-              />
+                />
+                ) : (<></>)}
               <TextField
                 margin="normal"
                 required
@@ -169,6 +179,7 @@ function ResetPassword(props) {
           </Paper> 
       </Grid>
     </Grid>
+    </Container>
   )
 }
 
