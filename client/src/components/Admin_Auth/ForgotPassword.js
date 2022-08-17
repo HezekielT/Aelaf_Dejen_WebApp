@@ -94,7 +94,7 @@ function ForgotPasswordForm(props) {
               value={formik.values.email}
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
-              helperText={formik.touched.email && formik.error.email}
+              helperText={formik.touched.email && formik.errors.email}
             />
             <Button
               type="submit"
