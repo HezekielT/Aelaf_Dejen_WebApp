@@ -27,8 +27,8 @@ function ResetPassword(props) {
   // const location = useLocation();
   const reset = resetToken.resetToken;
   const endpoint = (reset !== undefined) ? 
-    (`http://localhost:5000/passwordreset/${reset}`) :
-    ('http://localhost:5000/passwordreset')
+    (`/api/admin/passwordreset/${reset}`) :
+    ('/api/admin/passwordreset')
 
   // const navigate = useNavigate();
   function getName() {
