@@ -81,8 +81,9 @@ router.route('/createnewpassword').post(async function(req, res) {
 router.route('/signin').post(async function(req, res) {
   const { email, password } = req.body;
   try {
-      const user = await Admin.findOne({ email }).select("+password");
-      
+    console.log("email is ",email)
+      const user = await Admin.findOne({ 'admin.email': email }).select("+password");
+      console.log("User Detail", user)
      if (!user) {
           return res.status(404).send({ message: "Admin Not found!"});
       }
