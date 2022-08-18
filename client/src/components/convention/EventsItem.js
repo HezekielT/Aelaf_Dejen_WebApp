@@ -85,6 +85,7 @@ function EventsItem(props) {
                id={props.convention.id} 
                event_name={props.convention.title} 
                drivers={props.drivers}
+               setExpanded={setExpanded}
               />
           ) : (
               <View_Participants 
