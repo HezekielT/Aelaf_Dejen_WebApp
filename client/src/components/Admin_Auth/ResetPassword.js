@@ -4,12 +4,18 @@ import { Grid, Typography, Paper,
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
+import ConfirmRegistration from '../SuccessDialog';
 
 import { useNavigate, useParams } from 'react-router-dom';
 const axios = require('axios')
 
 
 function ResetPassword(props) {
+  const msg = "You have Successfully updated your password, \
+  Please use your new password when when you log in next time!";
+  const [open, setOpen] = useState(false)
+  const title = "Password Updated Successfully!";
+  
   const resetToken = useParams();
   // const location = useLocation();
   const navigate = useNavigate();
@@ -82,6 +88,7 @@ function ResetPassword(props) {
         oldPassword: values.oldPassword,
         password: values.confirmPassword,
       })
+      console.log("bob", body)
       setResponseError('')
       const resetFunc = async () => {
         await axios.post(
@@ -94,7 +101,7 @@ function ResetPassword(props) {
           }
         )
         .then(function(response){
-          alert("Password Successfully Updated!")
+          setOpen(true);
           localStorage.removeItem('UserInfo')
           localStorage.setItem('UserInfo', response.data.token)
           localStorage.setItem("fname",  response.data.first_name)
@@ -144,9 +151,11 @@ function ResetPassword(props) {
                 )}
           </Typography>
 
-          <Typography sx={{color: "#c62828"}}>
-                {responseError}
-          </Typography>
+      </Grid>
+      <Grid item xs={12} lg={12}>
+        <Typography sx={{color: "#c62828", my: '1%', display: 'flex', justifyContent: 'center'}}>
+          {responseError}
+        </Typography>
       </Grid>
       <Grid item xs={12} lg={12} sx={{ p: 1,display: 'flex', justifyContent: 'center' }}>
 
@@ -203,6 +212,7 @@ function ResetPassword(props) {
             >
                 Change Password
             </Button>
+          <ConfirmRegistration open={open} setOpen={setOpen} title={title} message={msg} /> 
           </Box>
           </Paper> 
       </Grid>
