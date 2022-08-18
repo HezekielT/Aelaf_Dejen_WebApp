@@ -30,7 +30,7 @@ const sendResetEmail = (email, resetToken) => {
     })
 }
 
-const sendConfirmationEmail = async (first_name, last_name, email, privilege, token) => {
+const sendConfirmationEmail = (first_name, last_name, email, privilege, token) => {
 
   const resetUrl = `https://intense-mountain-14095.herokuapp.com/confirm/${token}`;
   const message = `<h1>Email Confirmation</h1>
