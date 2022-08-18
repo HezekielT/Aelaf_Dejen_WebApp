@@ -76,7 +76,18 @@ function Participant_Regist(props) {
                 })
             }
             putvalues()
-          }
+            actions.setSubmitting(false);
+            actions.resetForm({
+                vvalues: {
+                    first_name: '',
+                    last_name: '',
+                    email: '',
+                    phoneno: '',
+                    location: '',
+                },
+                    
+            });
+                }
     });
 
     return (
@@ -155,7 +166,7 @@ function Participant_Regist(props) {
                                 helperText={formik.touched.phoneno && formik.errors.phoneno}
                             />
                             <Typography sx={{py: 2}}>
-                                Since we have prepared a transport service, please select the closest location to you from the following
+                            The convention will have transportation available, so pick the one that would work best for you.
                             </Typography>
                             <Box sx={{ py:3, display: 'flex', justifyContent: 'center'}}>
                             
