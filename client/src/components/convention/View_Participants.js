@@ -10,7 +10,7 @@ function GenerateTable(props) {
 
   return (
     props.data.data.length !==0 && Object.keys(props.data).length !== 0 ? (
-      <Paper>
+      <Paper sx={{overflowX: 'auto'}}>
 
         <hr />
 
