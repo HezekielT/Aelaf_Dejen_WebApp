@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {v4 as uuidV4 } from "uuid";
-import ConfirmRegistration from './Confirm_Registration';
+import ConfirmRegistration from '../SuccessDialog';
 
 const axios = require('axios');
 
@@ -34,6 +34,7 @@ function Participant_Regist(props) {
     const msg = "You have Successfully registered for the upcoming convention. \
     Updates will be sent to you!";
     const [open, setOpen] = useState(false)
+    const title = "Thank You for Registering!";
 
     const formik = useFormik({
         initialValues: {
@@ -50,7 +51,6 @@ function Participant_Regist(props) {
                     "Content-Type": "application/json"
                 },
             };
-            setOpen(true);
             
             const putvalues = async () => {
                 await axios.post(
@@ -70,12 +70,12 @@ function Participant_Regist(props) {
                     },
                 }
                 ).then(function (){
-                    alert(JSON.stringify("Thank You for Registering!"))
+                    setOpen(true);
                 }).catch(function (error){
                     console.log(error);
                 })
             }
-            // putvalues()
+            putvalues()
           }
     });
 
@@ -189,7 +189,7 @@ function Participant_Regist(props) {
                                 Register
                             </Button>
 
-                            <ConfirmRegistration open={open} setOpen={setOpen} message={msg} /> 
+                            <ConfirmRegistration open={open} setOpen={setOpen} title={title} message={msg} /> 
                         </Box>
                     </Paper>
                 </Grid>
