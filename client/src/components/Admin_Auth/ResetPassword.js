@@ -104,8 +104,8 @@ function ResetPassword(props) {
           setOpen(true);
           localStorage.removeItem('UserInfo')
           localStorage.setItem('UserInfo', response.data.token)
-          localStorage.setItem("fname",  response.data.first_name)
-          localStorage.setItem("lname",  response.data.last_name)
+          localStorage.setItem("fname",  response.data.admin.first_name)
+          localStorage.setItem("lname",  response.data.admin.last_name)
           localStorage.setItem('pri', response.data.privilege)
           localStorage.setItem('id', response.data.id)
           navigate('/dashboard')
