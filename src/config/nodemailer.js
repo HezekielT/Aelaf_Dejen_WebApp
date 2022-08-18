@@ -6,7 +6,7 @@ require('dotenv').config({ path: '../../.env' });
 
 const sendResetEmail = (email, resetToken) => {
 
-  const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+  const resetUrl = `https://intense-mountain-14095.herokuapp.com/passwordreset/${resetToken}`;
   const message = `
          <h1>You have requested a password reset</h1>
          <p> You can reset your password by clicking on the following link: </p>
