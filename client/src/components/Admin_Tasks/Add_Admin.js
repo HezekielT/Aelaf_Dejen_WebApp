@@ -1,10 +1,11 @@
 import { Grid, Box, Paper, Typography, 
   TextField, FormControl, InputLabel, 
   Select, MenuItem, Button } from '@mui/material';
-import React from 'react';
+import React, {useState} from 'react';
 import { v4 as uuidV4 } from 'uuid'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import ConfirmRegistration from '../SuccessDialog';
 const axios = require('axios');
 
 const validationSchema = yup.object({
@@ -31,6 +32,10 @@ const validationSchema = yup.object({
 });
 
 function AddAdmin(props) {
+  const [msg, setMsg] = useState('')
+  const [open, setOpen] = useState(false)
+  const title = "New Admin Resgistered Successfully";
+  
   const aid = uuidV4();
   const formik = useFormik({
     initialValues: {
@@ -38,32 +43,32 @@ function AddAdmin(props) {
       last_name: '',
       email: '',
       phoneno: '',
-    //   password: '',
       privilege: '',
     },
     validationSchema: validationSchema,
     onSubmit: (values, actions) => {
-    const putvalues = async () => {
-        await axios.post(
-            "/api/admin/registerAdmin",
-            {
-                id: aid,
-                first_name: values.first_name,
-                last_name: values.last_name,
-                email: values.email,
-                phoneno: values.phoneno,
-                // password: values.password,
-                privilege: values.privilege,
-            },{
-            header: {
-                "Content-Type": "application/json",
-            },
-        }
-        ).then(function (){
-            alert(JSON.stringify(`Admin Successfully Added, please check ${values.email} email's to verify!`));
-        }).catch(function (error){
-            console.log(error);
-        })
+        setMsg(`Admin Successfully Added, please check ${values.email} email's to activate their account!`)
+        const putvalues = async () => {
+            await axios.post(
+                "/api/admin/registerAdmin",
+                {
+                    id: aid,
+                    first_name: values.first_name,
+                    last_name: values.last_name,
+                    email: values.email,
+                    phoneno: values.phoneno,
+                    // password: values.password,
+                    privilege: values.privilege,
+                },{
+                header: {
+                    "Content-Type": "application/json",
+                },
+            }
+            ).then(function (){
+                setOpen(true);
+            }).catch(function (error){
+                console.log(error);
+            })
     }
     putvalues()
     actions.setSubmitting(false);
@@ -180,6 +185,7 @@ return(
             Add
         </Button>
         </Box>
+        <ConfirmRegistration open={open} setOpen={setOpen} title={title} message={msg} /> 
         </Paper>
     </Grid>
 </Grid>
