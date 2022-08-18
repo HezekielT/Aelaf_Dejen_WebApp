@@ -8,30 +8,44 @@ import { useFormik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
 const axios = require('axios')
 
-const changePsdValidation = yup.object({
-  oldPassword: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters')
-    .required('Password is required'),
-  newPassword: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters')
-    .required('Password is required'),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref('newPassword'), null], 'Password must match')
-});
 
 function ResetPassword(props) {
   const resetToken = useParams();
   // const location = useLocation();
   const navigate = useNavigate();
   const reset = resetToken.resetToken;
+  const changePsdValidation = reset !== undefined ? (
+    yup.object({
+      newPassword: yup
+        .string('Enter your password')
+        .min(8, 'Password should be of minimum 8 characters')
+        .required('Password is required'),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null], 'Password must match')
+    })
+  ) : (
+    yup.object({
+      oldPassword: yup
+        .string('Enter your password')
+        .min(8, 'Password should be of minimum 8 characters')
+        .required('Password is required'),
+      newPassword: yup
+        .string('Enter your password')
+        .min(8, 'Password should be of minimum 8 characters')
+        .required('Password is required'),
+      confirmPassword: yup
+        .string()
+        .oneOf([yup.ref('newPassword'), null], 'Password must match')
+    })
+  )
+    
   const endpoint = (reset !== undefined) ? 
     (`/api/admin/passwordreset/${reset}`) :
     ('/api/admin/passwordreset')
 
   // const navigate = useNavigate();
+  // console.log(endpoint)
   function getName() {
     const name = localStorage.getItem('id');
     
@@ -47,13 +61,18 @@ function ResetPassword(props) {
 
   const name = getName()
   const [responseError, setResponseError] = useState('');
-  
-  const formik = useFormik({
-  initialValues: {
+  const initialValue = reset!== undefined ? (
+  {
+    newPassword: '',
+    confirmPassword: '',
+  })
+: ({
     oldPassword: '',
     newPassword: '',
     confirmPassword: '',
-  },
+  })
+  const formik = useFormik({
+  initialValues: initialValue,  
   validationSchema: changePsdValidation,
   onSubmit: (values, actions) => {
       const body = (reset !== undefined) ? ({
@@ -91,15 +110,23 @@ function ResetPassword(props) {
       resetFunc();
       actions.setSubmitting(false);
       actions.resetForm({
-        values: {
-          oldPassword: '',
-          newPassword: '',
-          confirmPassword: '',
-        },
+        values: 
+          reset!== undefined ? 
+          { 
+            newPassword: '',
+            confirmPassword: '',
+          }
+          : 
+          {
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+          }
+            
       });
     },
+    
 });
-
   return (
     <Container>
       
