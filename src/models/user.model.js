@@ -43,7 +43,6 @@ const participantSchema = new mongoose.Schema({
     location: {
         // transport location chosen by the participant
         type: String,
-        required: [true],
     },
     event_name: {
         type: String,
@@ -82,7 +81,7 @@ const adminSchema = new mongoose.Schema(
         type: String,
         required: [true, "Please add a password"],
         minlength: 8,
-        default: "qncir6;fus0!Y7",
+        default: "",
         select: false,
     },
     privilege: {
