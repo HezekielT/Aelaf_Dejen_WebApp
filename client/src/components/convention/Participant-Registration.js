@@ -1,9 +1,10 @@
 import { Typography, Grid, Paper, TextField, Box, Button, 
     Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import {v4 as uuidV4 } from "uuid";
+import ConfirmRegistration from './Confirm_Registration';
 
 const axios = require('axios');
 
@@ -30,6 +31,10 @@ const validationSchema = yup.object({
 
 function Participant_Regist(props) {
     const pid = uuidV4();
+    const msg = "You have Successfully registered for the upcoming convention. \
+    Updates will be sent to you!";
+    const [open, setOpen] = useState(false)
+
     const formik = useFormik({
         initialValues: {
             first_name: '',
@@ -45,6 +50,8 @@ function Participant_Regist(props) {
                     "Content-Type": "application/json"
                 },
             };
+            setOpen(true);
+            
             const putvalues = async () => {
                 await axios.post(
                     "/api/driver/participate",
@@ -68,7 +75,7 @@ function Participant_Regist(props) {
                     console.log(error);
                 })
             }
-            putvalues()
+            // putvalues()
           }
     });
 
@@ -181,6 +188,8 @@ function Participant_Regist(props) {
                                 >
                                 Register
                             </Button>
+
+                            <ConfirmRegistration open={open} setOpen={setOpen} message={msg} /> 
                         </Box>
                     </Paper>
                 </Grid>
