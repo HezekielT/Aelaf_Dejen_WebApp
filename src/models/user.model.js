@@ -81,7 +81,7 @@ const adminSchema = new mongoose.Schema(
         type: String,
         required: [true, "Please add a password"],
         minlength: 8,
-        default: "",
+        default: "ew87fgs!^&*(feawe",
         select: false,
     },
     privilege: {
