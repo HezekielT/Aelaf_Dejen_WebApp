@@ -130,9 +130,13 @@ adminSchema.methods.getSignedJwtToken = function () {
 };
 
 adminSchema.methods.getResetPasswordToken = async function () {
-    let resetToken = crypto.randomBytes(32).toString("hex");
+    let resetToken = crypto.randomBytes(20).toString("hex");
 
-    this.resetPasswordToken = await bcrypt.hash(resetToken, Number(10));
+    this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
     return resetToken;
 }
 
