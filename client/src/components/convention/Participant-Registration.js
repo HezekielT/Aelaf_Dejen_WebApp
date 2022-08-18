@@ -45,7 +45,7 @@ function Participant_Regist(props) {
             location: '',
           },
           validationSchema: validationSchema,
-          onSubmit: (values) => {
+          onSubmit: (values, actions) => {
             const config = {
                 header: {
                     "Content-Type": "application/json"
