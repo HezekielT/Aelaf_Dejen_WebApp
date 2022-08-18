@@ -53,8 +53,8 @@ function EventsItem(props) {
           </Typography>
           {(props.val === true) ? (
               <Box sx={{ textAlign: 'right', px: 2}}>
-                  <EditIcon sx={{cursor: 'pointer',}} onClick={() => props.EditConvention(props.convention)}/>
-                  <DeleteIcon sx={{cursor: 'pointer',}} onClick={() => props.DeleteConvention(props.convention.id)}/>
+                  <EditIcon sx={{mx: 2,cursor: 'pointer',}} onClick={() => props.EditConvention(props.convention)}/>
+                  <DeleteIcon sx={{mx: 2,cursor: 'pointer',}} onClick={() => props.DeleteConvention(props.convention.id)}/>
               </Box>
           ) : (<></>)
           }
