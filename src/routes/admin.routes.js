@@ -137,7 +137,6 @@ router.route('/forgotPassword').post(async function(req, res, next){
 })
 // can the parameter reset token be optional?
 router.route('/passwordreset/:resetToken?').post(async function(req, res){
-    console.log(req.params.resetToken, "kl")
   if (req.params.resetToken !== undefined ){
       const resetPasswordToken = crypto.createHash("sha256")
           .update(req.params.resetToken)
@@ -166,17 +165,19 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
       }
   } else {
       const { id, oldPassword, password } = req.body;
+
       try {
           const user = await Admin.findOne({
               id,
-          });
+          }).select("+password");
           if (!user) {
               return res.status(400).send({ message: "Admin Not Found!"})
           }
 
           const isMatch = await user.matchPassword(oldPassword);
+          console.log("ismatch", isMatch)
           if(!isMatch) {
-            return res.status(400).send({ message: " Old Password is Incorrect"})
+            return res.status(400).send({ message: "Your Old Password is Incorrect"})
           }
 
           user.password = password;
@@ -189,7 +190,7 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
             token: user.getSignedJwtToken(),
           });
       } catch (err) {
-          console.log(err);
+          console.log("Error is",err);
       }
   }
 })
@@ -204,23 +205,7 @@ router.route('/getAdmins').get(async function(req, res) {
 
 router.route('/updateAdmin/:id').post(async function (req, response) {
   const { first_name, last_name, email, phoneno, password, privilege } = req.body;
-  // try {
-  //     await Admin.create({
-  //         id,
-  //         admin: {
-  //             first_name,
-  //             last_name,
-  //             email,
-  //             phoneno,
-  //         },
-  //         plateno,
-  //         location,
-  //     });
-  //     console.log("Successfully registered driver");
-  //     res.status(201).send();
-  // } catch(err) {
-  //     res.status(400).json({ message: err.message });
-  // }
+
   let id = req.params.id;
   let newvalues = {
           admin: {
@@ -231,14 +216,6 @@ router.route('/updateAdmin/:id').post(async function (req, response) {
           },
           password: password,
           privilege: privilege,
-          // user: {
-          //     req.body.first_name,
-          //     req.body.last_name,
-          //     req.body.email,
-          //     req.body.phoneno,
-          // },
-          // plateno: req.body.plateno,
-          // location: req.body.location,
       }
 
   try {
