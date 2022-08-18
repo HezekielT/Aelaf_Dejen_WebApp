@@ -69,7 +69,7 @@ function Transport_Registration(props) {
                     
                 >
                     {conventions.map(convention => 
-                        <MenuItem key={convention.id} value={convention.id}>{convention.location}</MenuItem>
+                        <MenuItem key={convention.id} value={convention.id}>{convention.title}</MenuItem>
                     )}
                 </Select>
             </FormControl>
