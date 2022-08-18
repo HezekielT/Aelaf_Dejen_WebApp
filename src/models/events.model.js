@@ -23,7 +23,7 @@ const eventSchema = new mongoose.Schema({
     },
     location: {
         type: String,
-        required: [true, "Please provide the location the convention will take place"]
+        required: [true, "Please provide the convention's location"]
     }
 })
 
