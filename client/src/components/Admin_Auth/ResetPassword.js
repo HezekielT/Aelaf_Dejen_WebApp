@@ -4,7 +4,7 @@ import { Grid, Typography, Paper,
 
 import * as yup from 'yup';
 import { useFormik } from 'formik';
-import ConfirmRegistration from '../SuccessDialog';
+import ConfirmRegistration from '../DialogComponent';
 
 import { useNavigate, useParams } from 'react-router-dom';
 const axios = require('axios')
