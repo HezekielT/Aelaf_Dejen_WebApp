@@ -7,7 +7,6 @@ const router = Router();
 
 router.route('/participate').post(async function(req, res) {
     const { id, event_id, first_name, last_name, email, phoneno, location, event_name } = req.body;
-    console.log(id," ",event_id," ",first_name," ",last_name," ",email," ",phoneno," ",location," ",event_name)
     try {
         await Participant.create({
             id,
