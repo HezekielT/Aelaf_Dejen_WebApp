@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, ThemeProvider, Box, 
     CssBaseline, Container, Toolbar, 
-    Typography, createTheme, IconButton, 
+    Typography, createTheme, IconButton, Button,
      Menu, MenuItem, Link, ListItemIcon, Avatar, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ import { Logout } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 // import { LogoutIcon } from '@mui/icons-material/Logout'
 
-const theme = createTheme();
+const theme = createTheme()
 
 function stringToColor(string) {
     let hash = 0;
@@ -41,24 +41,24 @@ function stringToColor(string) {
     };
   }
 
-function NavBar() {
+
+function NavBar(props) {
     const location = useLocation();
     const navigate = useNavigate();
-    const [isScrolled, setIsScrolled ] = useState('#1565c0');
+
+    const fname = localStorage.getItem('fname');
+    const lname = localStorage.getItem('lname');
+    const full_name = fname + ' ' + lname;
+
+
+    const [isScrolled, setIsScrolled] = useState(null)
+    const [anchorElPro, setAnchorElPro] = useState(null)
     const { homeRef, eventRef, contactRef, scrollToRef } = useReference();
 
-    const [anchorElPro, setAnchorElPro] = useState(null);
-    const [anchorEl, setAnchorEl] = useState(null)
-    const [anchorElNav, setAnchorElNav] = useState(null);
-    const open = Boolean(anchorEl);
+    const open = Boolean(anchorElPro);
+    const [anchorElProMd, setAnchorElProMd] = useState(null)
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    const openMd = Boolean(anchorElProMd);
 
     const handleClick = (event) => {
         console.log("gag")
@@ -68,6 +68,23 @@ function NavBar() {
     const handleClose = () => {
         setAnchorElPro(null);
     }
+    const handleClickMd = (event) => {
+        console.log("gag")
+        setAnchorElProMd(event.currentTarget);
+        // console.log(anchorElPro)
+    }
+    const handleCloseMd = () => {
+        setAnchorElProMd(null);
+    }
+    const handleLogout = () => {
+        localStorage.removeItem('UserInfo')
+        localStorage.removeItem('fname')
+        localStorage.removeItem('lname')
+        localStorage.removeItem('pri')
+        localStorage.removeItem('id')
+        navigate('/admin')
+    }
+    
 
     useEffect(() => {
         const handleScroll = () => {
@@ -84,192 +101,269 @@ function NavBar() {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
-    
-    function AdminXsNavBar() {
-        return (
-            <>
-            
-                <ListItemIcon sx={{ mx :1 }} onClick={() => {console.log("JJJ")}}>
-                    <Logout fontSize='small' sx={{ ml:1 }}/>
-                    <Typography>Logout</Typography>
-                </ListItemIcon>
-            
-            </>
-        )
-    }
 
-    function AdminMdNavBar() {
-        
-        const fname = localStorage.getItem('fname');
-        const lname = localStorage.getItem('lname');
-        const full_name = fname + ' ' + lname;
-        return (
-            <React.Fragment>
-            <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? 'account-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            >
-                <Stack direction="row" spacing={2}>
-                    {fname !== '' ? (
-                        <Avatar  {...stringAvatar(full_name)} />
-                    ) : (
-                        <></>
-                    )}
-                </Stack>
-            </IconButton>
-            <Menu
-                anchorEl={anchorElPro}
-                id="account-menu"
-                open={open}
-                onClose={handleClose}
-                onClick={handleClose}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-                <MenuItem
-                    onClick={() => navigate('/logout')}
-                >
-                    <ListItemIcon>
-                        <Logout fontSize="small" />
-                    </ListItemIcon>
-                    Logout
-                </MenuItem>
-            </Menu>
-            </React.Fragment>
-        )
-    }
-
-    function NormalXsNavBar() {
-        return (
-            <>
-            <MenuItem key={0} onClick={handleCloseNavMenu}>
-                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(homeRef)}>Home</Link>
-            </MenuItem>
-            <MenuItem key={1} onClick={handleCloseNavMenu}>
-                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
-            </MenuItem>
-            <MenuItem key={2} onClick={handleCloseNavMenu}>
-                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
-            </MenuItem>
-            </>
-        )
-    }
-    
-    function NormalMdNavBar() {
-        return (
-            <>
-                <Link 
-                    sx={{
-                        color: '#fff', 
-                        cursor: 'pointer', 
-                        textDecoration: 'none',
-                        px: 2,
-                    }} 
-                    onClick={() => scrollToRef(homeRef)}
-                >Home</Link>
-                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
-                <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
-            </>
-        )
-    }
-    
     function Content() {
-        if(location.pathname === '/' || location.pathname === '/dashboard' 
-        || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
-        || location.pathname === '/dashboard/accounts') {
-            return(
-                    <Box sx={{display: 'flex'}}>
-                        <CssBaseline />
-                        <AppBar style={{background: isScrolled}}>
-                            <Container maxWidth="xl">
-                                <Toolbar>
-                                    <Typography
-                                        variant='h6'
-                                        noWrap
-                                        component="div"
-                                        sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'} }}
-                                    >
-                                        <pre>
-                                        አእላፍ-ደጀን 
-                                        AELAPH-DEJEN
-                                        </pre>
-                                    </Typography>
-                                    <Box sx={{ flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+        // if(location.pathname === '/' || location.pathname === '/dashboard' 
+        //         || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
+        //         || location.pathname === '/dashboard/accounts') {
+        //     return (
+        //         <Box sx={{ display: 'flex' }}>
+        //         <CssBaseline />
+        //         <AppBar style={{ background: isScrolled }}>
+        //             <Container maxWidth='xl'>
+        //                 <Toolbar>
+        //                     <Typography
+        //                         variant='h6'
+        //                         noWrap
+        //                         component="div"
+        //                         sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
+        //                     >
+        //                         <pre>
+        //                             አእላፍ-ደጀን 
+        //                             AELAPH-DEJEN
+        //                         </pre>
+        //                     </Typography>
+        //                     <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+        //                         <IconButton
+        //                             id='profile-button'
+        //                             onClick={handleClick}
+        //                             aria-controls={open ? 'profile-menu' : undefined}
+        //                             aria-haspopup='true'
+        //                             aria-expanded={open ? 'true' : undefined}
+        //                         >
+        //                             <Stack>
+        //                                 <Avatar  {...stringAvatar("Hezekiel Name")} />
+        //                             </Stack>
+        //                         </IconButton>
+        //                         <Menu
+        //                         id='profile-menu'
+        //                         anchorEl={anchorElPro}
+        //                         open={open}
+        //                         onClose={handleClose}
+        //                         >
+        //                             <MenuItem>cmo</MenuItem>
+        //                         </Menu>
+        //                     </Box>
+
+        //                     <Box sx={{flexGrow: 0, display: { md: 'flex', xs: 'none' }}}>
+        //                         <IconButton
+        //                             id='profile-button'
+        //                             onClick={handleClickMd}
+        //                             aria-controls={openMd ? 'profile-menuMd' : undefined}
+        //                             aria-haspopup='true'
+        //                             aria-expanded={openMd ? 'true' : undefined}
+        //                         >
+        //                             <Stack>
+        //                             <Avatar  {...stringAvatar("full Name")} />
+        //                             </Stack>
+        //                         </IconButton>
+        //                         <Menu
+        //                         id='profile-menuMd'
+        //                         anchorEl={anchorElProMd}
+        //                         open={openMd}
+        //                         onClose={handleCloseMd}
+        //                         >
+        //                             <MenuItem>cmo</MenuItem>
+        //                         </Menu>
+        //                     </Box>
+
+        //                     <Typography
+        //                         variant='h6'
+        //                         noWrap
+        //                         component="div"
+        //                         sx={{
+        //                             flexGrow: 1,
+        //                             display: { xs: 'flex', md: 'none'}
+        //                         }}
+        //                     >
+        //                         AELAPH-DEJEN
+        //                     </Typography>
+        //                 </Toolbar>
+        //             </Container>
+        //         </AppBar>
+        //     </Box>
+        //     )
+        // } else {
+        //     return (<></>)
+        // }
+    }
+    
+    if(location.pathname === '/' || location.pathname === '/dashboard' 
+                || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
+                || location.pathname === '/dashboard/accounts') {
+            return (
+                <Box sx={{ display: 'flex' }}>
+                <CssBaseline />
+                <AppBar style={{ background: isScrolled }}>
+                    <Container maxWidth='xl'>
+                        <Toolbar>
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component="div"
+                                sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
+                            >
+                                <pre>
+                                    አእላፍ-ደጀን 
+                                    AELAPH-DEJEN CONVENTION
+                                </pre>
+                            </Typography>
+                            <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+                                {location.pathname === '/' ? (
+                                    <>
                                         <IconButton
-                                            size="large"
-                                            aria-label='drivers option'
-                                            aria-controls='menu-appbar'
-                                            aria-haspopup="true"
-                                            onClick={handleOpenNavMenu}
+                                            id='profile-button'
+                                            onClick={handleClick}
+                                            aria-controls={open ? 'profile-menu' : undefined}
+                                            aria-haspopup='true'
+                                            aria-expanded={open ? 'true' : undefined}
                                         >
                                             <MenuIcon />
                                         </IconButton>
                                         <Menu
-                                            id="menu-appbar"
-                                            anchorEl={anchorElNav}
-                                            anchorOrigin={{
-                                                vertical: 'bottom',
-                                                horizontal: 'left',
-                                            }}
-                                            keepMounted
-                                            transformOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'left',
-                                            }}
-                                            open={Boolean(anchorElNav)}
-                                            onClose={handleCloseNavMenu}
-                                            sx={{
-                                                display: { xs: 'block', md: 'none' },
-                                            }}
-                                        > 
-                                                {location.pathname === '/' ? (
-                                                    <NormalXsNavBar />
-                                                ) : (
-                                                    <AdminXsNavBar />
-                                                )}
+                                        id='profile-menu'
+                                        anchorEl={anchorElPro}
+                                        open={open}
+                                        onClose={handleClose}
+                                        >
+
+                                            <MenuItem key={0} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(homeRef)}>Home</Link>
+                                            </MenuItem>
+                                            <MenuItem key={1} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                            </MenuItem>
+                                            <MenuItem key={2} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
+                                            </MenuItem>
                                         </Menu>
-                                    </Box>
-                                    <Typography
-                                        variant='h6'
-                                        noWrap
-                                        component="div"
+                                    </>
+                                ) : (
+                                    <>
+                                        <IconButton
+                                            id='profile-button'
+                                            onClick={handleClick}
+                                            aria-controls={open ? 'profile-menu' : undefined}
+                                            aria-haspopup='true'
+                                            aria-expanded={open ? 'true' : undefined}
+                                        >
+                                            <MenuIcon />
+                                        </IconButton>
+                                        <Menu
+                                        id='profile-menu'
+                                        anchorEl={anchorElPro}
+                                        open={open}
+                                        onClose={handleClose}
+                                        >
+                                            <MenuItem key={0} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/contents')}}>
+                                                    Manage Web Contents
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem key={1} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/transport')}}>
+                                                    Register Drivers
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem key={2} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/accounts')}}>
+                                                    Manage Account
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem key={3} onClick={handleClose}>
+                                                <Link sx={{cursor: 'pointer', textDecoration: 'none', display: 'inline-flex'}} onClick={() => {handleLogout()}}>
+                                                    <Logout fontSize='small' sx={{ mr: 1,}}/>
+                                                    <Typography>Logout</Typography>
+                                                </Link>
+                                            </MenuItem>
+                                        </Menu>
+                                    </>
+                                )}
+                            </Box>
+
+                            <Box sx={{flexGrow: 0, display: { md: 'flex', xs: 'none' }}}>
+                            {location.pathname === '/' ? (
+                                <>
+                                    <Link 
                                         sx={{
-                                            flexGrow: 1,
-                                            display: { xs: 'flex', md: 'none'}
-                                        }}
+                                            color: '#fff', 
+                                            cursor: 'pointer', 
+                                            textDecoration: 'none',
+                                            px: 2,
+                                        }} 
+                                        onClick={() => scrollToRef(homeRef)}
+                                    >Home</Link>
+                                    <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                    <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
+                                </>
+                            ) : (
+                                <>
+                                    <IconButton
+                                        id='profile-button'
+                                        onClick={handleClickMd}
+                                        aria-controls={openMd ? 'profile-menuMd' : undefined}
+                                        aria-haspopup='true'
+                                        aria-expanded={openMd ? 'true' : undefined}
                                     >
-                                        AELAPH-DEJEN
-                                    </Typography>
-                                    <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>
-                                        {location.pathname === '/' ? (
-                                            <NormalMdNavBar />
-                                        ) : (
-                                            <AdminMdNavBar />
-                                        )}
-                                    </Box>
-                                </Toolbar>
-                            </Container>
-                        </AppBar>
-                    </Box>
+                                        <Stack>
+                                        <Avatar  {...stringAvatar(full_name)} />
+                                        </Stack>
+                                    </IconButton>
+                                    <Menu
+                                        id='profile-menuMd'
+                                        anchorEl={anchorElProMd}
+                                        open={openMd}
+                                        onClick={handleCloseMd}
+                                    >
+                                        <MenuItem key={0} onClick={handleClose}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/contents')}}>
+                                                Manage Web Contents
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem key={1} onClick={handleClose}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/transport')}}>
+                                                Register Drivers
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem key={2} onClick={handleClose}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/accounts')}}>
+                                                Manage Account
+                                            </Link>
+                                        </MenuItem>
+                                        <MenuItem key={3} onClick={handleClose}>
+                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', display: 'inline-flex'}} onClick={() => {handleLogout()}}>
+                                                <Logout fontSize='small' sx={{ mr: 1,}}/>
+                                                <Typography>Logout</Typography>
+                                            </Link>
+                                        </MenuItem>
+                                        {/* <ListItemIcon >
+                                            <Logout fontSize='small'/>
+                                            <Typography>Logout</Typography>
+                                        </ListItemIcon> */}
+                                    </Menu>
+                                </>
+                            )}
+                            </Box>
+
+                            <Typography
+                                variant='h6'
+                                noWrap
+                                component="div"
+                                sx={{
+                                    flexGrow: 1,
+                                    display: { xs: 'flex', md: 'none'}
+                                }}
+                            >
+                                AELAPH-DEJEN CONVENTION
+                            </Typography>
+                        </Toolbar>
+                    </Container>
+                </AppBar>
+            </Box>
             )
-             } else {
-              return (<></>)
-             }
-    }
-
-    useEffect(() => {
-       <Content />
-    },[location.pathname])
-
-    return (
-    	<ThemeProvider theme={theme}>
-    		<Content />
-    	</ThemeProvider>
-    )
+        } else {
+            return (<></>)
+        }
 }
 
 export default NavBar;
