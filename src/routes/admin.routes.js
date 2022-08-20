@@ -115,7 +115,7 @@ router.route('/forgotPassword').post(async function(req, res, next){
   try {
       const user = await Admin.findOne({ email });
       if (!user) {
-          return res.status(404).send({ message: "No email could not be sent, Please check your email!"})
+          return res.status(404).send({ message: "No email matches yours, Please check your email!"})
       }
 
       const resetToken = await user.getResetPasswordToken()
