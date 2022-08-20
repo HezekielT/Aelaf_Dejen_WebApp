@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, ThemeProvider, Box, 
     CssBaseline, Container, Toolbar, 
-    Typography, createTheme, IconButton, Button,
+    Typography, createTheme, IconButton,
      Menu, MenuItem, Link, ListItemIcon, Avatar, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect } from 'react';
@@ -192,68 +192,129 @@ function NavBar(props) {
                 || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
                 || location.pathname === '/dashboard/accounts') {
             return (
-                <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <AppBar style={{ background: isScrolled }}>
-                    <Container maxWidth='xl'>
-                        <Toolbar>
-                            <Typography
-                                variant='h6'
-                                noWrap
-                                component="div"
-                                sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
-                            >
-                                <pre>
-                                    አእላፍ-ደጀን 
-                                    AELAPH-DEJEN CONVENTION
-                                </pre>
-                            </Typography>
-                            <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+                <ThemeProvider theme={theme}>
+                    <Box sx={{ display: 'flex' }}>
+                    <CssBaseline />
+                    <AppBar style={{ background: isScrolled }}>
+                        <Container maxWidth='xl'>
+                            <Toolbar>
+                                <Typography
+                                    variant='h6'
+                                    noWrap
+                                    component="div"
+                                    sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
+                                >
+                                    <pre>
+                                        አእላፍ-ደጀን 
+                                        AELAPH-DEJEN CONVENTION
+                                    </pre>
+                                </Typography>
+                                <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
+                                    {location.pathname === '/' ? (
+                                        <>
+                                            <IconButton
+                                                id='profile-button'
+                                                onClick={handleClick}
+                                                aria-controls={open ? 'profile-menu' : undefined}
+                                                aria-haspopup='true'
+                                                aria-expanded={open ? 'true' : undefined}
+                                            >
+                                                <MenuIcon />
+                                            </IconButton>
+                                            <Menu
+                                            id='profile-menu'
+                                            anchorEl={anchorElPro}
+                                            open={open}
+                                            onClose={handleClose}
+                                            >
+
+                                                <MenuItem key={0} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(homeRef)}>Home</Link>
+                                                </MenuItem>
+                                                <MenuItem key={1} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                                </MenuItem>
+                                                <MenuItem key={2} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
+                                                </MenuItem>
+                                            </Menu>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <IconButton
+                                                id='profile-button'
+                                                onClick={handleClick}
+                                                aria-controls={open ? 'profile-menu' : undefined}
+                                                aria-haspopup='true'
+                                                aria-expanded={open ? 'true' : undefined}
+                                            >
+                                                <MenuIcon />
+                                            </IconButton>
+                                            <Menu
+                                            id='profile-menu'
+                                            anchorEl={anchorElPro}
+                                            open={open}
+                                            onClose={handleClose}
+                                            >
+                                                <MenuItem key={0} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/contents')}}>
+                                                        Manage Web Contents
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem key={1} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/transport')}}>
+                                                        Register Drivers
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem key={2} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/accounts')}}>
+                                                        Manage Account
+                                                    </Link>
+                                                </MenuItem>
+                                                <MenuItem key={3} onClick={handleClose}>
+                                                    <Link sx={{cursor: 'pointer', textDecoration: 'none', display: 'inline-flex'}} onClick={() => {handleLogout()}}>
+                                                        <Logout fontSize='small' sx={{ mr: 1,}}/>
+                                                        <Typography>Logout</Typography>
+                                                    </Link>
+                                                </MenuItem>
+                                            </Menu>
+                                        </>
+                                    )}
+                                </Box>
+
+                                <Box sx={{flexGrow: 0, display: { md: 'flex', xs: 'none' }}}>
                                 {location.pathname === '/' ? (
                                     <>
-                                        <IconButton
-                                            id='profile-button'
-                                            onClick={handleClick}
-                                            aria-controls={open ? 'profile-menu' : undefined}
-                                            aria-haspopup='true'
-                                            aria-expanded={open ? 'true' : undefined}
-                                        >
-                                            <MenuIcon />
-                                        </IconButton>
-                                        <Menu
-                                        id='profile-menu'
-                                        anchorEl={anchorElPro}
-                                        open={open}
-                                        onClose={handleClose}
-                                        >
-
-                                            <MenuItem key={0} onClick={handleClose}>
-                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(homeRef)}>Home</Link>
-                                            </MenuItem>
-                                            <MenuItem key={1} onClick={handleClose}>
-                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
-                                            </MenuItem>
-                                            <MenuItem key={2} onClick={handleClose}>
-                                                <Link sx={{cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
-                                            </MenuItem>
-                                        </Menu>
+                                        <Link 
+                                            sx={{
+                                                color: '#fff', 
+                                                cursor: 'pointer', 
+                                                textDecoration: 'none',
+                                                px: 2,
+                                            }} 
+                                            onClick={() => scrollToRef(homeRef)}
+                                        >Home</Link>
+                                        <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
+                                        <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
                                     </>
                                 ) : (
                                     <>
                                         <IconButton
                                             id='profile-button'
-                                            onClick={handleClick}
-                                            aria-controls={open ? 'profile-menu' : undefined}
+                                            onClick={handleClickMd}
+                                            aria-controls={openMd ? 'profile-menuMd' : undefined}
                                             aria-haspopup='true'
-                                            aria-expanded={open ? 'true' : undefined}
+                                            aria-expanded={openMd ? 'true' : undefined}
                                         >
-                                            <MenuIcon />
+                                            <Stack>
+                                            <Avatar  {...stringAvatar(full_name)} />
+                                            </Stack>
                                         </IconButton>
                                         <Menu
-                                        id='profile-menu'
-                                        anchorEl={anchorElPro}
-                                        open={open}
-                                        onClose={handleClose}
+                                            id='profile-menuMd'
+                                            anchorEl={anchorElProMd}
+                                            open={openMd}
+                                            onClick={handleCloseMd}
                                         >
                                             <MenuItem key={0} onClick={handleClose}>
                                                 <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/contents')}}>
@@ -276,90 +337,31 @@ function NavBar(props) {
                                                     <Typography>Logout</Typography>
                                                 </Link>
                                             </MenuItem>
+                                            {/* <ListItemIcon >
+                                                <Logout fontSize='small'/>
+                                                <Typography>Logout</Typography>
+                                            </ListItemIcon> */}
                                         </Menu>
                                     </>
                                 )}
-                            </Box>
+                                </Box>
 
-                            <Box sx={{flexGrow: 0, display: { md: 'flex', xs: 'none' }}}>
-                            {location.pathname === '/' ? (
-                                <>
-                                    <Link 
-                                        sx={{
-                                            color: '#fff', 
-                                            cursor: 'pointer', 
-                                            textDecoration: 'none',
-                                            px: 2,
-                                        }} 
-                                        onClick={() => scrollToRef(homeRef)}
-                                    >Home</Link>
-                                    <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(eventRef)}>Conventions</Link>
-                                    <Link sx={{color: '#fff', cursor: 'pointer', textDecoration: 'none',px: 2,}} onClick={() => scrollToRef(contactRef)}>Contact Us</Link>
-                                </>
-                            ) : (
-                                <>
-                                    <IconButton
-                                        id='profile-button'
-                                        onClick={handleClickMd}
-                                        aria-controls={openMd ? 'profile-menuMd' : undefined}
-                                        aria-haspopup='true'
-                                        aria-expanded={openMd ? 'true' : undefined}
-                                    >
-                                        <Stack>
-                                        <Avatar  {...stringAvatar(full_name)} />
-                                        </Stack>
-                                    </IconButton>
-                                    <Menu
-                                        id='profile-menuMd'
-                                        anchorEl={anchorElProMd}
-                                        open={openMd}
-                                        onClick={handleCloseMd}
-                                    >
-                                        <MenuItem key={0} onClick={handleClose}>
-                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/contents')}}>
-                                                Manage Web Contents
-                                            </Link>
-                                        </MenuItem>
-                                        <MenuItem key={1} onClick={handleClose}>
-                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/transport')}}>
-                                                Register Drivers
-                                            </Link>
-                                        </MenuItem>
-                                        <MenuItem key={2} onClick={handleClose}>
-                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', }} onClick={() => {navigate('/dashboard/accounts')}}>
-                                                Manage Account
-                                            </Link>
-                                        </MenuItem>
-                                        <MenuItem key={3} onClick={handleClose}>
-                                            <Link sx={{cursor: 'pointer', textDecoration: 'none', display: 'inline-flex'}} onClick={() => {handleLogout()}}>
-                                                <Logout fontSize='small' sx={{ mr: 1,}}/>
-                                                <Typography>Logout</Typography>
-                                            </Link>
-                                        </MenuItem>
-                                        {/* <ListItemIcon >
-                                            <Logout fontSize='small'/>
-                                            <Typography>Logout</Typography>
-                                        </ListItemIcon> */}
-                                    </Menu>
-                                </>
-                            )}
-                            </Box>
-
-                            <Typography
-                                variant='h6'
-                                noWrap
-                                component="div"
-                                sx={{
-                                    flexGrow: 1,
-                                    display: { xs: 'flex', md: 'none'}
-                                }}
-                            >
-                                AELAPH-DEJEN CONVENTION
-                            </Typography>
-                        </Toolbar>
-                    </Container>
-                </AppBar>
-            </Box>
+                                <Typography
+                                    variant='h6'
+                                    noWrap
+                                    component="div"
+                                    sx={{
+                                        flexGrow: 1,
+                                        display: { xs: 'flex', md: 'none'}
+                                    }}
+                                >
+                                    AELAPH-DEJEN CONVENTION
+                                </Typography>
+                            </Toolbar>
+                        </Container>
+                    </AppBar>
+                </Box>
+            </ThemeProvider>
             )
         } else {
             return (<></>)
