@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 import { v4 as uuidV4 } from 'uuid'
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import ConfirmRegistration from '../SuccessDialog';
+import ConfirmRegistration from '../DialogComponent';
 const axios = require('axios');
 
 const validationSchema = yup.object({
