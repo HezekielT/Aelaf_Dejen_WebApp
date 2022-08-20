@@ -65,7 +65,6 @@ function NavBar(props) {
         setAnchorElPro(null);
     }
     const handleClickMd = (event) => {
-        console.log("gag")
         setAnchorElProMd(event.currentTarget);
     }
     const handleCloseMd = () => {
