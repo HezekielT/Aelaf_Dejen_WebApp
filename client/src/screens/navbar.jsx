@@ -2,21 +2,19 @@ import React, { useState } from 'react';
 import { AppBar, ThemeProvider, Box, 
     CssBaseline, Container, Toolbar, 
     Typography, createTheme, IconButton,
-     Menu, MenuItem, Link, ListItemIcon, Avatar, Stack } from '@mui/material';
+     Menu, MenuItem, Link, Avatar, Stack } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { useEffect } from 'react';
 import { useReference } from '../context/refProvider';
 import { Logout } from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
-// import { LogoutIcon } from '@mui/icons-material/Logout'
 
 const theme = createTheme()
 
 function stringToColor(string) {
     let hash = 0;
     let i;
-  
-    /* eslint-disable no-bitwise */
+
     for (i = 0; i < string.length; i += 1) {
       hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
@@ -27,7 +25,6 @@ function stringToColor(string) {
       const value = (hash >> (i * 8)) & 0xff;
       color += `00${value.toString(16)}`.slice(-2);
     }
-    /* eslint-enable no-bitwise */
   
     return color;
   }
@@ -63,7 +60,6 @@ function NavBar(props) {
     const handleClick = (event) => {
         console.log("gag")
         setAnchorElPro(event.currentTarget);
-        // console.log(anchorElPro)
     }
     const handleClose = () => {
         setAnchorElPro(null);
@@ -71,7 +67,6 @@ function NavBar(props) {
     const handleClickMd = (event) => {
         console.log("gag")
         setAnchorElProMd(event.currentTarget);
-        // console.log(anchorElPro)
     }
     const handleCloseMd = () => {
         setAnchorElProMd(null);
@@ -101,93 +96,6 @@ function NavBar(props) {
             window.removeEventListener('scroll', handleScroll)
         }
     }, [])
-
-    function Content() {
-        // if(location.pathname === '/' || location.pathname === '/dashboard' 
-        //         || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
-        //         || location.pathname === '/dashboard/accounts') {
-        //     return (
-        //         <Box sx={{ display: 'flex' }}>
-        //         <CssBaseline />
-        //         <AppBar style={{ background: isScrolled }}>
-        //             <Container maxWidth='xl'>
-        //                 <Toolbar>
-        //                     <Typography
-        //                         variant='h6'
-        //                         noWrap
-        //                         component="div"
-        //                         sx={{ flexGrow: 1, display: {xs: 'none', md: 'flex'}}}
-        //                     >
-        //                         <pre>
-        //                             አእላፍ-ደጀን 
-        //                             AELAPH-DEJEN
-        //                         </pre>
-        //                     </Typography>
-        //                     <Box sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
-        //                         <IconButton
-        //                             id='profile-button'
-        //                             onClick={handleClick}
-        //                             aria-controls={open ? 'profile-menu' : undefined}
-        //                             aria-haspopup='true'
-        //                             aria-expanded={open ? 'true' : undefined}
-        //                         >
-        //                             <Stack>
-        //                                 <Avatar  {...stringAvatar("Hezekiel Name")} />
-        //                             </Stack>
-        //                         </IconButton>
-        //                         <Menu
-        //                         id='profile-menu'
-        //                         anchorEl={anchorElPro}
-        //                         open={open}
-        //                         onClose={handleClose}
-        //                         >
-        //                             <MenuItem>cmo</MenuItem>
-        //                         </Menu>
-        //                     </Box>
-
-        //                     <Box sx={{flexGrow: 0, display: { md: 'flex', xs: 'none' }}}>
-        //                         <IconButton
-        //                             id='profile-button'
-        //                             onClick={handleClickMd}
-        //                             aria-controls={openMd ? 'profile-menuMd' : undefined}
-        //                             aria-haspopup='true'
-        //                             aria-expanded={openMd ? 'true' : undefined}
-        //                         >
-        //                             <Stack>
-        //                             <Avatar  {...stringAvatar("full Name")} />
-        //                             </Stack>
-        //                         </IconButton>
-        //                         <Menu
-        //                         id='profile-menuMd'
-        //                         anchorEl={anchorElProMd}
-        //                         open={openMd}
-        //                         onClose={handleCloseMd}
-        //                         >
-        //                             <MenuItem>cmo</MenuItem>
-        //                         </Menu>
-        //                     </Box>
-
-        //                     <Typography
-        //                         variant='h6'
-        //                         noWrap
-        //                         component="div"
-        //                         sx={{
-        //                             flexGrow: 1,
-        //                             display: { xs: 'flex', md: 'none'}
-        //                         }}
-        //                     >
-        //                         AELAPH-DEJEN
-        //                     </Typography>
-        //                 </Toolbar>
-        //             </Container>
-        //         </AppBar>
-        //     </Box>
-        //     )
-        // } else {
-        //     return (<></>)
-        // }
-    }
-    
     if(location.pathname === '/' || location.pathname === '/dashboard' 
                 || location.pathname === '/dashboard/contents' || location.pathname === '/dashboard/transport' 
                 || location.pathname === '/dashboard/accounts') {
