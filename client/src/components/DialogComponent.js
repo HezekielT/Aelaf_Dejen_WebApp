@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@mui/material';
 
 function ConfirmRegistration(props) {
     return (
@@ -11,6 +11,14 @@ function ConfirmRegistration(props) {
                         {props.message}
                     </DialogContentText>
                 </DialogContent>
+                {props.confirm ? (
+                    <DialogActions>
+                        <Button autoFocus onClick={() => props.setDelete(false)}>
+                            Cancel  
+                        </Button>
+                        <Button onClick={() => props.setDelete(true)}>Delete</Button>
+                    </DialogActions>
+                ) : (<></>)}
             </Dialog>
         </React.Fragment>
     );
