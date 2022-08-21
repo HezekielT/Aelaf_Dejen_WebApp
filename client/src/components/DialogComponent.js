@@ -13,10 +13,10 @@ function ConfirmRegistration(props) {
                 </DialogContent>
                 {props.confirm ? (
                     <DialogActions>
-                        <Button autoFocus onClick={() => props.setDelete(false)}>
+                        <Button autoFocus onClick={() => {props.setDeleteConfirmation(false); props.setOpen(false)}}>
                             Cancel  
                         </Button>
-                        <Button onClick={() => props.setDelete(true)}>Delete</Button>
+                        <Button onClick={() => {props.setDeleteConfirmation(true); props.setOpen(false)}}>Delete</Button>
                     </DialogActions>
                 ) : (<></>)}
             </Dialog>
