@@ -43,7 +43,6 @@ function EventsForm(props) {
             "state_changed",
             (snapshot) => {
                 var percent = snapshot.bytesTransferred / snapshot.totalbytes * 100 ;
-                console.log(percent + "%");
             },
             (error) => {console.log(error)},
             async () => {
@@ -53,17 +52,15 @@ function EventsForm(props) {
                         val = urls;
                         setImagePath(val) 
                         setButtonDisable(false)
-                        // console.log(imagePath, "........")
                 })
                 
             }
         )
-        console.log('image path is', val)
     }
-    useEffect(() => {
-        // setImagePath(val)
-        console.log(imagePath, 'after uploading hopefully')
-    },[imagePath])
+    // useEffect(() => {
+    //     // setImagePath(val)
+    //     console.log(imagePath, 'after uploading hopefully')
+    // },[imagePath])
 
     const formik = useFormik({
         initialValues: {
