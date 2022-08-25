@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, CardActions, CardContent, Box,
   IconButton, Typography, Collapse, CardMedia, Container, alpha } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Participant_Regist from './Participant-Registration';
 import View_Participants from './View_Participants';
+import ConfirmRegistration from '../DialogComponent';
 
 
 const ExpandMore = styled((props) => {
@@ -39,11 +40,32 @@ function RenderPoster(value) {
 function EventsItem(props) {
 
   const [expanded, setExpanded] = React.useState(false);
+  const msg = "Registered Participants, Drivers will also be deleted! This action can't be undo";
+  const title = "Are you sure you want to delete?";
+  const [id, setId] = useState('');
+  const [deleteConfirmation, setDeleteConfirmation] = useState(false)
 
+  const confirm = true;
   const handleExpandClick = () => {
     setExpanded(!expanded)
   }
   // const []
+  function DelConv(id) {
+    setId(id)
+    props.setOpen(true)
+  }
+  useEffect(() => {
+
+      console.log(deleteConfirmation, 'here is deleteCom')
+      if(deleteConfirmation){
+        console.log("MOrning")
+        props.DeleteConvention(id)
+      } else {
+        console.log("Evening")
+      }
+      
+  },[props.open])
+    // props.setDeleteConfirmation(true)
   return (
     <Card key={props.convention.id} sx={{mb: 2}}>
       {RenderPoster(props.convention.image)}
@@ -54,7 +76,7 @@ function EventsItem(props) {
           {(props.val === true) ? (
               <Box sx={{ textAlign: 'right', px: 2}}>
                   <EditIcon sx={{mx: 2,cursor: 'pointer',}} onClick={() => props.EditConvention(props.convention)}/>
-                  <DeleteIcon sx={{mx: 2,cursor: 'pointer',}} onClick={() => props.DeleteConvention(props.convention.id)}/>
+                  <DeleteIcon sx={{mx: 2,cursor: 'pointer',}} onClick={() => DelConv(props.convention.id)}/>
               </Box>
           ) : (<></>)
           }
@@ -62,6 +84,14 @@ function EventsItem(props) {
           <Typography paragraph>{props.convention.description}</Typography>
           <Typography paragraph>Date and Time: {props.convention.dateTime}</Typography>
           <Typography paragraph>Place: {props.convention.location}</Typography>
+          <ConfirmRegistration 
+            open={props.open} 
+            setOpen={props.setOpen} 
+            title={title} 
+            message={msg} 
+            confirm={confirm} 
+            setDeleteConfirmation={setDeleteConfirmation}
+          />
 
       </CardContent>
       <CardActions sx={{ border: 1, }}>
