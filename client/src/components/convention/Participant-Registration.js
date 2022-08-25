@@ -78,7 +78,7 @@ function Participant_Regist(props) {
             putvalues()
             actions.setSubmitting(false);
             actions.resetForm({
-                vvalues: {
+                values: {
                     first_name: '',
                     last_name: '',
                     email: '',
