@@ -1,10 +1,11 @@
 import { Button, Container, Box, 
     Grid, Paper, Typography, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidV4 } from "uuid";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import storage from "../../firebase";
+import ConfirmRegistration from '../DialogComponent';
 
 const axios = require('axios');
 
@@ -25,10 +26,18 @@ const conventionValidationSchema = yup.object({
 
 function EventsForm(props) {
     const eid = uuidV4();
+
+    const msg =props.convention!==undefined ? ("Successfully Updated") : ("Successfully Added New Convention");
+    const [open, setOpen] = useState(false)
+    const title = "Success";
+
     const [imagePath, setImagePath] = useState(undefined);
     const [remove, setRemove] = useState(false);
+    const [buttonDisable, setButtonDisable] = useState(false)
+    let val = ''
 
-    function uploadToFirebase(value) {
+    function UploadToFirebase(value) {
+        setButtonDisable(true)
         const uploadTask = storage.ref(`posters/${value.name}`).put(value);
         uploadTask.on(
             "state_changed",
@@ -40,14 +49,21 @@ function EventsForm(props) {
             async () => {
                 await storage
                     .ref("posters").child(value.name).getDownloadURL().then((urls) => {
-                        const val = urls;
-                        setImagePath(val)
-                        console.log(imagePath, "........")
+                        console.log("Here is the url ",urls)
+                        val = urls;
+                        setImagePath(val) 
+                        setButtonDisable(false)
+                        // console.log(imagePath, "........")
                 })
                 
             }
         )
+        console.log('image path is', val)
     }
+    useEffect(() => {
+        // setImagePath(val)
+        console.log(imagePath, 'after uploading hopefully')
+    },[imagePath])
 
     const formik = useFormik({
         initialValues: {
@@ -57,7 +73,7 @@ function EventsForm(props) {
             venue: props.convention!==undefined ? (props.convention.location) : (''),
           },
           validationSchema: conventionValidationSchema,
-          onSubmit: (values) => {
+          onSubmit: (values, actions) => {
             const config = {
                 header: {
                     "Content-Type": "application/json"
@@ -84,7 +100,9 @@ function EventsForm(props) {
                                 "Content-Type": "application/json",
                             },}
                     ).then(function (){
-                        alert(JSON.stringify("Successfully Updated!"))
+                        // alert(JSON.stringify("Successfully Updated!"))
+                        setOpen(true)
+                        setImagePath(undefined)
                         setRemove(false)
                         props.setEnableEdit(false)
                         props.setReloadComponent(!props.reloadComponent)
@@ -93,6 +111,15 @@ function EventsForm(props) {
                     })
                 }
                 putvalues()
+                actions.setSubmitting(false);
+                actions.resetForm({
+                    values: {
+                        title: '',
+                        description: '',
+                        dateTime: '',
+                        venue: '',
+                    },  
+                });
             } else {
                 const putvalues = async () => {
                     await axios.post(
@@ -110,13 +137,24 @@ function EventsForm(props) {
                             },}
                     ).then(function (){
                         // props.setReloadComponent(!props.reloadComponent)
-                        alert(JSON.stringify("Successfully Added!"))
+                        // alert(JSON.stringify("Successfully Added!"))
+                        setOpen(true)
+                        props.setEnableEdit(false)
+                        props.setReloadComponent(!props.reloadComponent)
                     }).catch(function (error){
                         alert(error)
                     })
                 }
                 putvalues()
-                
+                actions.setSubmitting(false);
+                actions.resetForm({
+                    values: {
+                        title: '',
+                        description: '',
+                        dateTime: '',
+                        venue: '',
+                    },  
+                });
             }
 
           }
@@ -183,7 +221,7 @@ function EventsForm(props) {
                                     type="file"
                                     accept='image/*'
                                     style={{ display: 'none'}}
-                                    onChange={(e) => uploadToFirebase(e.target.files[0])}
+                                    onChange={(e) => UploadToFirebase(e.target.files[0])}
                                 />
                                 <Button
                                     variant="outlined"
@@ -236,7 +274,8 @@ function EventsForm(props) {
                                     Cancel
                                 </Button>
                             ): (<></>)}
-                            <Button type="submit" variant='contained' sx={{m: 2}}>Submit</Button>
+                            <Button type="submit" variant='contained' disabled={buttonDisable} sx={{m: 2}}>Submit</Button>
+                            <ConfirmRegistration open={open} setOpen={setOpen} title={title} message={msg} /> 
                         </Box>
                     </Paper>
                 </Grid>
