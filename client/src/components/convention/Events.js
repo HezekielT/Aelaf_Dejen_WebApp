@@ -14,6 +14,10 @@ function Events(props) {
     const [conventionItem, setConventionItem] = useState([]);
     const [text, setText] = useState('')
     const [getList, setGetList] = useState('');
+    const [deleteConfirmation, setDeleteConfirmation] = useState(false)
+
+    const [open, setOpen] = useState(false)
+    
 
     const config = {
         header: {
@@ -60,14 +64,20 @@ function Events(props) {
     }, [conventions])
 
     async function DeleteConvention(id) {
-        await axios.delete(
-            `/api/driver/deleteEvent/${id}`,
-            config
-        ).then(function(response) {
-            setReloadComponent(!reloadComponent);
-        }).catch(function (error) {
-            console.log(error)
-        })
+        // setOpen(true)
+        // if(deleteConfirmation === true) {
+            // console.log(id, 'here is props in events')
+            await axios.delete(
+                `/api/event/deleteEvent/${id}`,
+                config
+            ).then(function(response) {
+                setReloadComponent(!reloadComponent);
+            }).catch(function (error) {
+                console.log(error)
+            })
+        // }
+        // useEffect(async () => {
+        // }, [open, setDeleteConfirmation])
     }
 
     async function EditConvention(convention) {
@@ -75,53 +85,51 @@ function Events(props) {
         setConventionItem(convention)
     }
 
-    function DisplayComponent() {
-        if(conventions.length === 0){
-            
-            return (
-                <Card>
-                    <CardContent>
-                        <Typography component="h1" variant="h5" sx={{ py: 5, justifyContent: 'center'}}>
-                            There is no upcoming convention!
-                        </Typography>
-                    </CardContent>
-                </Card>
+    if(conventions.length === 0){
+        
+        return (
+            <Card>
+                <CardContent>
+                    <Typography component="h1" variant="h5" sx={{ py: 5, justifyContent: 'center'}}>
+                        No upcoming convention!
+                    </Typography>
+                </CardContent>
+            </Card>
+        )
+    } else {
+        if(enableEdit === false) {
+            return(
+                conventions.map((convention) => 
+                <>
+                    <EventsItem 
+                        key={convention.id}
+                        val={val}
+                        text={text}
+                        EditConvention={EditConvention}
+                        DeleteConvention={DeleteConvention}
+                        convention={convention} 
+                        drivers={drivers}
+                        getList={getList}
+                        index={conventions.indexOf(convention)}
+                        open={open} 
+                        setOpen={setOpen} 
+                        // setDeleteConfirmation={setDeleteConfirmation}
+                    />
+                    
+                </>
+                )
             )
         } else {
-            if(enableEdit === false) {
-                return(
-                    conventions.map((convention) => 
-                    // console.log(conventions.indexOf(convention),"-id-", convention.id)
-                        <EventsItem 
-                         key={convention.id}
-                         val={val}
-                         text={text}
-                         EditConvention={EditConvention}
-                         DeleteConvention={DeleteConvention}
-                         convention={convention} 
-                         drivers={drivers}
-                         getList={getList}
-                         index={conventions.indexOf(convention)}
-
-                        />
-                    )
-                )
-            } else {
-                return (
-                    <EventsForm 
+            return (
+                <EventsForm 
                     convention={conventionItem} 
                     setEnableEdit={setEnableEdit} 
                     reloadComponent={reloadComponent} 
                     setReloadComponent={setReloadComponent}
-                    />
-                )
-            }
+                />
+            )
         }
     }
-
-    return (
-        <DisplayComponent />
-    );
 }
 
 export default Events;
