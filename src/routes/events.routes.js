@@ -56,6 +56,7 @@ router.route('/updateEvent/:id').post(async function (req, response) {
 router.route("/deleteEvent/:id").delete(async (req, response) => {
 
     let id = req.params.id;
+    console.log('id is this-', id)
     try {
         await Event.deleteOne({id: id}).then(function() {
             response.status(200).send({ message: "Successfully Deleted!"})
