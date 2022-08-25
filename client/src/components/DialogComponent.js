@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 function ConfirmRegistration(props) {
     return (
         <React.Fragment>
-            <Dialog open={props.open} onClose={() => props.setOpen(false)}>
+            <Dialog open={props.open}>
                 <DialogTitle component="h1" variant="h5" sx={{ textAlign: 'center'}}>{props.title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
