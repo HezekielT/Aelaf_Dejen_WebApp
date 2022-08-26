@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, B
 function ConfirmRegistration(props) {
     return (
         <React.Fragment>
-            <Dialog open={props.open}>
+            <Dialog open={props.open} onClose={() => props.setOpen(false)}>
                 <DialogTitle component="h1" variant="h5" sx={{ textAlign: 'center'}}>{props.title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -13,10 +13,10 @@ function ConfirmRegistration(props) {
                 </DialogContent>
                 {props.confirm ? (
                     <DialogActions>
-                        <Button autoFocus onClick={() => {props.setDeleteConfirmation(false); props.setOpen(false)}}>
+                        <Button onClick={() => {props.setDeleteConfirmation(false); props.setOpen(false)}}>
                             Cancel  
                         </Button>
-                        <Button onClick={() => {props.setDeleteConfirmation(true); props.setOpen(false)}}>Delete</Button>
+                        <Button variant='contained' onClick={() => {props.setDeleteConfirmation(true); props.setOpen(false)}}>Delete</Button>
                     </DialogActions>
                 ) : (<></>)}
             </Dialog>
