@@ -121,7 +121,7 @@ adminSchema.methods.matchPassword = async function(password){
  };
 
 adminSchema.methods.getSignedJwtToken = function () {
-    return jwt.sign({ id: this._id }, process.env.ACCESS_TOKEN_SECRET, {
+    return jwt.sign({ id: this.id }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: "10d",
     });
     // jwt.sign({ email: this.email }, process.env.ACCESS_TOKEN_SECRET);
