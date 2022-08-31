@@ -93,9 +93,10 @@ function EventsForm(props) {
                             dateTime: values.dateTime,
                             location: values.venue,
                         },{
-                            header: {
-                                "Content-Type": "application/json",
-                            },}
+                            headers: {
+                                "Authorization": `Bearer ${localStorage.getItem('UserInfo')}`
+                            },
+                        }
                     ).then(function (){
                         // alert(JSON.stringify("Successfully Updated!"))
                         setOpen(true)
