@@ -92,7 +92,7 @@ function Manage_Account(props) {
                             sx={{px: 4, mt: 33,borderRight: 1, borderColor: 'divider', }}
                         >
                             <Tab label="Reset Password" {...tabProps(0)}/>
-                            {(privilege !== '' && privilege  === 'super_admin') ? (
+                            {(privilege !== '' && privilege  === 'sp') ? (
                                 <Tab label="Add New Admin" {...tabProps(1)}/>
                             ) : ( 
                                 <></>
@@ -124,7 +124,7 @@ function Manage_Account(props) {
                             
 
                                 <Tab label="Change Password" {...tabProps(0)}/> 
-                                {(privilege !== '' && privilege  === 'super_admin') ? (
+                                {(privilege !== '' && privilege  === 'sp') ? (
                                     <Tab label="Add New Admin" {...tabProps(1)}/>
                                   ) : ( 
                                      <></>
@@ -154,7 +154,7 @@ function Manage_Account(props) {
                         <TabPanel value={value} index={0}>
                             <ResetPassword />
                         </TabPanel>
-                        {(privilege !== '' && privilege  === 'super_admin') ? (
+                        {(privilege !== '' && privilege  === 'sp') ? (
                             <TabPanel value={value} index={1}>
                                 <AddAdmin />
                             </TabPanel>
