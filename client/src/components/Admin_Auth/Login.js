@@ -47,16 +47,21 @@ function Login(props) {
         await axios.post(
           "/api/admin/signin",
           {
-            email: values.email,
+            email: values.email.toLowerCase(),
             password: values.password,
           },
           config,
         ).then(function (response){
-          console.log(typeof(response.data.admin))
+          // console.log(response.data.user.admin)
           localStorage.setItem("UserInfo", response.data.token)
+          localStorage.setItem("UserData", Object.entries(response.data.user))
           localStorage.setItem("fname",  response.data.first_name)
           localStorage.setItem("lname",  response.data.last_name)
-          localStorage.setItem('pri', response.data.privilege)
+          if(response.data.privilege === 'super_admin'){
+            localStorage.setItem('pri', 'sp')
+          } else {
+            localStorage.setItem('pri', 'sb')
+          }
           localStorage.setItem('id', response.data.id)
           navigate('/dashboard')
         }).catch(function (error){
