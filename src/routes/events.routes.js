@@ -1,9 +1,9 @@
 const express = require('express');
 const Event = require('../models/events.model');
-
+const { protect } = require('../middleware/authMiddleware')
 const router = express.Router();
 
-router.route('/addEvent').post(async function(req, res) {
+router.route('/addEvent').post(protect, async function(req, res) {
     const { id, title, image, description, dateTime, location } = req.body;
     try {
         await Event.create({
@@ -30,7 +30,7 @@ router.route('/getEvents').get(async function(req, res) {
     }
 })
 
-router.route('/updateEvent/:id').post(async function (req, response) {
+router.route('/updateEvent/:id').post(protect, async function (req, response) {
     let id = req.params.id;
     let newvalues = {
         $set: {
@@ -53,10 +53,9 @@ router.route('/updateEvent/:id').post(async function (req, response) {
     }
 });
 
-router.route("/deleteEvent/:id").delete(async (req, response) => {
+router.route("/deleteEvent/:id").delete(protect, async (req, response) => {
 
     let id = req.params.id;
-    console.log('id is this-', id)
     try {
         await Event.deleteOne({id: id}).then(function() {
             response.status(200).send({ message: "Successfully Deleted!"})
