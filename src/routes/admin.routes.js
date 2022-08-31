@@ -100,6 +100,7 @@ router.route('/signin').post(async function(req, res) {
         last_name: user.admin.last_name,
         privilege: user.privilege,
         id: user.id,
+        user: user,
         token: user.getSignedJwtToken(),
         success: "Successfully Logged In",
       });
@@ -174,7 +175,6 @@ router.route('/passwordreset/:resetToken?').post(async function(req, res){
           }
 
           const isMatch = await user.matchPassword(oldPassword);
-          console.log("ismatch", isMatch)
           if(!isMatch) {
             return res.status(400).send({ message: "Your Old Password is Incorrect"})
           }
