@@ -25,7 +25,8 @@ const paperSx = {
 
 function Admin_Options(props) {
     const navigate = useNavigate();
-
+    const ud = localStorage.getItem('UserData')
+    console.log(Object.values(ud))
     return (
         <ThemeProvider theme={mdTheme}>
             <Box
