@@ -71,6 +71,7 @@ function Events(props) {
                 `/api/event/deleteEvent/${id}`,
                 config
             ).then(function(response) {
+                console.log(typeof response)
                 setReloadComponent(!reloadComponent);
             }).catch(function (error) {
                 console.log(error)
